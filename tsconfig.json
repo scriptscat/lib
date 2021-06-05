@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@App/*": ["src/*"],
+      "@Test/*": ["tests/*"]
+    },
+    "typeRoots": ["./node_modules/@types/", "./src/types"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "tests/*.test.ts"]
+}
