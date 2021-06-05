@@ -1,13 +1,14 @@
 {
   "name": "scriptcat-lib",
-  "version": "0.1.2",
+  "version": "1.0.1",
   "description": "脚本仓库",
   "scripts": {
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "declaration": "tsc --declaration src/msg-push/main.ts --outDir src/types/msg-push --emitDeclarationOnly",
     "dev": "webpack --mode production --config webpack.dev.js",
-    "build": "webpack --mode production --config webpack.config.js"
+    "build": "webpack --mode production --config webpack.config.js",
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,6 @@
   },
   "files": [
     "dist/",
-    "types/"
+    "src/types/"
   ]
 }

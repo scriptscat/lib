@@ -39,7 +39,7 @@ declare class DingTalk implements MsgPlatform {
 }
 
 // 企业微信机器人文档:https://work.weixin.qq.com/api/doc/90000/90136/91770
-declare class DingTalk implements MsgPlatform {
+declare class Wechat implements MsgPlatform {
     constructor(key: string);
     pushMsg(entity: MsgEntity): Promise<PushResult>;
     platform(): string;
