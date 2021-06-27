@@ -61,7 +61,6 @@ describe("telegram", () => {
 
 
 describe("MsgCenter", () => {
-
     let center = new MsgCenter([dingtalk, wechat, telegram]);
     it("send", async () => {
         let results = await center.pushMsg({
@@ -90,5 +89,10 @@ describe("MsgCenter", () => {
             expect(result.error()).toEqual("");
             expect(result.code()).toEqual(0);
         }
+    });
+    it('zero', async () => {
+        let center = new MsgCenter([]);
+        let ret = await center.pushMsg({})
+        console.log("ok",ret)
     });
 });

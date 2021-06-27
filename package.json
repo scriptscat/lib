@@ -1,6 +1,6 @@
 {
   "name": "scriptcat-lib",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "脚本仓库",
   "scripts": {
     "test": "jest",
@@ -8,7 +8,7 @@
     "declaration": "tsc --declaration src/msg-push/main.ts --outDir src/types/msg-push --emitDeclarationOnly",
     "dev": "webpack --mode production --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.config.js",
-    "publish": "npm run build && npm publish"
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",

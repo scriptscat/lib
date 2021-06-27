@@ -12,8 +12,8 @@
 
 ```ts
 // @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/dist/msg-push.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/src/types/msg-push.d.ts
+// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/dist/msg-push.js
+// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/src/types/msg-push.d.ts
 ```
 **支持平台**
 
@@ -59,7 +59,7 @@ let results = await center.pushMsg({
 
 ```ts
 // @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/dist/utils.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/src/types/utils.d.ts
+// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/dist/utils.js
+// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/src/types/utils.d.ts
 ```
 
