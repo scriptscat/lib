@@ -30,5 +30,5 @@ export class PushResult {
     }
 }
 
-export const ErrNetWork = new PushResult(-1, "network error");
+export const ErrNetwork = new PushResult(-1, "network error");
 export const PushSuccess = new PushResult(0, "");

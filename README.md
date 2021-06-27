@@ -12,9 +12,18 @@
 
 ```ts
 // @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.1/dist/msg-push.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.1/src/types/msg-push.d.ts
+// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/dist/msg-push.js
+// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/src/types/msg-push.d.ts
 ```
+**支持平台**
+
+* 钉钉
+* 微信
+* PushPlus
+* Telegram
+
+
+
 
 **使用**
 
@@ -33,14 +42,24 @@ for (const key in results) {
   expect(result.code()).toEqual(0);
 }
 // 不同平台发送不同内容
+let param = {};
+param[wechat.platform()] = {
+  type: "markdown",
+  content: "# h1",
+};
 let results = await center.pushMsg({
   type: "text",
   content: "test",
-  param: {
-    wechat: {
-      type: "markdown",
-      content: "# h1",
-    },
-  },
+  param: param,
 });
 ```
+
+### 工具类
+请在脚本中加入如下 3 行
+
+```ts
+// @grant GM_xmlhttpRequest
+// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/dist/utils.js
+// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.3/src/types/utils.d.ts
+```
+

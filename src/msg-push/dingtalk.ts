@@ -1,5 +1,5 @@
 import { postJson } from "@App/utils/utils";
-import { ErrNetWork, MsgEntity, PushResult, PushSuccess } from "./model";
+import { ErrNetwork, MsgEntity, PushResult, PushSuccess } from "./model";
 import { MsgPlatform } from "./platform";
 import crypto from "crypto";
 
@@ -49,7 +49,7 @@ export class DingTalk implements MsgPlatform {
                     resolve(PushSuccess);
                 }
             }, () => {
-                resolve(ErrNetWork);
+                resolve(ErrNetwork);
             });
         });
     }

@@ -14,7 +14,7 @@ export class MsgCenter {
         this.platforms = platforms;
     }
 
-    pushMsg(entity: MsgEntity): Promise<{ [key: string]: PushResult }> {
+    public pushMsg(entity: MsgEntity): Promise<{ [key: string]: PushResult }> {
         return new Promise(resolve => {
             let ret: { [key: string]: PushResult } = {};
             let i = 0;
@@ -26,6 +26,7 @@ export class MsgCenter {
                     resolve(ret);
                 }
             });
+            this.platforms.length || resolve(ret);
         })
     }
 

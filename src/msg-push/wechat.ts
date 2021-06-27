@@ -1,5 +1,5 @@
 import { postJson } from "@App/utils/utils";
-import { MsgEntity, PushResult, PushSuccess, ErrNetWork } from "./model";
+import { MsgEntity, PushResult, PushSuccess, ErrNetwork } from "./model";
 import { MsgPlatform } from "./platform";
 
 export class Wechat implements MsgPlatform {
@@ -41,7 +41,7 @@ export class Wechat implements MsgPlatform {
                     resolve(PushSuccess);
                 }
             }, () => {
-                resolve(ErrNetWork);
+                resolve(ErrNetwork);
             });
         });
     }
