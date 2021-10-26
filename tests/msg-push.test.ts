@@ -1,7 +1,7 @@
 import {DingTalk} from "@App/msg-push/dingtalk";
 import {MsgCenter} from "@App/msg-push/platform";
 import {Wechat} from "@App/msg-push/wechat";
-import gmUt from "@App/utils/gm-ut";
+import gmUt from "@App/utils/gm-unit-test";
 import {Telegram} from "@App/msg-push/telegram";
 
 console.log(gmUt)

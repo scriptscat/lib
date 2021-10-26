@@ -4,6 +4,7 @@ const home = __dirname + "/src";
 
 module.exports = {
     entry: {
+        "gm": home + "/gm/main.ts",
         "msg-push": home + "/msg-push/main.ts",
         "utils": home + "/utils/main.ts"
     },

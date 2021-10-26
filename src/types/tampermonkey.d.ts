@@ -68,17 +68,24 @@ declare function GM_getValue(name: string, defaultValue?: any): any;
 
 declare function GM_log(message: string, level?: GM_Types.LOGGER_LEVEL): any;
 
-declare function GM_getResourceText(name: string): string;
+declare function GM_getResourceText(name: string): string | undefined;
 
-declare function GM_getResourceURL(name: string): string;
+declare function GM_getResourceURL(name: string): string | undefined;
 
 declare function GM_registerMenuCommand(name: string, listener: Function, accessKey?: string): number;
 
 declare function GM_unregisterMenuCommand(id: number): void;
 
-declare function GM_openInTab(url: string, options: GM_Types.OpenTabOptions): void;
-declare function GM_openInTab(url: string, loadInBackground: boolean): void;
-declare function GM_openInTab(url: string): void;
+declare interface tab {
+    close()
+    onclose?: () => void
+    closed?: boolean
+    name?: string
+}
+
+declare function GM_openInTab(url: string, options: GM_Types.OpenTabOptions): tab;
+declare function GM_openInTab(url: string, loadInBackground: boolean): tab;
+declare function GM_openInTab(url: string): tab;
 
 declare function GM_xmlhttpRequest(details: GM_Types.XHRDetails): GM_Types.AbortHandle<void>;
 
@@ -96,15 +103,13 @@ declare function GM_updateNotification(id: string, details: GM_Types.Notificatio
 
 declare function GM_setClipboard(data: string, info?: string | { type?: string, minetype?: string }): void;
 
-declare function GM_cookie(action: GM_Types.CookieAction, details: GM_Types.CookieDetails, ondone: (cookie: GM_Types.Cookie[] | any, error: any | undefined) => void): void;
+declare function GM_cookie(action: GM_Types.CookieAction, details: GM_Types.CookieDetails, ondone: (cookie: GM_Types.Cookie[], error: any | undefined) => void): void;
+// 通过tabid(前后端通信可能用到,ValueChangeListener会返回tabid),获取storeid,后台脚本用.
+declare function GM_getCookieStore(tabid: number, ondone: (storeId: number, error: any | undefined) => void): void;
 
 declare function CAT_setProxy(rule: CAT_Types.ProxyRule[] | string): void;
 declare function CAT_clearProxy(): void;
 declare function CAT_click(x: number, y: number): void;
-// 同步函数
-declare namespace GM {
-    declare function fetch(details: GM_Types.XHRDetails): Promise<GM_Types.XHRResponse>;
-}
 
 declare namespace CAT_Types {
     interface ProxyRule {
@@ -121,17 +126,20 @@ declare namespace CAT_Types {
 
 declare namespace GM_Types {
 
-    type CookieAction = "list" | "delete" | "set";
+    // store为获取隐身窗口之类的cookie
+    type CookieAction = "list" | "delete" | "set" | 'store';
 
     type LOGGER_LEVEL = 'debug' | 'info' | 'warn' | 'error';
 
     interface CookieDetails {
-        url: string
+        url?: string
         name: string
         value?: string
         domain?: string
         path?: string
         secure?: boolean
+        session?: boolean
+        storeId?: string;
         httpOnly?: boolean
         expirationDate?: number
     }
@@ -149,8 +157,8 @@ declare namespace GM_Types {
         secure: boolean;
     }
 
-
-    type ValueChangeListener = (name: string, oldValue: any, newValue: any, remote: boolean) => any;
+    // tabid是只有后台脚本监听才有的参数
+    type ValueChangeListener = (name: string, oldValue: any, newValue: any, remote: boolean, tabid?: number) => any;
 
     interface OpenTabOptions {
         active?: boolean,
@@ -167,6 +175,7 @@ declare namespace GM_Types {
         response?: any,
         responseText?: string,
         responseXML?: Document | null
+        responseType?: "arraybuffer" | "blob" | "json"
     }
 
     interface XHRProgress extends XHRResponse {
@@ -181,10 +190,10 @@ declare namespace GM_Types {
     type Listener<OBJ> = (event: OBJ) => any;
 
     interface XHRDetails {
-        method?: "GET" | "HEAD" | "POST"
+        method?: "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "PATCH" | "OPTIONS"
         url: string
         headers?: { [key: string]: string }
-        data?: string
+        data?: any
         cookie?: string
         binary?: boolean
         timeout?: number
@@ -193,8 +202,9 @@ declare namespace GM_Types {
         overrideMimeType?: string,
         anonymous?: boolean,
         fetch?: boolean,
-        username?: string,
+        user?: string,
         password?: string,
+        nocache?: boolean
 
         onload?: Listener<XHRResponse>,
         onloadstart?: Listener<XHRResponse>,
@@ -202,6 +212,7 @@ declare namespace GM_Types {
         onprogress?: Listener<XHRProgress>,
         onreadystatechange?: Listener<XHRResponse>,
         ontimeout?: Function,
+        //TODO
         onabort?: Function,
         onerror?: Function
     }

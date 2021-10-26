@@ -1,5 +1,5 @@
 // 单元测试用
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 var gmUt = "gm";
 export default gmUt;
@@ -12,6 +12,9 @@ export default gmUt;
         data: details.data,
         proxy: false,
         responseType: details.responseType,
+        validateStatus() {
+            return true;
+        }
     };
 
     axios(config)
@@ -23,6 +26,8 @@ export default gmUt;
             details.onload && details.onload({
                 response: response.data,
                 responseHeaders: headers,
+                status: response.status,
+                statusText: response.statusText
             })
         })
         .catch(function (error: AxiosError) {
