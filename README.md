@@ -2,64 +2,6 @@
 
 > 提供给脚本`require`的库
 
-[TOC]
-
-### 消息推送
-
-**声明**
-
-请在脚本中加入如下 3 行
-
-```ts
-// @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/dist/msg-push.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/src/types/msg-push.d.ts
-```
-**支持平台**
-
-* 钉钉
-* 微信
-* PushPlus
-* Telegram
-
-
-
-
-**使用**
-
-```ts
-let dingtalk = new DingTalk("token", "secret");
-let wechat = new Wechat("key");
-
-let center = new MsgCenter([dingtalk, wechat]);
-let results = await center.pushMsg({
-  type: "text",
-  content: "test",
-});
-for (const key in results) {
-  let result = results[key];
-  expect(result.error()).toEqual("");
-  expect(result.code()).toEqual(0);
-}
-// 不同平台发送不同内容
-let param = {};
-param[wechat.platform()] = {
-  type: "markdown",
-  content: "# h1",
-};
-let results = await center.pushMsg({
-  type: "text",
-  content: "test",
-  param: param,
-});
-```
-
-### 工具类
-请在脚本中加入如下 3 行
-
-```ts
-// @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/dist/utils.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.0.4/src/types/utils.d.ts
-```
-
+* [油猴函数封装](src/gm/README.md)
+* [消息推送](src/msg-push/README.md)
+* [工具类](src/utils/README.md)
