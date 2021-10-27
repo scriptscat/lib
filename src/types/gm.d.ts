@@ -34,6 +34,7 @@ declare namespace gm {
     interface AjaxInstance {
         (config: AjaxRequestConfig): AjaxPromise;
         (url: string, config?: AjaxRequestConfig): AjaxPromise;
+        create(config?: AjaxInstanceConfig): AjaxInstance;
         request(config: AjaxRequestConfig): AjaxPromise;
         get(url: string, config?: AjaxRequestConfig): AjaxPromise;
         delete(url: string, config?: AjaxRequestConfig): AjaxPromise;
@@ -44,9 +45,7 @@ declare namespace gm {
         patch(url: string, data?: any, config?: AjaxRequestConfig): AjaxPromise;
     }
 
-    export interface ajax extends AjaxInstance {
-        create(config?: AjaxInstanceConfig): AjaxInstance;
-    }
+    export const ajax: AjaxInstance;
 
     interface NotificationConfig {
 

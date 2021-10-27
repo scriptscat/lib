@@ -1,7 +1,7 @@
 
 export const ajax = _ajax();
 
-function _ajax(baseConfig?: gm.AjaxInstanceConfig): gm.ajax {
+function _ajax(baseConfig?: gm.AjaxInstanceConfig): gm.AjaxInstance {
 	function ajax(url: string | gm.AjaxRequestConfig, config?: gm.AjaxRequestConfig): gm.AjaxPromise {
 		return new Promise((resolve, reject) => {
 			if (typeof url !== "string") {
@@ -67,7 +67,7 @@ function _ajax(baseConfig?: gm.AjaxInstanceConfig): gm.ajax {
 		});
 	}
 
-	ajax.create = function (config?: gm.AjaxInstanceConfig): gm.ajax {
+	ajax.create = function (config?: gm.AjaxInstanceConfig): gm.AjaxInstance {
 		return _ajax(config);
 	}
 
