@@ -1,5 +1,5 @@
 import gmUt from "@App/utils/gm-unit-test";
-import { imageUrlToBase64 } from "@App/utils/utils";
+import { imageUrlToBase64 } from "@App/utils";
 
 console.log(gmUt);
 

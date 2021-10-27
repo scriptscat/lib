@@ -1,4 +1,4 @@
-import {postJson} from "@App/utils/utils";
+import {postJson} from "@App/utils";
 import {ErrNetwork, MsgEntity, PushResult, PushSuccess} from "./model";
 import {MsgPlatform} from "./platform";
 

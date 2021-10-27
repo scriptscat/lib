@@ -48,4 +48,31 @@ declare namespace gm {
         create(config?: AjaxInstanceConfig): AjaxInstance;
     }
 
+    interface NotificationConfig {
+
+    }
+
+    interface NotificationDetails {
+        text?: string
+        title?: string
+        image?: string
+        highlight?: boolean
+        silent?: boolean
+        timeout?: number
+        onclick?: GM_Types.NotificationOnClick
+        ondone?: GM_Types.NotificationOnDone
+        progress?: number
+        oncreate?: GM_Types.NotificationOnClick
+        buttons?: GM_Types.NotificationButton[]
+    }
+
+    interface NotificationInstance {
+        update(details: NotificationDetails);
+        close();
+        done(callback: () => void);
+        click(callback: () => void);
+    }
+
+    export function notification(title: string, content: string, details?: NotificationDetails): Promise<NotificationInstance>;
+
 }
