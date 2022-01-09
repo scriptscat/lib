@@ -8,5 +8,5 @@
 // @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.1/dist/gm.js
 // @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.1/src/types/gm.d.ts
 
-let resp = await ajax("https://bbs.tampermonkey.net.cn/");
+let resp = await gm.ajax("https://bbs.tampermonkey.net.cn/");
 ```
