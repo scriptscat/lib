@@ -15,7 +15,7 @@
     "url": "git+https://github.com/scriptscat/lib.git"
   },
   "author": "CodFrm <love@xloli.top>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/scriptscat/lib/issues"
   },
