@@ -7,8 +7,8 @@
 
 ```ts
 // @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.1/dist/msg-push.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.1/src/types/msg-push.d.ts
+// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.3/dist/msg-push.js
+// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.3/src/types/msg-push.d.ts
 ```
 **支持平台**
 

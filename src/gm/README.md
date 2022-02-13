@@ -6,8 +6,8 @@
 
 ```ts
 // @grant GM_xmlhttpRequest
-// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.2/dist/gm.js
-// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.2/src/types/gm.d.ts
+// @require https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.3/dist/gm.js
+// @definition https://cdn.jsdelivr.net/npm/scriptcat-lib@1.1.3/src/types/gm.d.ts
 
 let resp = await gm.ajax("https://bbs.tampermonkey.net.cn/");
 

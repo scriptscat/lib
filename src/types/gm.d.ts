@@ -3,10 +3,6 @@ declare namespace gm {
 
     const ajax: AxiosStatic & { ajaxRetry: IAxiosRetry; };
 
-    interface NotificationConfig {
-
-    }
-
     interface NotificationDetails {
         text?: string
         title?: string
@@ -28,37 +24,37 @@ declare namespace gm {
         click(callback: () => void);
     }
 
-    export function notification(title: string, content: string, details?: NotificationDetails): Promise<NotificationInstance>;
+    function notification(title: string, content: string, details?: NotificationDetails): Promise<NotificationInstance>;
 
 }
 
 // ------------- 复制来自axios -------------------
 // TypeScript Version: 3.0
 
-export type AxiosRequestHeaders = Record<string, string | number | boolean>;
+type AxiosRequestHeaders = Record<string, string | number | boolean>;
 
-export type AxiosResponseHeaders = Record<string, string> & {
+type AxiosResponseHeaders = Record<string, string> & {
     "set-cookie"?: string[]
 };
 
-export interface AxiosRequestTransformer {
+interface AxiosRequestTransformer {
     (data: any, headers?: AxiosRequestHeaders): any;
 }
 
-export interface AxiosResponseTransformer {
+interface AxiosResponseTransformer {
     (data: any, headers?: AxiosResponseHeaders): any;
 }
 
-export interface AxiosAdapter {
+interface AxiosAdapter {
     (config: AxiosRequestConfig): AxiosPromise;
 }
 
-export interface AxiosBasicCredentials {
+interface AxiosBasicCredentials {
     username: string;
     password: string;
 }
 
-export interface AxiosProxyConfig {
+interface AxiosProxyConfig {
     host: string;
     port: number;
     auth?: {
@@ -68,7 +64,7 @@ export interface AxiosProxyConfig {
     protocol?: string;
 }
 
-export type Method =
+type Method =
     | 'get' | 'GET'
     | 'delete' | 'DELETE'
     | 'head' | 'HEAD'
@@ -80,7 +76,7 @@ export type Method =
     | 'link' | 'LINK'
     | 'unlink' | 'UNLINK';
 
-export type ResponseType =
+type ResponseType =
     | 'arraybuffer'
     | 'blob'
     | 'document'
@@ -88,7 +84,7 @@ export type ResponseType =
     | 'text'
     | 'stream';
 
-export type responseEncoding =
+type responseEncoding =
     | 'ascii' | 'ASCII'
     | 'ansi' | 'ANSI'
     | 'binary' | 'BINARY'
@@ -102,13 +98,13 @@ export type responseEncoding =
     | 'utf8' | 'UTF8'
     | 'utf16le' | 'UTF16LE';
 
-export interface TransitionalOptions {
+interface TransitionalOptions {
     silentJSONParsing?: boolean;
     forcedJSONParsing?: boolean;
     clarifyTimeoutError?: boolean;
 }
 
-export interface AxiosRequestConfig<D = any> {
+interface AxiosRequestConfig<D = any> {
     url?: string;
     method?: Method;
     baseURL?: string;
@@ -144,7 +140,7 @@ export interface AxiosRequestConfig<D = any> {
     insecureHTTPParser?: boolean;
 }
 
-export interface HeadersDefaults {
+interface HeadersDefaults {
     common: AxiosRequestHeaders;
     delete: AxiosRequestHeaders;
     get: AxiosRequestHeaders;
@@ -158,11 +154,11 @@ export interface HeadersDefaults {
     unlink?: AxiosRequestHeaders;
 }
 
-export interface AxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
+interface AxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
     headers: HeadersDefaults;
 }
 
-export interface AxiosResponse<T = any, D = any> {
+interface AxiosResponse<T = any, D = any> {
     data: T;
     status: number;
     statusText: string;
@@ -171,7 +167,7 @@ export interface AxiosResponse<T = any, D = any> {
     request?: any;
 }
 
-export interface AxiosError<T = any, D = any> extends Error {
+interface AxiosError<T = any, D = any> extends Error {
     config: AxiosRequestConfig<D>;
     code?: string;
     request?: any;
@@ -180,43 +176,42 @@ export interface AxiosError<T = any, D = any> extends Error {
     toJSON: () => object;
 }
 
-export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {
-}
+type AxiosPromise<T = any> = Promise<AxiosResponse<T>>
 
-export interface CancelStatic {
+interface CancelStatic {
     new(message?: string): Cancel;
 }
 
-export interface Cancel {
+interface Cancel {
     message: string | undefined;
 }
 
-export interface Canceler {
+interface Canceler {
     (message?: string): void;
 }
 
-export interface CancelTokenStatic {
+interface CancelTokenStatic {
     new(executor: (cancel: Canceler) => void): CancelToken;
     source(): CancelTokenSource;
 }
 
-export interface CancelToken {
+interface CancelToken {
     promise: Promise<Cancel>;
     reason?: Cancel;
     throwIfRequested(): void;
 }
 
-export interface CancelTokenSource {
+interface CancelTokenSource {
     token: CancelToken;
     cancel: Canceler;
 }
 
-export interface AxiosInterceptorManager<V> {
+interface AxiosInterceptorManager<V> {
     use<T = V>(onFulfilled?: (value: V) => T | Promise<T>, onRejected?: (error: any) => any): number;
     eject(id: number): void;
 }
 
-export class Axios {
+class Axios {
     constructor(config?: AxiosRequestConfig);
     defaults: AxiosDefaults;
     interceptors: {
@@ -234,12 +229,12 @@ export class Axios {
     patch<T = any, R = AxiosResponse<T>, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<R>;
 }
 
-export interface AxiosInstance extends Axios {
+interface AxiosInstance extends Axios {
     (config: AxiosRequestConfig): AxiosPromise;
     (url: string, config?: AxiosRequestConfig): AxiosPromise;
 }
 
-export interface AxiosStatic extends AxiosInstance {
+interface AxiosStatic extends AxiosInstance {
     create(config?: AxiosRequestConfig): AxiosInstance;
     Cancel: CancelStatic;
     CancelToken: CancelTokenStatic;
@@ -269,15 +264,15 @@ interface IAxiosRetry {
     exponentialDelay(retryNumber: number): number;
 }
 
-export function isNetworkError(error: Error): boolean;
-export function isRetryableError(error: Error): boolean;
-export function isSafeRequestError(error: Error): boolean;
-export function isIdempotentRequestError(error: Error): boolean;
-export function isNetworkOrIdempotentRequestError(error: Error): boolean;
-export function exponentialDelay(retryNumber: number): number;
+function isNetworkError(error: Error): boolean;
+function isRetryableError(error: Error): boolean;
+function isSafeRequestError(error: Error): boolean;
+function isIdempotentRequestError(error: Error): boolean;
+function isNetworkOrIdempotentRequestError(error: Error): boolean;
+function exponentialDelay(retryNumber: number): number;
 
 declare namespace IAxiosRetry {
-    export interface IAxiosRetryConfig {
+    interface IAxiosRetryConfig {
         /**
          * The number of times to retry before failing
          * default: 3
@@ -310,12 +305,10 @@ declare namespace IAxiosRetry {
 
 declare const axiosRetry: IAxiosRetry;
 
-export type IAxiosRetryConfig = IAxiosRetry.IAxiosRetryConfig;
+type IAxiosRetryConfig = IAxiosRetry.IAxiosRetryConfig;
 
-declare module 'axios' {
-    export interface AxiosRequestConfig {
-        'axios-retry'?: IAxiosRetryConfig;
-    }
+interface AxiosRequestConfig {
+    'axios-retry'?: IAxiosRetryConfig;
 }
 
 // ----------------- 复制来自axios-retry -------------------
