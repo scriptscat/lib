@@ -1,3 +1,4 @@
+import { gm } from "@App/types/gm";
 
 export function notification(title: string, content: string, details?: gm.NotificationDetails): Promise<gm.NotificationInstance> {
 	return new Promise(resolve => {

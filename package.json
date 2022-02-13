@@ -1,6 +1,6 @@
 {
   "name": "scriptcat-lib",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "脚本库",
   "scripts": {
     "test": "jest",
@@ -24,6 +24,7 @@
     "@types/crypto-js": "^4.0.1",
     "@types/jest": "^26.0.23",
     "jest": "^27.0.4",
+    "nock": "^13.2.4",
     "ts-jest": "^27.0.2",
     "ts-loader": "^9.2.2",
     "tslib": "^2.2.0",
@@ -33,7 +34,8 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.25.0",
+    "axios-retry": "^3.2.4",
     "base64-arraybuffer": "^0.2.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",

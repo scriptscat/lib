@@ -5,8 +5,6 @@ import gmUt from "@App/utils/gm-unit-test";
 import { Telegram } from "@App/msg-push/telegram";
 
 console.log(gmUt);
-let wechat = new Wechat("");
-let telegram = new Telegram("", "");
 
 describe("DingTalk", () => {
     let dingtalk = new DingTalk("", "");
@@ -37,6 +35,7 @@ describe("DingTalk", () => {
 
 
 describe("telegram", () => {
+    let telegram = new Telegram("", "");
     it("text", async () => {
         let result = await telegram.pushMsg({
             type: "text",
@@ -61,6 +60,9 @@ describe("telegram", () => {
 
 
 describe("MsgCenter", () => {
+    let dingtalk = new DingTalk("", "");
+    let wechat = new Wechat("");
+    let telegram = new Telegram("", "");
     let center = new MsgCenter([dingtalk, wechat, telegram]);
     it("send", async () => {
         let results = await center.pushMsg({

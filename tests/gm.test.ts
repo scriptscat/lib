@@ -1,7 +1,32 @@
 import { ajax } from "@App/gm/ajax";
 import gmUt from "@App/utils/gm-unit-test";
+import { Axios } from "axios";
+import nock from 'nock';
 
 console.log(gmUt);
+
+const NETWORK_ERROR = new Error('Some connection error');
+(<any>NETWORK_ERROR).code = 'ECONNRESET';
+
+function setupResponses(client: Axios, responses: Array<any>) {
+	const configureResponse = () => {
+		const response = responses.shift();
+		if (response) {
+			response();
+		}
+	};
+	client.interceptors.response.use(
+		(result) => {
+			configureResponse();
+			return result;
+		},
+		(error) => {
+			configureResponse();
+			return Promise.reject(error);
+		}
+	);
+	configureResponse();
+}
 
 describe("utils", () => {
 	it("ajax", async () => {
@@ -41,4 +66,21 @@ describe("utils", () => {
 		console.log(resp);
 	});
 
+	it('retry', (done) => {
+		const client = ajax.create();
+		setupResponses(client, [
+			() => nock('http://example.com').get('/test').replyWithError(NETWORK_ERROR),
+			() => nock('http://example.com').get('/test').reply(200, 'It worked!')
+		]);
+
+		const retryCondition = (error: any) => {
+			expect(error).toBe(NETWORK_ERROR);
+			done();
+			return false;
+		};
+
+		ajax.ajaxRetry(client, { retries: 1, retryCondition });
+
+		client.get('http://example.com/test').catch(() => { });
+	});
 });

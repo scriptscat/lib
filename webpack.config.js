@@ -4,9 +4,9 @@ const home = __dirname + "/src";
 
 module.exports = {
     entry: {
-        "gm": home + "/gm/main.ts",
+        "gm": home + "/gm/index.ts",
         "msg-push": home + "/msg-push/main.ts",
-        "utils": home + "/utils/main.ts"
+        "utils": home + "/utils/index.ts"
     },
     output: {
         path: __dirname + "/dist",
