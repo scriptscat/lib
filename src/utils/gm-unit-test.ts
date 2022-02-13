@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 var gmUt = "gm";
 export default gmUt;
 
-(<any>global).GM_xmlhttpRequest = function (details: GM_Types.XHRDetails) {
+function GM_xmlhttpRequest(details: GM_Types.XHRDetails) {
     const config: AxiosRequestConfig = {
         method: details.method,
         url: details.url,
@@ -14,7 +14,8 @@ export default gmUt;
         responseType: details.responseType,
         validateStatus() {
             return true;
-        }
+        },
+        adapter: undefined,
     };
 
     axios(config)
@@ -23,8 +24,13 @@ export default gmUt;
             for (const key in response.headers) {
                 headers += key + ":" + response.headers[key] + "\n"
             }
+            let respText = undefined;
+            if (!config.responseType || config.responseType == 'text') {
+                respText = typeof response.data !== 'string' ? JSON.stringify(response.data) : response.data;
+            }
             details.onload && details.onload({
                 response: response.data,
+                responseText: respText,
                 responseHeaders: headers,
                 status: response.status,
                 statusText: response.statusText
@@ -41,4 +47,8 @@ export default gmUt;
         });
 
 }
+(<any>global).GM_xmlhttpRequest = GM_xmlhttpRequest;
 
+(<any>global).GM = {
+    xmlHttpRequest: GM_xmlhttpRequest
+};

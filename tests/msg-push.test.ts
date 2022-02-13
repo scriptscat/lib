@@ -1,15 +1,15 @@
-import {DingTalk} from "@App/msg-push/dingtalk";
-import {MsgCenter} from "@App/msg-push/platform";
-import {Wechat} from "@App/msg-push/wechat";
+import { DingTalk } from "@App/msg-push/dingtalk";
+import { MsgCenter } from "@App/msg-push/platform";
+import { Wechat } from "@App/msg-push/wechat";
 import gmUt from "@App/utils/gm-unit-test";
-import {Telegram} from "@App/msg-push/telegram";
+import { Telegram } from "@App/msg-push/telegram";
 
-console.log(gmUt)
-let dingtalk = new DingTalk("", "");
+console.log(gmUt);
 let wechat = new Wechat("");
 let telegram = new Telegram("", "");
 
 describe("DingTalk", () => {
+    let dingtalk = new DingTalk("", "");
     it("text", async () => {
         let result = await dingtalk.pushMsg({
             type: "text",
@@ -93,6 +93,6 @@ describe("MsgCenter", () => {
     it('zero', async () => {
         let center = new MsgCenter([]);
         let ret = await center.pushMsg({})
-        console.log("ok",ret)
+        console.log("ok", ret)
     });
 });

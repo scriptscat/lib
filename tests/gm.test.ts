@@ -7,8 +7,10 @@ describe("utils", () => {
 	it("ajax", async () => {
 		let resp = await ajax("https://www.baidu.com");
 		console.log(resp);
-		resp = await ajax.get("https://www.baidu.com");
+		expect(resp.data).toMatch(/html/)
+		resp = await ajax.get("https://www.baidu.com", { responseType: 'arraybuffer' });
 		console.log(resp);
+		expect(resp.data).toBeInstanceOf(Buffer);
 		resp = await ajax.post("https://www.baidu.com", { "ok": 1 });
 		console.log(resp);
 		resp = await ajax.post("https://www.baidu.com", "ok=1");
@@ -17,7 +19,7 @@ describe("utils", () => {
 
 	it("instance", async () => {
 		let instance = ajax.create({
-			baseUrl: "https://bbs.tampermonkey.net.cn/"
+			baseURL: "https://bbs.tampermonkey.net.cn/"
 		});
 		let resp = await instance.get("forum.php?mod=forumdisplay&fid=2");
 		console.log(resp);
@@ -25,7 +27,7 @@ describe("utils", () => {
 
 	it("validateStatus", async () => {
 		let instance = ajax.create({
-			baseUrl: "https://bbs.tampermonkey.net.cn/",
+			baseURL: "https://bbs.tampermonkey.net.cn/",
 			validateStatus: (status: number) => {
 				return status === 404;
 			}

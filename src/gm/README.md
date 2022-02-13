@@ -10,3 +10,9 @@
 
 let resp = await gm.ajax("https://bbs.tampermonkey.net.cn/");
 ```
+
+### gm.ajax
+
+感谢: [https://github.com/Trim21/axios-userscript-adapter](https://github.com/Trim21/axios-userscript-adapter) gm.ajax 底层使用此库实现
+
+gm.ajax 与 axios 使用方法一致
