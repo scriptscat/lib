@@ -1,5 +1,5 @@
 
-declare namespace gm {
+export declare namespace gm {
 
     const ajax: AxiosStatic & { ajaxRetry: IAxiosRetry; };
 
