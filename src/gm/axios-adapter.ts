@@ -58,7 +58,7 @@ export default function xhrAdapter<T>(config: Config): Promise<AxiosResponse<T>>
 
     // Send the request
     // Listen for ready state
-    const onload = function handleLoad(resp: GM_Types.XHRResponse) {
+    const onload = function handleLoad(resp: GMTypes.XHRResponse) {
       // Prepare the response
       const responseHeaders = resp.responseHeaders ? parseHeaders(resp.responseHeaders) : {};
       const responseData = !config.responseType || config.responseType === "text" ? resp.responseText : resp.response;
