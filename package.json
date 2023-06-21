@@ -1,6 +1,6 @@
 {
   "name": "scriptcat-lib",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "脚本库",
   "scripts": {
     "test": "jest",
@@ -23,8 +23,13 @@
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
     "@types/jest": "^26.0.23",
+    "@types/react": "^18.2.13",
+    "@types/react-dom": "^18.2.6",
+    "css-loader": "^6.8.1",
     "jest": "^27.0.4",
     "nock": "^13.2.4",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^3.3.3",
     "ts-jest": "^27.0.2",
     "ts-loader": "^9.2.2",
     "tslib": "^2.2.0",
@@ -34,6 +39,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@arco-design/web-react": "^2.49.2",
     "@types/tough-cookie": "^4.0.2",
     "axios": "^0.25.0",
     "axios-retry": "^3.2.4",
@@ -41,6 +47,8 @@
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "stream-browserify": "^3.0.0",
     "tough-cookie": "^4.1.2"
   },
