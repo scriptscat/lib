@@ -6,10 +6,11 @@
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "declaration": "tsc --declaration src/msg-push/main.ts --outDir src/types/msg-push --emitDeclarationOnly",
-    "dev": "webpack --mode production --config webpack.dev.js",
+    "dev": "webpack --mode development --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.config.js",
     "publish": "npm publish",
-    "example":"webpack --mode production --config ./webpack/webpack.example.js"
+    "example:build":"webpack --mode production --config ./webpack/webpack.example.js",
+    "example:dev":"webpack --mode development --config ./webpack/webpack.example.dev.js"
   },
   "repository": {
     "type": "git",

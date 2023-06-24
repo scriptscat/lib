@@ -1,8 +1,9 @@
 const path = require("path");
-
+const { merge } = require("webpack-merge");
+const baseConfig = require("./webpack/webpack.lib");
 const home = __dirname + "/src";
 
-module.exports = {
+module.exports = merge(baseConfig, {
   entry: {
     gm: home + "/gm/index.ts",
     scsite: home + "/scsite/index.js",
@@ -14,24 +15,4 @@ module.exports = {
     filename: "[name].js",
   },
   plugins: [],
-  resolve: {
-    extensions: [".js", ".ts", ".tsx"],
-    alias: {
-      "@App": path.resolve(__dirname, "src/"),
-    },
-    fallback: {
-      crypto: require.resolve("crypto-browserify"),
-      stream: require.resolve("stream-browserify"),
-      util: false,
-    },
-  },
-  module: {
-    rules: [
-      { test: /\.(ts|tsx)?$/, use: "ts-loader" },
-      {
-        test: /arco\.css$/,
-        use: ["raw-loader"],
-      }
-    ],
-  },
-};
+});
