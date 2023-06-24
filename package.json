@@ -8,7 +8,8 @@
     "declaration": "tsc --declaration src/msg-push/main.ts --outDir src/types/msg-push --emitDeclarationOnly",
     "dev": "webpack --mode production --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.config.js",
-    "publish": "npm publish"
+    "publish": "npm publish",
+    "example":"webpack --mode production --config ./webpack/webpack.example.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "jest": "^27.0.4",
     "nock": "^13.2.4",
     "raw-loader": "^4.0.2",
+    "scriptcat-webpack-plugin": "^1.3.0",
     "style-loader": "^3.3.3",
     "ts-jest": "^27.0.2",
     "ts-loader": "^9.2.2",

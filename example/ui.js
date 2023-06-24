@@ -7,9 +7,12 @@
 // @match        https://bbs.tampermonkey.net.cn/
 // ==/UserScript==
 
+// dist/ui.js复制粘贴到此处
+
+
 const data = { input: "默认值" };
 
-CAT_UI.create({
+CAT_UI.createPlan({
 	render() {
 		const [input, setInput] = CAT_UI.useState(data.input);
 		return [

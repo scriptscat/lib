@@ -1,9 +1,12 @@
 import { ReactElement } from "react";
 import ReactDOM from "react-dom/client";
 import UIPage, { UIPageOptions } from "./page";
+import arcoCss from "./arco.css";
 import { Layout } from "@arco-design/web-react";
 
-export type UIPlanOptions = UIPageOptions & {};
+export type UIPlanOptions = UIPageOptions & {
+  appendStyle?: string;
+};
 
 // 创建UI面板
 class UIPlan extends HTMLElement {
@@ -13,6 +16,12 @@ class UIPlan extends HTMLElement {
     super();
     // @ts-ignore
     this.options = UIPlan.options;
+    if (!this.options.style) {
+      this.options.style = arcoCss as unknown as string;
+    }
+    if (this.options.appendStyle) {
+      this.options.style += this.options.appendStyle;
+    }
     const oldRender = this.options.render;
     const Child = (): ReactElement => {
       const ret = oldRender();
@@ -34,11 +43,7 @@ class UIPlan extends HTMLElement {
             borderRadius: "6px",
           }}
         >
-          <Layout.Header>
-		  	<div >
-				
-			</div>
-		  </Layout.Header>
+          <Layout.Header>Header</Layout.Header>
           <Layout.Content>
             <Child />
           </Layout.Content>

@@ -5,7 +5,6 @@ const home = __dirname + "/src";
 module.exports = {
   entry: {
     gm: home + "/gm/index.ts",
-    "msg-push": home + "/msg-push/main.ts",
     scsite: home + "/scsite/index.js",
     utils: home + "/utils/index.ts",
     ui: home + "/ui/index.ts"

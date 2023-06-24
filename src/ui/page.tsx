@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
-import arcoCss from "./arco.css";
 import { Button } from "@arco-design/web-react";
 import { ReactElement, useState } from "react";
 
 export type UIPageOptions = {
+  style?: string;
   render: () => JSX.Element[] | JSX.Element;
 };
 
@@ -25,9 +25,11 @@ class UIPage extends HTMLElement {
     let container = document.createElement("div");
     container.classList.add("container");
 
-    let css = document.createElement("style");
-    // @ts-ignore
-    css.innerHTML = arcoCss;
+    if (_this.options.style) {
+      let css = document.createElement("style");
+      css.innerHTML = _this.options.style;
+      shadow.append(css);
+    }
 
     const Child = (): ReactElement => {
       if (_this.options.render instanceof Array) {
@@ -44,7 +46,7 @@ class UIPage extends HTMLElement {
       </div>
     );
 
-    shadow.append(css, container);
+    shadow.append(container);
   }
 }
 
