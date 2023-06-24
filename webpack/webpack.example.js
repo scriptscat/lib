@@ -16,9 +16,9 @@ module.exports = merge(baseConfig, {
     new ScriptCatWebpackPlugin({
       file: "ui.user.js",
       name: "脚本猫UI库",
-      namespace: "基于Arco做的UI库, 用于快速开发脚本的UI界面",
+      namespace: "https://scriptcat.org/",
       version: "0.1.0",
-      description: "try to take over the world!",
+      description: "基于Arco做的UI库, 用于快速开发脚本的UI界面",
       author: "You",
       metadata: {
         match: "https://bbs.tampermonkey.net.cn/",

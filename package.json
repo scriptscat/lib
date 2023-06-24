@@ -10,7 +10,7 @@
     "build": "webpack --mode production --config webpack.config.js",
     "publish": "npm publish",
     "example:build":"webpack --mode production --config ./webpack/webpack.example.js",
-    "example:dev":"webpack --mode development --config ./webpack/webpack.example.dev.js"
+    "example:dev":"webpack --mode production --config ./webpack/webpack.example.dev.js"
   },
   "repository": {
     "type": "git",
