@@ -7,6 +7,8 @@
       "DOM"
     ],
     "strict": true,
+    "declaration": true,
+    "outDir": "./dist",
     "jsx": "react-jsx",
     "importHelpers": true,
     "moduleResolution": "node",

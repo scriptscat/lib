@@ -1,5 +1,15 @@
 // ui.d.ts
 
+import {
+  TypographyProps,
+  InputProps,
+  ButtonProps,
+  CheckboxProps,
+  SelectProps,
+  MessageProps,
+  SelectOptionProps,
+} from "@arco-design/web-react";
+
 interface MutableRefObject<T> {
   current: T;
 }
@@ -41,83 +51,23 @@ declare class UIPlan extends HTMLElement {
   onDraggableStop(callback: (event: { x: number; y: number }) => void);
 }
 
-declare type CSSProperties = {
-  [key: string]: string | number | CSSProperties;
-};
-
-declare type MessageProps = {
-  style?: CSSProperties;
-  className?: string | string[];
-  /**
-   * @zh 消息弹出动画的类名，见 react-transition-group 的 `classNames`
-   * @en ClassNames of react-transition-group of the message pop-up animation, see `classNames`
-   */
-  transitionClassNames?: string;
-  /**
-   * @zh 动画持续时间，见 react-transition-group 的 `timeout`
-   * @en timeout of `react-transition-group` of the message pop-up animation, see `timeout`
-   * @defaultValue {enter: 100, exit: 300}
-   * @version 2.43.0
-   */
-  transitionTimeout?: {
-    enter?: number;
-    exit?: number;
-  };
-  /**
-   * @zh 消息内容
-   * @en Message content
-   */
-  content: string;
-  /**
-   * @zh 是否显示图标
-   * @en Whether to show the icon
-   * @defaultValue true
-   */
-  showIcon?: boolean;
-  /**
-   * @zh 自定义图标
-   * @en Custom icon
-   */
-  icon?: any;
-  /**
-   * @zh 自动关闭的时间，单位为 `ms`
-   * @en Automatic shutdown time, the unit is `ms`
-   * @defaultValue 3000
-   */
-  duration?: number;
-  /**
-   * @zh 关闭时的回调
-   * @en Callback when close
-   */
-  onClose?: () => void;
-  /**
-   * @zh 当前消息的唯一标识，可以用来更新消息
-   * @en The unique identifier of the current message, which can be used to update the message
-   */
-  id?: string;
-  /**
-   * @zh 消息的位置，分为 `top` 上方和 `bottom` 下方
-   * @en The position of the message
-   */
-  position?: "top" | "bottom";
-  /**
-   * @zh 是否显示关闭按钮
-   * @en Whether to show the close button
-   */
-  closable?: boolean;
-  type?: string;
-};
-
 declare namespace CAT_UI {
   function create(options: UIPageOptions): void;
   function createPlan(options: UIPlanOptions): void;
   function useState(data?: any): [any, (data: any) => void];
-  function Text(child: string): JSX.Element;
-  function Input(
-    value: string | ((val: string) => void),
-    onChange?: (val: string) => void
-  ): JSX.Element;
-  function Button(child: string, onClick: () => void): JSX.Element;
+
+  function Text(text: string, props?: TypographyProps): JSX.Element;
+  function Input(props?: InputProps): JSX.Element;
+  function Button(text: string, props?: ButtonProps): JSX.Element;
+  function Checkbox(text: string, props?: CheckboxProps): JSX.Element;
+  type TSelect = (
+    options: JSX.Element[],
+    props?: SelectProps
+  ) => JSX.Element & {
+    Option: (text: string, props?: SelectOptionProps) => JSX.Element;
+  };
+  const Select: TSelect;
+
   namespace Message {
     function info(config: MessageProps | string);
     function success(config: MessageProps | string);

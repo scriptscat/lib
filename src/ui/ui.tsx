@@ -1,6 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import UIPage, { UIPageOptions } from "./page";
-import { Button, Input, Typography } from "@arco-design/web-react";
+import {
+  Button,
+  ButtonProps,
+  Checkbox,
+  CheckboxProps,
+  Input,
+  InputProps,
+  Select,
+  SelectOptionProps,
+  SelectProps,
+  Typography,
+  TypographyProps,
+} from "@arco-design/web-react";
 import UIPlan, { UIPlanOptions } from "./plan";
 import Message from "./component/message";
 
@@ -34,39 +46,40 @@ const CAT_UI = {
   useState(data?: any) {
     return useState(data);
   },
-  Text(child: string) {
-    return <Typography>{child}</Typography>;
+
+  Text(text: string, props?: TypographyProps) {
+    return <Typography {...props}>{text}</Typography>;
   },
-  Input(
-    value: string | ((val: string) => void),
-    onChange?: (val: string) => void
-  ) {
-    if (typeof value === "function") {
-      return (
-        <Input
-          onChange={(val) => {
-            value(val);
-          }}
-        />
-      );
+  Input(props?: InputProps) {
+    return <Input {...props} />;
+  },
+  Button(text: string, props?: ButtonProps) {
+    return <Button {...props}>{text}</Button>;
+  },
+  Checkbox(text: string, props?: CheckboxProps) {
+    return <Checkbox {...props}>{text}</Checkbox>;
+  },
+  Select(options: JSX.Element[], props?: SelectProps) {
+    if (!props) {
+      props = {};
     }
-    return (
-      <Input
-        value={value}
-        onChange={(val) => {
-          onChange && onChange(val);
-        }}
-      />
-    );
-  },
-  Button(child: string, onClick: () => void) {
-    return (
-      <Button onClick={onClick} type="primary">
-        {child}
-      </Button>
-    );
+    if (!props.triggerProps) {
+      props.triggerProps = {};
+    }
+    if (!props.triggerProps.getPopupContainer) {
+      props.triggerProps.getPopupContainer = (node) => {
+        return node;
+      };
+    }
+    return <Select {...props}>{options}</Select>;
   },
   Message: Message,
+};
+
+// @ts-ignore
+CAT_UI.Select.Option = function (text: string, props?: SelectOptionProps) {
+  // @ts-ignore
+  return <Select.Option {...props}>{text}</Select.Option>;
 };
 
 export default CAT_UI;
