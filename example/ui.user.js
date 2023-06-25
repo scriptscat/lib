@@ -12,7 +12,7 @@ CAT_UI.createPlan({
 		return [
 			CAT_UI.Text("脚本猫的UI框架: " + input),
 			CAT_UI.Button("我是按钮", () => {
-				alert("我被点击了,你输入了: " + input);
+				CAT_UI.Message.info("我被点击了,你输入了: " + input);
 			}),
 			CAT_UI.Input(input, (val) => {
 				setInput(val);
@@ -26,3 +26,5 @@ CAT_UI.createPlan({
 		});
 	}
 });
+
+CAT_UI.Message.success("你好，脚本猫");

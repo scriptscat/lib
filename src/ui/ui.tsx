@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import { Button, Input, Typography } from "@arco-design/web-react";
 import UIPlan, { UIPlanOptions } from "./plan";
+import Message from "./component/message";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -65,6 +66,7 @@ const CAT_UI = {
       </Button>
     );
   },
+  Message: Message,
 };
 
 export default CAT_UI;
