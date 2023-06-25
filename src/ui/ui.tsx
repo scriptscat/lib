@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import { Button, Input, Typography } from "@arco-design/web-react";
 import UIPlan, { UIPlanOptions } from "./plan";
@@ -29,6 +29,7 @@ const CAT_UI = {
 
     document.body.append(div);
   },
+  UIPlan,
   useState(data?: any) {
     return useState(data);
   },

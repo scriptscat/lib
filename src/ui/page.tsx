@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { Button } from "@arco-design/web-react";
-import { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 
 export type UIPageOptions = {
   style?: string;
@@ -19,8 +19,6 @@ class UIPage extends HTMLElement {
   }
 
   static render(_this: UIPage) {
-    // @ts-ignore
-    console.log(UIPage.options, this.options);
     let shadow = _this.attachShadow({ mode: "closed" });
     let container = document.createElement("div");
     container.classList.add("container");

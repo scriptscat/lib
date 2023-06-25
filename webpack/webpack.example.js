@@ -5,8 +5,8 @@ const baseConfig = require("./webpack.lib");
 
 module.exports = merge(baseConfig, {
   entry: {
-    "ui.user": "./example/ui.user.js",
-    "ui": "./src/ui/index.ts"
+    "ui": "./src/ui/index.ts",
+    "ui.user": "./example/ui.user.js"
   },
   output: {
     path: __dirname + "/../dist/example",

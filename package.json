@@ -9,8 +9,8 @@
     "dev": "webpack --mode development --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.config.js",
     "publish": "npm publish",
-    "example:build":"webpack --mode production --config ./webpack/webpack.example.js",
-    "example:dev":"webpack --mode production --config ./webpack/webpack.example.dev.js"
+    "example:build": "webpack --mode production --config ./webpack/webpack.example.js",
+    "example:dev": "webpack --mode production --config ./webpack/webpack.example.dev.js"
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "crypto-js": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
     "stream-browserify": "^3.0.0",
     "tough-cookie": "^4.1.2"
   },

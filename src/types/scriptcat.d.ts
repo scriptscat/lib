@@ -65,7 +65,7 @@ declare function GM_addValueChangeListener(
 declare function GM_removeValueChangeListener(listenerId: number): void;
 
 // 可以使用Promise实际等待值的设置完成
-declare function GM_setValue(name: string, value: any): Promise;
+declare function GM_setValue(name: string, value: any): Promise<void>;
 
 declare function GM_getValue(name: string, defaultValue?: any): any;
 
@@ -80,7 +80,7 @@ declare function GM_getResourceText(name: string): string | undefined;
 
 declare function GM_getResourceURL(
   name: string,
-  isBlobUrl?: boolean = false
+  isBlobUrl?: boolean
 ): string | undefined;
 
 declare function GM_registerMenuCommand(
@@ -94,9 +94,9 @@ declare function GM_unregisterMenuCommand(id: number): void;
 declare function GM_openInTab(
   url: string,
   options: GMTypes.OpenTabOptions
-): tab;
-declare function GM_openInTab(url: string, loadInBackground: boolean): tab;
-declare function GM_openInTab(url: string): tab;
+): any;
+declare function GM_openInTab(url: string, loadInBackground: boolean): any;
+declare function GM_openInTab(url: string): any;
 
 declare function GM_xmlhttpRequest(
   details: GMTypes.XHRDetails
@@ -190,8 +190,8 @@ declare function CAT_click(x: number, y: number): void;
 declare function CAT_userConfig(): void;
 
 /**
- * 操控脚本同步配置的文件储存源,将会在同步目录下创建一个app/uuid目录供此 API 使用
- * 上传时默认覆盖同名文件, 请注意这是一个试验性质的 API, 后续可能会改变
+ * 操控管理器设置的储存系统,将会在目录下创建一个app/uuid目录供此 API 使用,如果指定了baseDir参数,则会使用baseDir作为基础目录
+ * 上传时默认覆盖同名文件
  * @param action 操作类型 list 列出指定目录所有文件, upload 上传文件, download 下载文件, delete 删除文件, config 打开配置页, 暂时不提供move/mkdir等操作
  * @param details
  */
