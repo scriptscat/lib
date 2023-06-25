@@ -27,10 +27,10 @@ export function notification(
       ret.id = id;
       resolve(ret);
     };
-    d.ondone = (clicked, id) => {
+    d.ondone = (clicked: boolean, id: number) => {
       ret.ondone && ret.ondone(clicked, id);
     };
-    d.onclick = (id, index) => {
+    d.onclick = (id: number, index: number) => {
       ret.onclick && ret.onclick(id, index);
     };
     GM_notification(d);

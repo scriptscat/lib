@@ -4,13 +4,19 @@ import { imageUrlToBase64 } from "@App/utils";
 console.log(gmUt);
 
 describe("utils", () => {
-    it("imageUrlToBase64", async () => {
-        let ok = await imageUrlToBase64("https://www.baidu.com/img/flexible/logo/pc/peak-result.png");
-        console.log(ok);
-    });
+  it("imageUrlToBase64", async () => {
+    let ok = await imageUrlToBase64(
+      "https://www.baidu.com/img/flexible/logo/pc/peak-result.png"
+    );
+    console.log(ok);
+  });
 
-    it("test-axios", async () => {
-        GM_xmlhttpRequest({ url: "https://www.baidu.com" });
-        GM_xmlhttpRequest({ url: "https://www.baidu.com", method: "POST", data: { ok: 1 } });
+  it("test-axios", async () => {
+    GM_xmlhttpRequest({ url: "https://www.baidu.com" });
+    GM_xmlhttpRequest({
+      url: "https://www.baidu.com",
+      method: "POST",
+      data: "ok",
     });
+  });
 });

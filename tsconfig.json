@@ -2,10 +2,12 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "strict": true,
-    "jsx": "preserve",
-    "jsxFactory": "h",
+    "jsx": "react-jsx",
     "importHelpers": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -16,11 +18,20 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@App/*": ["src/*"],
-      "@Test/*": ["tests/*"]
+      "@App/*": [
+        "src/*"
+      ],
+      "@Test/*": [
+        "tests/*"
+      ]
     },
-    "typeRoots": ["./node_modules/@types/", "./src/types"]
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./src/types"
+    ]
   },
-  "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "tests/*.test.ts"]
+  "include": [
+    "src",
+    "tests"
+  ]
 }
