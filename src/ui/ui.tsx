@@ -105,7 +105,7 @@ const CAT_UI: { [key: string]: any } = {
           ColumnProps.filterDropdownProps.triggerProps.getPopupContainer = (
             node
           ) => {
-            return node.parentElement as Element;
+            return  node.getRootNode().lastChild as HTMLElement;
           };
         }
       }
