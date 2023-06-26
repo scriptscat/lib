@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import {
   Button,
@@ -15,13 +15,15 @@ import {
   Typography,
   TypographyProps,
 } from "@arco-design/web-react";
-import UIPlan, { UIPlanOptions } from "./plan";
+import UIPanel, { UIPanelOptions } from "./panel";
 import Message from "./component/message";
+// @ts-ignore
+import arcoCss from "./arco.css";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
 const planElName = "cat-ui-plan";
-window.customElements.define(planElName, UIPlan);
+window.customElements.define(planElName, UIPanel);
 
 const CAT_UI = {
   create(options: UIPageOptions) {
@@ -33,16 +35,18 @@ const CAT_UI = {
     div.innerHTML = "<" + pageElName + " />";
 
     document.body.append(div);
+    return div;
   },
-  createPlan(options: UIPlanOptions) {
+  createPanel(options: UIPanelOptions) {
     // @ts-ignore
-    UIPlan.options = options;
+    UIPanel.options = options;
 
     let div = document.createElement("div");
 
     div.innerHTML = "<" + planElName + " />";
 
     document.body.append(div);
+    return div;
   },
   createElement(type: string, props?: any, ...children: React.ReactNode[]) {
     return React.createElement(type, props, children);

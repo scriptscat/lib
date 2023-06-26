@@ -15,8 +15,10 @@ interface MutableRefObject<T> {
 }
 
 declare type UIPageOptions = {
+  appendStyle?: string;
   style?: string;
   render: () => JSX.Element[] | JSX.Element;
+  onReady?: (panel: UIPage) => void;
 };
 
 declare class UIPage extends HTMLElement {
@@ -25,8 +27,7 @@ declare class UIPage extends HTMLElement {
   constructor();
 }
 
-declare type UIPlanOptions = UIPageOptions & {
-  appendStyle?: string;
+declare type UIPanelOptions = UIPageOptions & {
   min?: boolean;
   point?: {
     x: number;
@@ -38,14 +39,14 @@ declare type UIPlanOptions = UIPageOptions & {
   footer?: {
     version?: string;
   };
-  onReady?: (plan: UIPlan) => void;
+  onReady?: (panel: UIPanel) => void;
 };
 
-declare class UIPlan extends HTMLElement {
-  options: UIPlanOptions;
+declare class UIPanel extends HTMLElement {
+  options: UIPanelOptions;
   static DefaultHeader(props: {
     title: string;
-    plan: MutableRefObject<HTMLElement | undefined>;
+    panel: MutableRefObject<HTMLElement | undefined>;
   }): JSX.Element;
   static DefaultFooter(child?: JSX.Element): JSX.Element;
   onDraggableStop(callback: (event: { x: number; y: number }) => void);
@@ -53,7 +54,7 @@ declare class UIPlan extends HTMLElement {
 
 declare namespace CAT_UI {
   function create(options: UIPageOptions): void;
-  function createPlan(options: UIPlanOptions): void;
+  function createPanel(options: UIPanelOptions): void;
 
   function createElement(
     type: string,

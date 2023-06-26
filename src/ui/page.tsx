@@ -1,10 +1,13 @@
 import ReactDOM from "react-dom/client";
-import { Button } from "@arco-design/web-react";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
+// @ts-ignore
+import arcoCss from "./arco.css";
 
 export type UIPageOptions = {
   style?: string;
+  appendStyle?: string;
   render: () => JSX.Element[] | JSX.Element;
+  onReady?: (panel: UIPage) => void;
 };
 
 // Web Component实现
@@ -15,10 +18,23 @@ class UIPage extends HTMLElement {
     super();
     // @ts-ignore
     this.options = UIPage.options;
+    this.defaultOptions();
     UIPage.render(this);
+    this.options.onReady && this.options.onReady(this);
   }
 
-  static render(_this: UIPage) {
+  protected defaultOptions() {
+    this.options = Object.assign({}, this.options);
+    console.log(this.options);
+    if (!this.options.style) {
+      this.options.style = arcoCss as unknown as string;
+    }
+    if (!this.options.appendStyle) {
+      this.options.style += this.options.appendStyle;
+    }
+  }
+
+  static render(_this: HTMLElement & { options: UIPageOptions }) {
     let shadow = _this.attachShadow({ mode: "closed" });
     let container = document.createElement("div");
     container.classList.add("container");

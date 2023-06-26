@@ -6,8 +6,7 @@ import Draggable from "react-draggable";
 // @ts-ignore
 import arcoCss from "./arco.css";
 
-export type UIPlanOptions = UIPageOptions & {
-  appendStyle?: string;
+export type UIPanelOptions = UIPageOptions & {
   min?: boolean;
   point?: {
     x: number;
@@ -19,17 +18,17 @@ export type UIPlanOptions = UIPageOptions & {
   footer?: {
     version?: string;
   };
-  onReady?: (plan: UIPlan) => void;
+  onReady?: (panel: UIPanel) => void;
 };
 
 // 创建UI面板
-class UIPlan extends HTMLElement {
-  options: UIPlanOptions;
+class UIPanel extends HTMLElement {
+  options: UIPanelOptions;
 
   constructor() {
     super();
     // @ts-ignore
-    this.options = UIPlan.options;
+    this.options = UIPanel.options;
     this.defaultOptions();
     const oldRender = this.options.render;
     const Child = (): ReactElement => {
@@ -67,11 +66,11 @@ class UIPlan extends HTMLElement {
             }}
             ref={ref}
           >
-            <UIPlan.DefaultHeader
-              title={this.options.header?.title || "UIPlan"}
+            <UIPanel.DefaultHeader
+              title={this.options.header?.title || "UIPanel"}
               min={min}
               onMin={() => setMin(!min)}
-              plan={ref}
+              panel={ref}
             />
             {!min && (
               <Layout.Content
@@ -83,7 +82,7 @@ class UIPlan extends HTMLElement {
               </Layout.Content>
             )}
             {!min && (
-              <UIPlan.DefaultFooter version={this.options.footer?.version} />
+              <UIPanel.DefaultFooter version={this.options.footer?.version} />
             )}
           </Layout>
         </Draggable>
@@ -132,7 +131,7 @@ class UIPlan extends HTMLElement {
   static DefaultHeader(props: {
     title: string;
     min?: boolean;
-    plan: MutableRefObject<HTMLElement | undefined>;
+    panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: () => void;
   }) {
     return (
@@ -183,4 +182,4 @@ class UIPlan extends HTMLElement {
   }
 }
 
-export default UIPlan;
+export default UIPanel;

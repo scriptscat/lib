@@ -1,6 +1,6 @@
 const data = { input: "默认值" };
 
-CAT_UI.createPlan({
+CAT_UI.createPanel({
 	header: {
 		title: "脚本猫的UI框架",
 	},
@@ -49,8 +49,8 @@ CAT_UI.createPlan({
 			direction: "vertical"
 		});
 	},
-	onReady(plan) {
-		plan.onDraggableStop((e) => {
+	onReady(panel) {
+		panel.onDraggableStop((e) => {
 			console.log(e)
 		});
 	}
