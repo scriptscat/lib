@@ -44,7 +44,10 @@ CAT_UI.createPanel({
 				style: {
 					flex: 1
 				}
-			}))
+			}),
+            CAT_UI.Icon.IconStar({style:{ fontSize: 24, color: '#ff0000' }}),
+            CAT_UI.Icon.IconSync({spin:true,style:{fontSize: 24}}),
+            ),
 		], {
 			direction: "vertical"
 		});
@@ -57,3 +60,6 @@ CAT_UI.createPanel({
 });
 
 CAT_UI.Message.success("你好，脚本猫");
+
+//暴露变量 方便调试
+(window.unsafeWindow || window).CAT_UI=CAT_UI
