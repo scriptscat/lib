@@ -10,6 +10,8 @@ import {
   Select,
   SelectOptionProps,
   SelectProps,
+  Space,
+  SpaceProps,
   Typography,
   TypographyProps,
 } from "@arco-design/web-react";
@@ -42,7 +44,9 @@ const CAT_UI = {
 
     document.body.append(div);
   },
-  UIPlan,
+  createElement(type: string, props?: any, ...children: React.ReactNode[]) {
+    return React.createElement(type, props, children);
+  },
   useState(data?: any) {
     return useState(data);
   },
@@ -72,6 +76,9 @@ const CAT_UI = {
       };
     }
     return <Select {...props}>{options}</Select>;
+  },
+  Space(element: JSX.Element[] | JSX.Element, props?: SpaceProps) {
+    return <Space {...props}>{element}</Space>;
   },
   Message: Message,
 };

@@ -54,6 +54,13 @@ declare class UIPlan extends HTMLElement {
 declare namespace CAT_UI {
   function create(options: UIPageOptions): void;
   function createPlan(options: UIPlanOptions): void;
+
+  function createElement(
+    type: string,
+    props?: any,
+    ...children: React.ReactNode[]
+  );
+
   function useState(data?: any): [any, (data: any) => void];
 
   function Text(text: string, props?: TypographyProps): JSX.Element;
@@ -67,6 +74,7 @@ declare namespace CAT_UI {
     Option: (text: string, props?: SelectOptionProps) => JSX.Element;
   };
   const Select: TSelect;
+  function Space(element: JSX.Element, props?: SpaceProps);
 
   namespace Message {
     function info(config: MessageProps | string);

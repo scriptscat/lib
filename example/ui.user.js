@@ -9,7 +9,7 @@ CAT_UI.createPlan({
 	},
 	render() {
 		const [input, setInput] = CAT_UI.useState(data.input);
-		return [
+		return CAT_UI.Space([
 			CAT_UI.Text("脚本猫的UI框架: " + input),
 			CAT_UI.Button("我是按钮", {
 				type: "primary",
@@ -29,7 +29,25 @@ CAT_UI.createPlan({
 				CAT_UI.Select.Option("选项1"),
 				CAT_UI.Select.Option("选项2"),
 			]),
-		];
+			CAT_UI.createElement("div", {
+				style: {
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center"
+				}
+			}, CAT_UI.Text("请输入"), CAT_UI.Input({
+				value: input,
+				onChange(val) {
+					setInput(val);
+					data.input = val;
+				},
+				style: {
+					flex: 1
+				}
+			}))
+		], {
+			direction: "vertical"
+		});
 	},
 	onReady(plan) {
 		plan.onDraggableStop((e) => {
