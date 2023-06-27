@@ -12,9 +12,6 @@ import {
   SelectProps,
   Space,
   SpaceProps,
-  Typography,
-  TypographyProps,
-  TypographyTextProps,
   Table,
   TableProps,
 } from "@arco-design/web-react";
@@ -25,6 +22,12 @@ import Message from "./component/message";
 // @ts-ignore
 import arcoCss from "./arco.css";
 import { ImgHTMLAttributes } from "react";
+import Typography, {
+  TypographyProps,
+  TypographyTextProps,
+  TypographyTitleProps,
+  TypographyParagraphProps,
+} from "@arco-design/web-react/es/Typography";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -65,7 +68,7 @@ const CAT_UI: { [key: string]: any } = {
   },
   //图标 动态加载
   Icon: {},
-  Text(text: string, props?: TypographyProps) {
+  Typography(text: string, props?: TypographyProps) {
     return <Typography {...props}>{text}</Typography>;
   },
   Input(props?: InputProps) {
@@ -134,9 +137,20 @@ Object.keys(Icon).forEach((icon) => {
   };
 });
 
-CAT_UI.Text.Text = (text: string, props:TypographyTextProps)=>{
-  return <Typography.Text {...props}>{text}</Typography.Text>
-}
+CAT_UI.Typography.Text = (text: string, props: TypographyTextProps) => {
+  return <Typography.Text {...props}>{text}</Typography.Text>;
+};
+
+CAT_UI.Typography.Title = (text: string, props: TypographyTitleProps) => {
+  return <Typography.Title {...props}>{text}</Typography.Title>;
+};
+
+CAT_UI.Typography.Paragraph = (text: string, props: TypographyTitleProps) => {
+  return <Typography.Paragraph {...props}>{text}</Typography.Paragraph>;
+};
+
+// 简化别名
+CAT_UI.Text = CAT_UI.Typography.Text;
 
 CAT_UI.Icon.ScriptCat = (props: ImgHTMLAttributes<HTMLImageElement>) => {
   return (
