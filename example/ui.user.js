@@ -2,7 +2,7 @@ const data = { input: "默认值" };
 
 CAT_UI.createPanel({
   header: {
-    title: CAT_UI.Text.Text("脚本猫的UI框架"),
+    title: "脚本猫的UI框架",
   },
   footer: {
     version: "0.1.0",

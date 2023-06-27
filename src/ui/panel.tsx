@@ -13,7 +13,7 @@ export type UIPanelOptions = UIPageOptions & {
     y: number;
   };
   header?: {
-    title?: JSX.Element;
+    title?: JSX.Element | string;
     icon?: JSX.Element;
     style?: React.CSSProperties
   };
@@ -134,7 +134,7 @@ class UIPanel extends HTMLElement {
   }
 
   static DefaultHeader(props: {
-    Title?: JSX.Element;
+    Title?: JSX.Element | string;
     Icon?: JSX.Element;
     style? : React.CSSProperties;
     min?: boolean;
