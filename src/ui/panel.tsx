@@ -70,8 +70,8 @@ class UIPanel extends HTMLElement {
             ref={ref}
           >
             <UIPanel.DefaultHeader
-              Title={this.options.header?.title}
-              Icon={this.options.header?.icon}
+              title={this.options.header?.title}
+              icon={this.options.header?.icon}
               style={this.options.header?.style}
               min={min}
               onMin={() => setMin(!min)}
@@ -134,8 +134,8 @@ class UIPanel extends HTMLElement {
   }
 
   static DefaultHeader(props: {
-    Title?: JSX.Element | string;
-    Icon?: JSX.Element;
+    title?: JSX.Element | string;
+    icon?: JSX.Element;
     style? : React.CSSProperties;
     min?: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
@@ -160,8 +160,8 @@ class UIPanel extends HTMLElement {
             MozUserSelect: "-moz-none",
           }}
         >
-          {props.Icon}
-          {props.Title}
+          {props.icon}
+          {props.title}
         </div>
         <Button
           type="text"
