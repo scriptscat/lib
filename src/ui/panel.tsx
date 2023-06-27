@@ -1,7 +1,7 @@
 import React, { MutableRefObject, ReactElement, useRef, useState } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import { Button, Layout, Space, Typography } from "@arco-design/web-react";
-import { IconMinus } from "@arco-design/web-react/icon";
+import { IconMinus, IconProps } from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
 // @ts-ignore
 import arcoCss from "./arco.css";
@@ -13,7 +13,9 @@ export type UIPanelOptions = UIPageOptions & {
     y: number;
   };
   header?: {
-    title?: string;
+    title?: JSX.Element;
+    icon?: JSX.Element;
+    style?: React.CSSProperties
   };
   footer?: {
     version?: string;
@@ -63,11 +65,14 @@ class UIPanel extends HTMLElement {
               left: "0px",
               borderRadius: "6px",
               zIndex: "1000",
+              overflow: "hidden",
             }}
             ref={ref}
           >
             <UIPanel.DefaultHeader
-              title={this.options.header?.title || "UIPanel"}
+              Title={this.options.header?.title}
+              Icon={this.options.header?.icon}
+              style={this.options.header?.style}
               min={min}
               onMin={() => setMin(!min)}
               panel={ref}
@@ -129,7 +134,9 @@ class UIPanel extends HTMLElement {
   }
 
   static DefaultHeader(props: {
-    title: string;
+    Title?: JSX.Element;
+    Icon?: JSX.Element;
+    style? : React.CSSProperties;
     min?: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: () => void;
@@ -140,18 +147,21 @@ class UIPanel extends HTMLElement {
         style={{
           alignItems: "center",
           padding: "4px 6px",
+          ...props.style
         }}
       >
         <div
-          className="draggable"
+          className="draggable flex"
           style={{
             flex: 1,
             cursor: "move",
+            alignItems: "center",
+            userSelect: "none",
+            MozUserSelect: "-moz-none",
           }}
         >
-          <Typography.Text style={{ fontSize: "16px" }}>
-            {props.title}
-          </Typography.Text>
+          {props.Icon}
+          {props.Title}
         </div>
         <Button
           type="text"

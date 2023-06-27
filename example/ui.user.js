@@ -2,7 +2,7 @@ const data = { input: "默认值" };
 
 CAT_UI.createPanel({
   header: {
-    title: "脚本猫的UI框架",
+    title: CAT_UI.Text.Text("脚本猫的UI框架"),
   },
   footer: {
     version: "0.1.0",
@@ -111,12 +111,24 @@ const testData = [
 
 CAT_UI.createPanel({
   header: {
-    title: "脚本猫的UI框架Table",
+    title: CAT_UI.Text.Text("脚本猫的UI框架Table", {
+      style: { fontSize: "16px" },
+    }),
+    // 控制图标大小 img→width svg→fontSize
+    // CAT_UI.Icon中除了ScriptCat是img，其余均为svg ……待优化
+    icon: CAT_UI.Icon.ScriptCat({
+      style: { width: "24px", marginRight: "10px" },
+      draggable: "false",
+      className: "arco-icon-loading",
+    }),
+    style: { background: "#e5e5ff" },
   },
   footer: {
     version: "0.1.0",
   },
   render() {
+    // 下方均为官方示例https://arco.design/react/components/table#自定义筛选菜单
+    // 转译成ui.js封装形式
     const inputRef = CAT_UI.useRef(null);
     const columns = [
       {
@@ -127,7 +139,7 @@ CAT_UI.createPanel({
           return CAT_UI.createElement(
             "div",
             {
-              className: "arco-table-custom-filter",
+              // className: "arco-table-custom-filter",
               style: {
                 padding: "10px",
                 "background-color": "var(--color-bg-5)",
