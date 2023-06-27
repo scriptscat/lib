@@ -1,3 +1,7 @@
+//暴露变量 方便调试
+(window.unsafeWindow || window).CAT_UI = CAT_UI;
+
+// 综合面板
 const data = { input: "默认值" };
 
 CAT_UI.createPanel({
@@ -66,11 +70,10 @@ CAT_UI.createPanel({
   },
 });
 
+// Message
 CAT_UI.Message.success("你好，脚本猫");
 
-//暴露变量 方便调试
-(window.unsafeWindow || window).CAT_UI = CAT_UI;
-
+// Table
 const testData = [
   {
     key: "1",
@@ -111,7 +114,7 @@ const testData = [
 
 CAT_UI.createPanel({
   header: {
-    title: CAT_UI.Text.Text("脚本猫的UI框架Table", {
+    title: CAT_UI.Text("脚本猫的UI框架Table", {
       style: { fontSize: "16px" },
     }),
     // 控制图标大小 img→width svg→fontSize
@@ -182,5 +185,65 @@ CAT_UI.createPanel({
       },
     ];
     return CAT_UI.Table({ columns, data: testData });
+  },
+});
+
+// Typography
+CAT_UI.createPanel({
+  // 相当于GM_addStyle
+  appendStyle: `section {width:500px}`,
+  header: {
+    title: CAT_UI.Space([
+      CAT_UI.Icon.ScriptCat({
+        style: { width: "24px" },
+        draggable: "false",
+      }),
+      CAT_UI.Text("脚本猫的UI框架Typography", {
+        style: { fontSize: "16px" },
+      }),
+    ]),
+  },
+  render() {
+    const array1 = [];
+    array1.push(CAT_UI.Typography.Title("Default", { heading: 5 }));
+    array1.push(
+      CAT_UI.Typography.Paragraph(
+        " A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in theform of a prototype, product or process. The verb to design expresses the process ofdeveloping a design. In some cases, the direct construction of an object without an explicitprior plan (such as in craftwork, some engineering, coding, and graphic design) may also beconsidered to be a design activity."
+      )
+    );
+    array1.push(CAT_UI.Typography.Title("Secondary", { heading: 5 }));
+    array1.push(
+      CAT_UI.Typography.Paragraph(
+        "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design. In some cases, the direct construction of an object without an explicit prior plan (such as in craftwork, some engineering, coding, and graphic design) may also be considered to be a design activity.",
+        { type: "secondary" }
+      )
+    );
+    array1.push(CAT_UI.Typography.Title("Spacing close", { heading: 5 }));
+    array1.push(
+      CAT_UI.Typography.Paragraph(
+        "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design.",
+        { type: "secondary", spacing: "close" }
+      )
+    );
+
+    const [str, setStr] = CAT_UI.useState("Click the icon to edit this text.");
+    const array2 = [];
+    array2.push(
+      CAT_UI.Typography.Paragraph("Click the icon to copy this text.", {
+        copyable: true,
+      })
+    );
+    array2.push(
+      CAT_UI.Typography.Paragraph(str, {
+        editable: {
+          onChange: setStr,
+        },
+      })
+    );
+
+    return CAT_UI.Space(
+      [CAT_UI.Typography(array1), CAT_UI.Typography(array2)],
+      { direction: "vertical" }
+    );
   },
 });

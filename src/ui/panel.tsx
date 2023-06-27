@@ -122,7 +122,7 @@ class UIPanel extends HTMLElement {
         }
       `;
     }
-    if (!this.options.appendStyle) {
+    if (this.options.appendStyle) {
       this.options.style += this.options.appendStyle;
     }
     if (!this.options.header) {
