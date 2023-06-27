@@ -16,6 +16,7 @@ import {
   TypographyProps,
 } from "@arco-design/web-react";
 import UIPanel, { UIPanelOptions } from "./panel";
+import * as Icon from "@arco-design/web-react/icon";
 import Message from "./component/message";
 // @ts-ignore
 import arcoCss from "./arco.css";
@@ -25,7 +26,7 @@ window.customElements.define(pageElName, UIPage);
 const planElName = "cat-ui-plan";
 window.customElements.define(planElName, UIPanel);
 
-const CAT_UI = {
+const CAT_UI: { [key: string]: any } = {
   create(options: UIPageOptions) {
     // @ts-ignore
     UIPage.options = options;
@@ -54,7 +55,8 @@ const CAT_UI = {
   useState(data?: any) {
     return useState(data);
   },
-
+  //图标 动态加载
+  Icon: {},
   Text(text: string, props?: TypographyProps) {
     return <Typography {...props}>{text}</Typography>;
   },
@@ -87,7 +89,23 @@ const CAT_UI = {
   Message: Message,
 };
 
-// @ts-ignore
+// 动态引入所有图标
+Object.keys(Icon).forEach((icon) => {
+  if (icon == "IconProps") {
+    return;
+  }
+
+  const Item = Icon[
+    icon as keyof typeof Icon
+  ] as React.ForwardRefExoticComponent<
+    Icon.IconProps & React.RefAttributes<unknown>
+  >;
+
+  CAT_UI.Icon[icon] = (props: Icon.IconProps) => {
+    return <Item {...props}></Item>;
+  };
+});
+
 CAT_UI.Select.Option = function (text: string, props?: SelectOptionProps) {
   // @ts-ignore
   return <Select.Option {...props}>{text}</Select.Option>;
