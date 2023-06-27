@@ -4,65 +4,136 @@
 // 综合面板
 const data = { input: "默认值" };
 
-CAT_UI.createPanel({
-  header: {
-    title: "脚本猫的UI框架",
-  },
-  footer: {
-    version: "0.1.0",
-  },
-  render() {
-    const [input, setInput] = CAT_UI.useState(data.input);
-    return CAT_UI.Space(
-      [
-        CAT_UI.Text("脚本猫的UI框架: " + input),
-        CAT_UI.Button("我是按钮", {
-          type: "primary",
-          onClick() {
-            CAT_UI.Message.info("我被点击了,你输入了: " + input);
+function Home() {
+  const [input, setInput] = CAT_UI.useState(data.input);
+  return CAT_UI.Space(
+    [
+      CAT_UI.Text("脚本猫的UI框架: " + input),
+      CAT_UI.Button("我是按钮", {
+        type: "primary",
+        onClick() {
+          CAT_UI.Message.info("我被点击了,你输入了: " + input);
+        },
+      }),
+      CAT_UI.Input({
+        value: input,
+        onChange(val) {
+          setInput(val);
+          data.input = val;
+        },
+      }),
+      CAT_UI.Checkbox("我是复选框"),
+      CAT_UI.Select([
+        CAT_UI.Select.Option("选项1"),
+        CAT_UI.Select.Option("选项2"),
+      ]),
+      CAT_UI.createElement(
+        "div",
+        {
+          style: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           },
-        }),
+        },
+        CAT_UI.Text("请输入"),
         CAT_UI.Input({
           value: input,
           onChange(val) {
             setInput(val);
             data.input = val;
           },
-        }),
-        CAT_UI.Checkbox("我是复选框"),
-        CAT_UI.Select([
-          CAT_UI.Select.Option("选项1"),
-          CAT_UI.Select.Option("选项2"),
-        ]),
-        CAT_UI.createElement(
-          "div",
-          {
-            style: {
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            },
+          style: {
+            flex: 1,
           },
-          CAT_UI.Text("请输入"),
-          CAT_UI.Input({
-            value: input,
-            onChange(val) {
-              setInput(val);
-              data.input = val;
-            },
-            style: {
-              flex: 1,
-            },
-          }),
-          CAT_UI.Icon.IconStar({ style: { fontSize: 24, color: "#ff0000" } }),
-          CAT_UI.Icon.IconSync({ spin: true, style: { fontSize: 24 } })
-        ),
-      ],
-      {
-        direction: "vertical",
-      }
-    );
+        }),
+        CAT_UI.Icon.IconStar({ style: { fontSize: 24, color: "#ff0000" } }),
+        CAT_UI.Icon.IconSync({ spin: true, style: { fontSize: 24 } })
+      ),
+    ],
+    {
+      direction: "vertical",
+    }
+  );
+}
+
+function Typography() {
+  const array1 = [];
+  array1.push(CAT_UI.Typography.Title("Default", { heading: 5 }));
+  array1.push(
+    CAT_UI.Typography.Paragraph(
+      " A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in theform of a prototype, product or process. The verb to design expresses the process ofdeveloping a design. In some cases, the direct construction of an object without an explicitprior plan (such as in craftwork, some engineering, coding, and graphic design) may also beconsidered to be a design activity."
+    )
+  );
+  array1.push(CAT_UI.Typography.Title("Secondary", { heading: 5 }));
+  array1.push(
+    CAT_UI.Typography.Paragraph(
+      "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design. In some cases, the direct construction of an object without an explicit prior plan (such as in craftwork, some engineering, coding, and graphic design) may also be considered to be a design activity.",
+      { type: "secondary" }
+    )
+  );
+  array1.push(CAT_UI.Typography.Title("Spacing close", { heading: 5 }));
+  array1.push(
+    CAT_UI.Typography.Paragraph(
+      "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design.",
+      { type: "secondary", spacing: "close" }
+    )
+  );
+
+  const [str, setStr] = CAT_UI.useState("Click the icon to edit this text.");
+  const array2 = [];
+  array2.push(
+    CAT_UI.Typography.Paragraph("Click the icon to copy this text.", {
+      copyable: true,
+    })
+  );
+  array2.push(
+    CAT_UI.Typography.Paragraph(str, {
+      editable: {
+        onChange: setStr,
+      },
+    })
+  );
+
+  return CAT_UI.Space([CAT_UI.Typography(array1), CAT_UI.Typography(array2)], {
+    direction: "vertical",
+  });
+}
+
+CAT_UI.createPanel({
+  header: {
+    title() {
+      // createElement别名
+      return CAT_UI.el(
+        "div",
+        {
+          style: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          },
+        },
+        CAT_UI.Text("脚本猫的UI框架"),
+        CAT_UI.Space([
+          CAT_UI.Router.Link("首页", { to: "/" }),
+          CAT_UI.Router.Link("Typography", { to: "/typography" }),
+        ])
+      );
+    },
   },
+  footer: {
+    version: "0.1.0",
+  },
+  routes: [
+    {
+      path: "/",
+      Component: Home,
+    },
+    {
+      path: "/typography",
+      Component: Typography,
+    },
+  ],
   onReady(panel) {
     panel.onDraggableStop((e) => {
       console.log(e);
@@ -203,47 +274,5 @@ CAT_UI.createPanel({
       }),
     ]),
   },
-  render() {
-    const array1 = [];
-    array1.push(CAT_UI.Typography.Title("Default", { heading: 5 }));
-    array1.push(
-      CAT_UI.Typography.Paragraph(
-        " A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in theform of a prototype, product or process. The verb to design expresses the process ofdeveloping a design. In some cases, the direct construction of an object without an explicitprior plan (such as in craftwork, some engineering, coding, and graphic design) may also beconsidered to be a design activity."
-      )
-    );
-    array1.push(CAT_UI.Typography.Title("Secondary", { heading: 5 }));
-    array1.push(
-      CAT_UI.Typography.Paragraph(
-        "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design. In some cases, the direct construction of an object without an explicit prior plan (such as in craftwork, some engineering, coding, and graphic design) may also be considered to be a design activity.",
-        { type: "secondary" }
-      )
-    );
-    array1.push(CAT_UI.Typography.Title("Spacing close", { heading: 5 }));
-    array1.push(
-      CAT_UI.Typography.Paragraph(
-        "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design.",
-        { type: "secondary", spacing: "close" }
-      )
-    );
-
-    const [str, setStr] = CAT_UI.useState("Click the icon to edit this text.");
-    const array2 = [];
-    array2.push(
-      CAT_UI.Typography.Paragraph("Click the icon to copy this text.", {
-        copyable: true,
-      })
-    );
-    array2.push(
-      CAT_UI.Typography.Paragraph(str, {
-        editable: {
-          onChange: setStr,
-        },
-      })
-    );
-
-    return CAT_UI.Space(
-      [CAT_UI.Typography(array1), CAT_UI.Typography(array2)],
-      { direction: "vertical" }
-    );
-  },
+  render: Typography,
 });

@@ -28,6 +28,7 @@ import Typography, {
   TypographyTitleProps,
   TypographyParagraphProps,
 } from "@arco-design/web-react/es/Typography";
+import Router from "./component/route";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -60,12 +61,16 @@ const CAT_UI: { [key: string]: any } = {
   createElement(type: string, props?: any, ...children: React.ReactNode[]) {
     return React.createElement(type, props, children);
   },
+  el(type: string, props?: any, ...children: React.ReactNode[]) {
+    return React.createElement(type, props, children);
+  },
   useState(data?: any) {
     return useState(data);
   },
   useRef(data?: any) {
     return useRef(data);
   },
+  Router: Router,
   //图标 动态加载
   Icon: {},
   Typography(text: string, props?: TypographyProps) {

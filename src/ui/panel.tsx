@@ -5,6 +5,13 @@ import { IconMinus, IconProps } from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
 // @ts-ignore
 import arcoCss from "./arco.css";
+import CAT_UI from "./ui";
+import {
+  Outlet,
+  RouteObject,
+  RouterProvider,
+  createMemoryRouter,
+} from "react-router-dom";
 
 export type UIPanelOptions = UIPageOptions & {
   min?: boolean;
@@ -13,13 +20,14 @@ export type UIPanelOptions = UIPageOptions & {
     y: number;
   };
   header?: {
-    title?: JSX.Element | string;
+    title?: () => JSX.Element | JSX.Element | string;
     icon?: JSX.Element;
-    style?: React.CSSProperties
+    style?: React.CSSProperties;
   };
   footer?: {
     version?: string;
   };
+  routes?: RouteObject[];
   onReady?: (panel: UIPanel) => void;
 };
 
@@ -32,19 +40,29 @@ class UIPanel extends HTMLElement {
     // @ts-ignore
     this.options = UIPanel.options;
     this.defaultOptions();
-    const oldRender = this.options.render;
-    const Child = (): ReactElement => {
-      const ret = oldRender();
-      if (ret instanceof Array) {
-        return ret.map((val) => {
-          return val;
-        }) as unknown as ReactElement;
-      }
-      return ret as ReactElement;
+    let oldRender = this.options.render;
+    // const Child = (): ReactElement => {
+    //   const ret = oldRender();
+    //   if (ret instanceof Array) {
+    //     return ret.map((val) => {
+    //       return val;
+    //     }) as unknown as ReactElement;
+    //   }
+    //   return ret as ReactElement;
+    // };
+
+    let Child: any = () => {
+      return oldRender() as ReactElement;
     };
-    this.options.render = () => {
+
+    const Render = () => {
       const ref = useRef<HTMLElement>();
       const [min, setMin] = useState(false);
+      const title =
+        typeof this.options.header?.title == "function"
+          ? this.options.header?.title()
+          : this.options.header?.title;
+
       return (
         <Draggable
           handle=".draggable"
@@ -70,7 +88,7 @@ class UIPanel extends HTMLElement {
             ref={ref}
           >
             <UIPanel.DefaultHeader
-              title={this.options.header?.title}
+              title={title}
               icon={this.options.header?.icon}
               style={this.options.header?.style}
               min={min}
@@ -93,6 +111,26 @@ class UIPanel extends HTMLElement {
         </Draggable>
       );
     };
+
+    if (this.options.routes) {
+      Child = () => {
+        return <Outlet />;
+      };
+      const routes: RouteObject[] = [
+        {
+          path: "/",
+          Component: Render,
+          children: this.options.routes,
+        },
+      ];
+      const router = createMemoryRouter(routes);
+      this.options.render = () => {
+        return <RouterProvider router={router}></RouterProvider>;
+      };
+    } else {
+      this.options.render = Render;
+    }
+
     UIPage.render(this);
     this.options.onReady && this.options.onReady(this);
   }
@@ -136,7 +174,7 @@ class UIPanel extends HTMLElement {
   static DefaultHeader(props: {
     title?: JSX.Element | string;
     icon?: JSX.Element;
-    style? : React.CSSProperties;
+    style?: React.CSSProperties;
     min?: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: () => void;
@@ -147,7 +185,7 @@ class UIPanel extends HTMLElement {
         style={{
           alignItems: "center",
           padding: "4px 6px",
-          ...props.style
+          ...props.style,
         }}
       >
         <div
