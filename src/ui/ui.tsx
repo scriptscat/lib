@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import {
   Button,
@@ -14,7 +14,10 @@ import {
   SpaceProps,
   Typography,
   TypographyProps,
+  Table,
+  TableProps,
 } from "@arco-design/web-react";
+import { InputSearchProps } from "@arco-design/web-react/es/Input";
 import UIPanel, { UIPanelOptions } from "./panel";
 import * as Icon from "@arco-design/web-react/icon";
 import Message from "./component/message";
@@ -55,6 +58,9 @@ const CAT_UI: { [key: string]: any } = {
   useState(data?: any) {
     return useState(data);
   },
+  useRef(data?: any) {
+    return useRef(data);
+  },
   //图标 动态加载
   Icon: {},
   Text(text: string, props?: TypographyProps) {
@@ -86,6 +92,26 @@ const CAT_UI: { [key: string]: any } = {
   Space(element: JSX.Element[] | JSX.Element, props?: SpaceProps) {
     return <Space {...props}>{element}</Space>;
   },
+  Table(props: TableProps) {
+    props.columns?.forEach((ColumnProps) => {
+      if (ColumnProps.filterDropdown) {
+        if (!ColumnProps.filterDropdownProps) {
+          ColumnProps.filterDropdownProps = {};
+        }
+        if (!ColumnProps.filterDropdownProps.triggerProps) {
+          ColumnProps.filterDropdownProps.triggerProps = {};
+        }
+        if (!ColumnProps.filterDropdownProps.triggerProps.getPopupContainer) {
+          ColumnProps.filterDropdownProps.triggerProps.getPopupContainer = (
+            node
+          ) => {
+            return  node.getRootNode().lastChild as HTMLElement;
+          };
+        }
+      }
+    });
+    return <Table {...props} />;
+  },
   Message: Message,
 };
 
@@ -109,6 +135,10 @@ Object.keys(Icon).forEach((icon) => {
 CAT_UI.Select.Option = function (text: string, props?: SelectOptionProps) {
   // @ts-ignore
   return <Select.Option {...props}>{text}</Select.Option>;
+};
+
+CAT_UI.Input.Search = (props?: InputSearchProps) => {
+  return <Input.Search {...props} />;
 };
 
 export default CAT_UI;

@@ -35,7 +35,7 @@ class UIPage extends HTMLElement {
   }
 
   static render(_this: HTMLElement & { options: UIPageOptions }) {
-    let shadow = _this.attachShadow({ mode: "closed" });
+    let shadow = _this.attachShadow({ mode: "open" });
     let container = document.createElement("div");
     container.classList.add("container");
 
