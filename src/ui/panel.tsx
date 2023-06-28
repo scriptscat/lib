@@ -57,7 +57,7 @@ class UIPanel extends HTMLElement {
 
     const Render = () => {
       const ref = useRef<HTMLElement>();
-      const [min, setMin] = useState(false);
+      const [min, setMin] = useState(this.options.min ?? false);
       const title =
         typeof this.options.header?.title == "function"
           ? this.options.header?.title()

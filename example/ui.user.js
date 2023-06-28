@@ -177,6 +177,8 @@ const testData = [
 ];
 
 CAT_UI.createPanel({
+  // 最小化面板
+  min: true,
   header: {
     title: CAT_UI.Text("脚本猫的UI框架Table", {
       style: { fontSize: "16px" },
