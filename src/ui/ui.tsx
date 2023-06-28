@@ -104,7 +104,7 @@ const CAT_UI: { [key: string]: any } = {
   },
   Table(props: TableProps) {
     props.columns?.forEach((ColumnProps) => {
-      if (ColumnProps.filterDropdown) {
+      if (ColumnProps.filterDropdown || ColumnProps.filters) {
         if (!ColumnProps.filterDropdownProps) {
           ColumnProps.filterDropdownProps = {};
         }
