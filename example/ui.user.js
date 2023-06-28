@@ -58,45 +58,38 @@ function Home() {
 }
 
 function Typography() {
-  const array1 = [];
-  array1.push(CAT_UI.Typography.Title("Default", { heading: 5 }));
-  array1.push(
+  const array1 = [
+    CAT_UI.Typography.Title("Default", { heading: 5 }),
     CAT_UI.Typography.Paragraph(
       " A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in theform of a prototype, product or process. The verb to design expresses the process ofdeveloping a design. In some cases, the direct construction of an object without an explicitprior plan (such as in craftwork, some engineering, coding, and graphic design) may also beconsidered to be a design activity."
-    )
-  );
-  array1.push(CAT_UI.Typography.Title("Secondary", { heading: 5 }));
-  array1.push(
+    ),
+    CAT_UI.Typography.Title("Secondary", { heading: 5 }),
     CAT_UI.Typography.Paragraph(
       "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design. In some cases, the direct construction of an object without an explicit prior plan (such as in craftwork, some engineering, coding, and graphic design) may also be considered to be a design activity.",
       { type: "secondary" }
-    )
-  );
-  array1.push(CAT_UI.Typography.Title("Spacing close", { heading: 5 }));
-  array1.push(
+    ),
+    CAT_UI.Typography.Title("Spacing close", { heading: 5 }),
     CAT_UI.Typography.Paragraph(
       "A design is a plan or specification for the construction of an object or system or for the implementation of an activity or process, or the result of that plan or specification in the form of a prototype, product or process. The verb to design expresses the process of developing a design.",
       { type: "secondary", spacing: "close" }
-    )
-  );
+    ),
+  ];
 
   const [str, setStr] = CAT_UI.useState("Click the icon to edit this text.");
-  const array2 = [];
-  array2.push(
+  const array2 = [
     CAT_UI.Typography.Paragraph("Click the icon to copy this text.", {
       copyable: true,
-    })
-  );
-  array2.push(
+    }),
     CAT_UI.Typography.Paragraph(str, {
       editable: {
         onChange: setStr,
       },
-    })
-  );
+    }),
+  ];
 
   return CAT_UI.Space([CAT_UI.Typography(array1), CAT_UI.Typography(array2)], {
     direction: "vertical",
+    style: { padding: "4px 36px" },
   });
 }
 
@@ -262,17 +255,24 @@ CAT_UI.createPanel({
 // Typography
 CAT_UI.createPanel({
   // 相当于GM_addStyle
-  appendStyle: `section {width:500px}`,
+  appendStyle: `section {
+    max-width:500px;
+    box-shadow:0px 0px 5px;
+  }`,
   header: {
-    title: CAT_UI.Space([
-      CAT_UI.Icon.ScriptCat({
-        style: { width: "24px" },
-        draggable: "false",
-      }),
-      CAT_UI.Text("脚本猫的UI框架Typography", {
-        style: { fontSize: "16px" },
-      }),
-    ]),
+    title: CAT_UI.Space(
+      [
+        CAT_UI.Icon.ScriptCat({
+          style: { width: "24px", verticalAlign: "middle" },
+          draggable: "false",
+        }),
+        CAT_UI.Text("脚本猫的UI框架Typography", {
+          style: { fontSize: "16px" },
+        }),
+      ],
+      { style: { marginLeft: "5px" } }
+    ),
+    style: { borderBottom: "1px solid var(--color-neutral-3)" },
   },
   render: Typography,
 });

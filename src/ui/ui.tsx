@@ -104,7 +104,7 @@ const CAT_UI: { [key: string]: any } = {
   },
   Table(props: TableProps) {
     props.columns?.forEach((ColumnProps) => {
-      if (ColumnProps.filterDropdown) {
+      if (ColumnProps.filterDropdown || ColumnProps.filters) {
         if (!ColumnProps.filterDropdownProps) {
           ColumnProps.filterDropdownProps = {};
         }
@@ -150,7 +150,7 @@ CAT_UI.Typography.Title = (text: string, props: TypographyTitleProps) => {
   return <Typography.Title {...props}>{text}</Typography.Title>;
 };
 
-CAT_UI.Typography.Paragraph = (text: string, props: TypographyTitleProps) => {
+CAT_UI.Typography.Paragraph = (text: string, props: TypographyParagraphProps) => {
   return <Typography.Paragraph {...props}>{text}</Typography.Paragraph>;
 };
 
