@@ -103,6 +103,7 @@ const CAT_UI: { [key: string]: any } = {
     return <Space {...props}>{element}</Space>;
   },
   Table(props: TableProps) {
+    // 定义筛选框、搜索框默认弹出位置至UIPanel节点下
     props.columns?.forEach((ColumnProps) => {
       if (ColumnProps.filterDropdown || ColumnProps.filters) {
         if (!ColumnProps.filterDropdownProps) {
@@ -120,6 +121,15 @@ const CAT_UI: { [key: string]: any } = {
         }
       }
     });
+    // 定义气泡框默认弹出位置至UIPanel节点下
+    if (props.showSorterTooltip !== false) {
+      if (!(props.showSorterTooltip instanceof Object)) {
+        props.showSorterTooltip = {};
+      }
+      props.showSorterTooltip.getPopupContainer = (node) => {
+        return node.getRootNode().lastChild as HTMLElement;
+      };
+    }
     return <Table {...props} />;
   },
   Message: Message,
@@ -150,7 +160,10 @@ CAT_UI.Typography.Title = (text: string, props: TypographyTitleProps) => {
   return <Typography.Title {...props}>{text}</Typography.Title>;
 };
 
-CAT_UI.Typography.Paragraph = (text: string, props: TypographyParagraphProps) => {
+CAT_UI.Typography.Paragraph = (
+  text: string,
+  props: TypographyParagraphProps
+) => {
   return <Typography.Paragraph {...props}>{text}</Typography.Paragraph>;
 };
 
