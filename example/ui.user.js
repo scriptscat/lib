@@ -261,6 +261,8 @@ CAT_UI.createPanel({
     max-width:500px;
     box-shadow:0px 0px 5px;
   }`,
+  // 面板初始坐标
+  point: { x: (window.screen.width - 500) / 2, y: 20 },
   header: {
     title: CAT_UI.Space(
       [
