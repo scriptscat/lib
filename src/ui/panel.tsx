@@ -1,7 +1,7 @@
 import React, { MutableRefObject, ReactElement, useRef, useState } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import { Button, Layout, Space, Typography } from "@arco-design/web-react";
-import { IconMinus, IconProps } from "@arco-design/web-react/icon";
+import { IconMinus, IconPlus, IconProps } from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
 // @ts-ignore
 import arcoCss from "./arco.css";
@@ -175,7 +175,7 @@ class UIPanel extends HTMLElement {
     title?: JSX.Element | string;
     icon?: JSX.Element;
     style?: React.CSSProperties;
-    min?: boolean;
+    min: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: () => void;
   }) {
@@ -204,7 +204,7 @@ class UIPanel extends HTMLElement {
         <Button
           type="text"
           className="min-btn"
-          icon={<IconMinus />}
+          icon={props.min ? <IconPlus /> : <IconMinus />}
           iconOnly
           size="small"
           onClick={() => {
