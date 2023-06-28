@@ -179,6 +179,7 @@ class UIPanel extends HTMLElement {
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: () => void;
   }) {
+    const MinIcon= props.min ? IconPlus : IconMinus
     return (
       <Layout.Header
         className="flex"
@@ -204,7 +205,7 @@ class UIPanel extends HTMLElement {
         <Button
           type="text"
           className="min-btn"
-          icon={props.min ? <IconPlus /> : <IconMinus />}
+          icon={<MinIcon />}
           iconOnly
           size="small"
           onClick={() => {
