@@ -15,7 +15,7 @@
 /******** link *******/
 /******** radius *******/
 /********* icon hover *********/
-:host {
+.arco.container {
 	--red-1: 255,236,232;
 	--red-2: 253,205,197;
 	--red-3: 251,172,163;
@@ -207,7 +207,7 @@
 	--link-9: var(--arcoblue-9);
 	--link-10: var(--arcoblue-10);
   }
-  :host [arco-theme='dark'] {
+  .arco.container[arco-theme='dark'] {
 	--red-1: 77,0,10;
 	--red-2: 119,6,17;
 	--red-3: 161,22,31;
@@ -399,7 +399,7 @@
 	--link-9: var(--arcoblue-9);
 	--link-10: var(--arcoblue-10);
   }
-  :host {
+  .arco.container {
 	--color-white: #ffffff;
 	--color-black: #000000;
 	--color-border: rgb(var(--gray-3));
@@ -468,7 +468,7 @@
 	--color-menu-dark-hover: rgba(255, 255, 255, 0.04);
 	--color-mask-bg: rgba(29, 33, 41, 0.6);
   }
- :host[arco-theme='dark'] {
+  .arco.container[arco-theme='dark'] {
 	--color-white: rgba(255, 255, 255, 0.9);
 	--color-black: #000000;
 	--color-border: #333335;
@@ -525,7 +525,7 @@
    * 1. Correct the line height in all browsers.
    * 2. Prevent adjustments of font size after orientation changes in iOS.
    */
-  :host {
+  .arco.container {
 	line-height: 1.5;
 	/* 1 */
 	-webkit-text-size-adjust: 100%;
@@ -541,7 +541,7 @@
   /**
    * Remove the margin in all browsers.
    */
-  :host {
+  .arco.container {
 	margin: 0;
 	padding: 0;
   }

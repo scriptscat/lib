@@ -38,6 +38,7 @@ class UIPage extends HTMLElement {
     let shadow = _this.attachShadow({ mode: "open" });
     let container = document.createElement("div");
     container.classList.add("container");
+    container.classList.add("arco");
 
     if (_this.options.style) {
       let css = document.createElement("style");
