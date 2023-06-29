@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import {
   Button,
@@ -63,6 +63,9 @@ const CAT_UI: { [key: string]: any } = {
   },
   el(type: string, props?: any, ...children: React.ReactNode[]) {
     return React.createElement(type, props, children);
+  },
+  useEffect(effect: React.EffectCallback, deps?: React.DependencyList) {
+    return useEffect(effect, deps);
   },
   useState(data?: any) {
     return useState(data);

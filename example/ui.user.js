@@ -138,121 +138,146 @@ CAT_UI.createPanel({
 CAT_UI.Message.success("你好，脚本猫");
 
 // Table
-const testData = [
-  {
-    key: "1",
-    name: "Jane Doe",
-    salary: 23000,
-    address: "32 Park Road, London",
-    email: "jane.doe@example.com",
-  },
-  {
-    key: "2",
-    name: "Alisa Ross",
-    salary: 25000,
-    address: "35 Park Road, London",
-    email: "alisa.ross@example.com",
-  },
-  {
-    key: "3",
-    name: "Kevin Sandra",
-    salary: 22000,
-    address: "31 Park Road, London",
-    email: "kevin.sandra@example.com",
-  },
-  {
-    key: "4",
-    name: "Ed Hellen",
-    salary: 17000,
-    address: "42 Park Road, London",
-    email: "ed.hellen@example.com",
-  },
-  {
-    key: "5",
-    name: "William Smith",
-    salary: 27000,
-    address: "62 Park Road, London",
-    email: "william.smith@example.com",
-  },
-];
+function initTable() {
+  // 模拟XHR
+  function simXHR() {
+    return new Promise((resolve) => {
+      const data = [
+        {
+          key: "1",
+          name: "Jane Doe",
+          salary: 23000,
+          address: "32 Park Road, London",
+          email: "jane.doe@example.com",
+        },
+        {
+          key: "2",
+          name: "Alisa Ross",
+          salary: 25000,
+          address: "35 Park Road, London",
+          email: "alisa.ross@example.com",
+        },
+        {
+          key: "3",
+          name: "Kevin Sandra",
+          salary: 22000,
+          address: "31 Park Road, London",
+          email: "kevin.sandra@example.com",
+        },
+        {
+          key: "4",
+          name: "Ed Hellen",
+          salary: 17000,
+          address: "42 Park Road, London",
+          email: "ed.hellen@example.com",
+        },
+        {
+          key: "5",
+          name: "William Smith",
+          salary: 27000,
+          address: "62 Park Road, London",
+          email: "william.smith@example.com",
+        },
+      ];
+      setTimeout(() => resolve(data), 1000);
+    });
+  }
 
-CAT_UI.createPanel({
-  // 最小化面板
-  min: true,
-  header: {
-    title: CAT_UI.Text("脚本猫的UI框架Table", {
-      style: { fontSize: "16px" },
-    }),
-    // 控制图标大小 img→width svg→fontSize
-    // CAT_UI.Icon中除了ScriptCat是img，其余均为svg ……待优化
-    icon: CAT_UI.Icon.ScriptCat({
-      style: { width: "24px", marginRight: "10px" },
-      draggable: "false",
-      className: "arco-icon-loading",
-    }),
-    style: { background: "#e5e5ff" },
-  },
-  footer: {
-    version: "0.1.0",
-  },
-  render() {
-    // 下方均为官方示例https://arco.design/react/components/table#自定义筛选菜单
-    // 转译成ui.js封装形式
-    const inputRef = CAT_UI.useRef(null);
-    const columns = [
-      {
-        title: "Name",
-        dataIndex: "name",
-        filterIcon: CAT_UI.Icon.IconSearch(),
-        filterDropdown: ({ filterKeys, setFilterKeys, confirm }) => {
-          return CAT_UI.createElement(
-            "div",
-            {
-              // className: "arco-table-custom-filter",
-              style: {
-                padding: "10px",
-                "background-color": "var(--color-bg-5)",
-                "box-shadow": "0 2px 8px 0 rgba(0, 0, 0, 0.15)",
+  let useTittle;
+  let testData;
+  CAT_UI.createPanel({
+    // 最小化面板
+    min: true,
+    header: {
+      title: () => {
+        let tittle;
+        [tittle, useTittle] = CAT_UI.useState("最大化后1s获取数据");
+        return CAT_UI.Text("脚本猫的UI框架Table " + tittle, {
+          style: { fontSize: "16px" },
+        });
+      },
+      // 控制图标大小 img→width svg→fontSize
+      // CAT_UI.Icon中除了ScriptCat是img，其余均为svg ……待优化
+      icon: CAT_UI.Icon.ScriptCat({
+        style: { width: "24px", marginRight: "10px" },
+        draggable: "false",
+        className: "arco-icon-loading",
+      }),
+      style: { background: "#e5e5ff" },
+    },
+    footer: {
+      version: "0.1.0",
+    },
+    render: () => {
+      CAT_UI.useEffect(() => {
+        if (!testData) {
+          simXHR().then((data) => {
+            testData = data;
+            useTittle("数据已更新");
+          });
+        }
+      });
+
+      // 下方均为官方示例https://arco.design/react/components/table#自定义筛选菜单
+      // 转译成ui.js封装形式
+      const inputRef = CAT_UI.useRef(null);
+      const columns = [
+        {
+          title: "Name",
+          dataIndex: "name",
+          filterIcon: CAT_UI.Icon.IconSearch(),
+          filterDropdown: ({ filterKeys, setFilterKeys, confirm }) => {
+            return CAT_UI.createElement(
+              "div",
+              {
+                // className: "arco-table-custom-filter",
+                style: {
+                  padding: "10px",
+                  "background-color": "var(--color-bg-5)",
+                  "box-shadow": "0 2px 8px 0 rgba(0, 0, 0, 0.15)",
+                },
               },
-            },
-            CAT_UI.Input.Search({
-              ref: inputRef,
-              searchButton: true,
-              placeholder: "Please enter name",
-              value: filterKeys[0] || "",
-              onChange: (value) => {
-                setFilterKeys(value ? [value] : []);
-              },
-              onSearch: () => {
-                confirm();
-              },
-            })
-          );
+              CAT_UI.Input.Search({
+                ref: inputRef,
+                searchButton: true,
+                placeholder: "Please enter name",
+                value: filterKeys[0] || "",
+                onChange: (value) => {
+                  setFilterKeys(value ? [value] : []);
+                },
+                onSearch: () => {
+                  confirm();
+                },
+              })
+            );
+          },
+          onFilter: (value, row) =>
+            value ? row.name.indexOf(value) !== -1 : true,
+          onFilterDropdownVisibleChange: (visible) => {
+            if (visible) {
+              setTimeout(() => inputRef.current.focus(), 150);
+            }
+          },
         },
-        onFilter: (value, row) =>
-          value ? row.name.indexOf(value) !== -1 : true,
-        onFilterDropdownVisibleChange: (visible) => {
-          if (visible) {
-            setTimeout(() => inputRef.current.focus(), 150);
-          }
+        {
+          title: "Salary",
+          dataIndex: "salary",
         },
-      },
-      {
-        title: "Salary",
-        dataIndex: "salary",
-      },
-      {
-        title: "Address",
-        dataIndex: "address",
-      },
-      {
-        title: "Email",
-        dataIndex: "email",
-      },
-    ];
-    return CAT_UI.Table({ columns, data: testData });
-  },
-});
+        {
+          title: "Address",
+          dataIndex: "address",
+        },
+        {
+          title: "Email",
+          dataIndex: "email",
+        },
+      ];
+      return CAT_UI.Table({ columns, data: testData, loading: !!!testData });
+    },
+  });
+}
+
+initTable();
 
 // Typography
 CAT_UI.createPanel({
