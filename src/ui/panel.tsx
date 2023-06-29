@@ -109,7 +109,12 @@ class UIPanel extends HTMLElement {
               minButton={this.options.minButton}
               display={display}
               displayButton={this.options.displayButton}
-              onMin={() => setMin(!min)}
+              onMin={() => {
+                setMin(!min);
+                if (min && !display) {
+                  setDisplay(true);
+                }
+              }}
               onDisplay={() => setDisplay(!display)}
               panel={ref}
             />
