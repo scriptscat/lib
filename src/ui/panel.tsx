@@ -1,11 +1,21 @@
-import React, { MutableRefObject, ReactElement, useRef, useState } from "react";
+import {
+  CSSProperties,
+  MutableRefObject,
+  ReactElement,
+  useRef,
+  useState,
+} from "react";
 import UIPage, { UIPageOptions } from "./page";
-import { Button, Layout, Space, Typography } from "@arco-design/web-react";
-import { IconMinus, IconPlus, IconProps } from "@arco-design/web-react/icon";
+import { Button, Layout } from "@arco-design/web-react";
+import {
+  IconExpand,
+  IconMinus,
+  IconPlus,
+  IconShrink,
+} from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
 // @ts-ignore
 import arcoCss from "./arco.css";
-import CAT_UI from "./ui";
 import {
   Outlet,
   RouteObject,
@@ -14,7 +24,10 @@ import {
 } from "react-router-dom";
 
 export type UIPanelOptions = UIPageOptions & {
-  min?: boolean;
+  min: boolean;
+  minButton: boolean;
+  displayButton: boolean;
+  display: boolean;
   point?: {
     x: number;
     y: number;
@@ -58,6 +71,7 @@ class UIPanel extends HTMLElement {
     const Render = () => {
       const ref = useRef<HTMLElement>();
       const [min, setMin] = useState(this.options.min ?? false);
+      const [display, setDisplay] = useState(this.options.display ?? true);
       const title =
         typeof this.options.header?.title == "function"
           ? this.options.header?.title()
@@ -92,20 +106,28 @@ class UIPanel extends HTMLElement {
               icon={this.options.header?.icon}
               style={this.options.header?.style}
               min={min}
+              minButton={this.options.minButton}
+              display={display}
+              displayButton={this.options.displayButton}
               onMin={() => setMin(!min)}
+              onDisplay={() => setDisplay(!display)}
               panel={ref}
             />
             {!min && (
               <Layout.Content
                 style={{
                   padding: "4px 6px",
+                  display: display ? "unset" : "none",
                 }}
               >
                 <Child />
               </Layout.Content>
             )}
             {!min && (
-              <UIPanel.DefaultFooter version={this.options.footer?.version} />
+              <UIPanel.DefaultFooter
+                version={this.options.footer?.version}
+                style={{ display: display ? "unset" : "none" }}
+              />
             )}
           </Layout>
         </Draggable>
@@ -169,6 +191,14 @@ class UIPanel extends HTMLElement {
     if (!this.options.footer) {
       this.options.footer = {};
     }
+    if (this.options.minButton == void 0) {
+      this.options.minButton = false;
+      this.options.min = false;
+    }
+    if (this.options.displayButton == void 0) {
+      this.options.displayButton = false;
+      this.options.display = true;
+    }
   }
 
   static DefaultHeader(props: {
@@ -176,10 +206,15 @@ class UIPanel extends HTMLElement {
     icon?: JSX.Element;
     style?: React.CSSProperties;
     min: boolean;
+    minButton: boolean;
+    display: boolean;
+    displayButton: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: () => void;
+    onDisplay?: () => void;
   }) {
-    const MinIcon= props.min ? IconPlus : IconMinus
+    const MinIcon = props.min ? IconPlus : IconMinus;
+    const DisplayIcon = props.display ? IconShrink : IconExpand;
     return (
       <Layout.Header
         className="flex"
@@ -202,27 +237,45 @@ class UIPanel extends HTMLElement {
           {props.icon}
           {props.title}
         </div>
-        <Button
-          type="text"
-          className="min-btn"
-          icon={<MinIcon />}
-          iconOnly
-          size="small"
-          onClick={() => {
-            props.onMin && props.onMin();
-          }}
-        />
+        {props.displayButton && !props.min && (
+          <Button
+            type="text"
+            className="min-btn"
+            icon={<DisplayIcon />}
+            iconOnly
+            size="small"
+            onClick={() => {
+              props.onDisplay && props.onDisplay();
+            }}
+          />
+        )}
+        {props.minButton && (
+          <Button
+            type="text"
+            className="min-btn"
+            icon={<MinIcon />}
+            iconOnly
+            size="small"
+            onClick={() => {
+              props.onMin && props.onMin();
+            }}
+          />
+        )}
       </Layout.Header>
     );
   }
 
-  static DefaultFooter(props: { version?: string }) {
+  static DefaultFooter(props: {
+    style: CSSProperties | undefined;
+    version?: string;
+  }) {
     return (
       <Layout.Footer
         className="flex"
         style={{
           alignItems: "center",
           padding: "4px 6px",
+          ...props.style,
         }}
       >
         <div className="flex">{props.version && props.version}</div>

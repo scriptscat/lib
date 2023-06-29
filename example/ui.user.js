@@ -94,6 +94,7 @@ function Typography() {
 }
 
 CAT_UI.createPanel({
+  displayButton:true,
   header: {
     title() {
       // createElement别名
@@ -188,6 +189,8 @@ function initTable() {
   CAT_UI.createPanel({
     // 最小化面板
     min: true,
+    minButton: true,
+    displayButton:true,
     header: {
       title: () => {
         let tittle;
@@ -281,6 +284,7 @@ initTable();
 
 // Typography
 CAT_UI.createPanel({
+  minButton: true,
   // 相当于GM_addStyle
   appendStyle: `section {
     max-width:500px;
