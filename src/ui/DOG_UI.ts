@@ -69,16 +69,56 @@ import {
   Typography,
   Upload,
 } from "@arco-design/web-react";
+import React,{ useState, useRef, useEffect } from "react";
+import Draggable from "react-draggable";
+
+
 class DOG_UI {
   shadowroot!: ShadowRoot;
   container!: HTMLDivElement;
   Notification!: typeof Notification;
   Message!: typeof Message;
+  moudles: any;
 
   constructor() {
     this.#createShadow();
     this.#initProxy();
-    Object.assign(this, {
+    this.#assignMoudles();
+  }
+
+  createApp(code: string) {
+    //@ts-ignore
+    return eval(globalThis.jsxLoader.compiler.compile(code));
+  }
+
+  #createShadow() {
+    const div = document.createElement("div");
+    //div.innerHTML = "<cat-ui-page />";
+    document.body.append(div);
+    const shadow = div.attachShadow({ mode: "open" });
+    const container = document.createElement("div");
+    container.classList.add("container");
+    container.classList.add("arco");
+    shadow.append(container);
+    const css = document.createElement("style");
+    css.innerHTML = arcoCss as unknown as string;
+    shadow.append(css);
+    this.container = container;
+    this.shadowroot = shadow;
+  }
+
+  addStyle(styleString: string) {
+    const css = document.createElement("style");
+    css.innerHTML = styleString;
+    this.shadowroot.append(css);
+  }
+
+  #assignMoudles() {
+    this.moudles = {
+      useState,
+      useRef,
+      useEffect,
+      Draggable,
       Affix,
       Alert,
       Anchor,
@@ -145,29 +185,8 @@ class DOG_UI {
       Trigger,
       Typography,
       Upload,
-    });
-  }
-
-  #createShadow() {
-    const div = document.createElement("div");
-    //div.innerHTML = "<cat-ui-page />";
-    document.body.append(div);
-    const shadow = div.attachShadow({ mode: "open" });
-    const container = document.createElement("div");
-    container.classList.add("container");
-    container.classList.add("arco");
-    shadow.append(container);
-    const css = document.createElement("style");
-    css.innerHTML = arcoCss as unknown as string;
-    shadow.append(css);
-    this.container = container;
-    this.shadowroot = shadow;
-  }
-
-  addStyle(styleString: string) {
-    const css = document.createElement("style");
-    css.innerHTML = styleString;
-    this.shadowroot.append(css);
+    };
+    Object.assign(this, this.moudles);
   }
 
   #initProxy() {
