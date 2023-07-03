@@ -1,10 +1,15 @@
-(window.unsafeWindow || window).CAT_UI = CAT_UI;
+/*(window.unsafeWindow || window).CAT_UI = CAT_UI;
 (window.unsafeWindow || window).DOG_UI = DOG_UI;
 (window.unsafeWindow || window).React = React;
 (window.unsafeWindow || window).ReactDOM = ReactDOM;
 (window.unsafeWindow || window).jsxLoader = jsxLoader;
 
-(window.unsafeWindow || window).dog = new DOG_UI();
+(window.unsafeWindow || window).dog = new DOG_UI();*/
+
+//函数式方法：CAT_UI.XXX
+//文本式方法：const cat = new CAT_UI(); 下方使用dog便于区分
+const dog = new CAT_UI();
+(window.unsafeWindow || window).dog = dog;
 
 dog.addStyle(`
 .flex{
@@ -76,7 +81,7 @@ options = {
             style: { width: "24px", verticalAlign: "middle" },
             draggable: "false",
           }),
-          CAT_UI.Text("脚本猫的UI框架Typography", {
+          CAT_UI.Text("脚本狗的UI框架Typography（文本式实现方法）", {
             style: { fontSize: "16px" },
           }),
         ],

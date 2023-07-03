@@ -1,5 +1,9 @@
 //暴露变量 方便调试
 (window.unsafeWindow || window).CAT_UI = CAT_UI;
+(window.unsafeWindow || window).React = React;
+(window.unsafeWindow || window).ReactDOM = ReactDOM;
+
+
 
 // 综合面板
 const data = { input: "默认值" };

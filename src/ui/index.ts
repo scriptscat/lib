@@ -5,8 +5,7 @@ import ReactDOM from "react-dom";
 //@ts-ignore
 import jsxLoaderFuc from "./lib/jsxLoader";
 
-(<any>window).CAT_UI = CAT_UI;
-(<any>window).DOG_UI = DOG_UI;
+(<any>window).CAT_UI = Object.assign(DOG_UI, CAT_UI);
 (<any>window).React = React;
 (<any>window).ReactDOM = ReactDOM;
 jsxLoaderFuc();
