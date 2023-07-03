@@ -96,11 +96,13 @@ class DOG_UI {
     this.#assignMoudles();
   }
 
-  createApp(code: string) {
+  createApp(code: string, args = {}) {
+    const keys = Object.keys(args).join(",");
     const app = new Function(
+      keys,
       //@ts-ignore
       "return " + globalThis.jsxLoader.compiler.compile(code)
-    )();
+    )(...Object.values(args));
     return typeof app == "function" ? createElement(app) : app;
   }
 

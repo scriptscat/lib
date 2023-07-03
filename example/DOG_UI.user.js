@@ -88,10 +88,8 @@ options = {
 
 // 混搭 模板字符串
 function Panel() {
-  // eval存在作用域问题 不能用const 也不能用var…… 待优化
-  title = options.header.title();
-  TypographyApp = dog.createApp(Typography.toString());
-  return `<Draggable
+  // jsx开头要顶格写 否则可能会被库识别错误
+  const jsx = `<Draggable
     handle=".draggable"
     onStop={(e, d) => {
         this.draggableStopCallback &&
@@ -169,5 +167,10 @@ function Panel() {
         )}
     </Layout>
 </Draggable>`;
+  // 传递变量引用
+  return dog.createApp(jsx, {
+    title: options.header.title(),
+    TypographyApp: dog.createApp(Typography.toString()),
+  });
 }
-dog.render(dog.createApp(Panel()));
+dog.render(Panel());
