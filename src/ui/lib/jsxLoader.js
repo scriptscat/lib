@@ -1575,7 +1575,7 @@ export default function() {
                         case astTypes.createElement:
                             // Start of Element
                             // Modified by DreamNya 
-                            var js = createElement + '(' + (node.isClass ? 'this.' + node.name : JSON.stringify(node.name)) + ', ';
+                            var js = createElement + '(' + (node.isClass ? 'DOG_UI.' + node.name : JSON.stringify(node.name)) + ', ';
                             if (node.stackCount > 0) {
                                 if (skipIndent !== true) {
                                     js = '\n' + ' '.repeat(8) + ' '.repeat(node.stackCount * 4) + js;

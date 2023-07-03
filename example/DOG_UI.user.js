@@ -45,15 +45,15 @@ function Typography() {
       { type: "secondary", spacing: "close" }
     ),
   ];
-  // useState、useRef无效，待优化
-  //const [str, setStr] = CAT_UI.useState("Click the icon to edit this text.");
+
+  const [str, setStr] = CAT_UI.useState("Click the icon to edit this text.");
   const array2 = [
     CAT_UI.Typography.Paragraph("Click the icon to copy this text.", {
       copyable: true,
     }),
-    CAT_UI.Typography.Paragraph("Click the icon to edit this text.（暂时没用 useState无效）", {
+    CAT_UI.Typography.Paragraph(str, {
       editable: {
-        //onChange: setStr,
+        onChange: setStr,
       },
     }),
   ];
@@ -64,7 +64,7 @@ function Typography() {
   });
 }
 
-const options = {
+options = {
   min: false,
   display: true,
   point: { x: (window.screen.width - 500) / 2, y: 20 },
@@ -89,9 +89,9 @@ const options = {
 // 混搭 模板字符串
 function Panel() {
   // eval存在作用域问题 不能用const 也不能用var…… 待优化
-  title = options.header.title()
-  const code = `
-    <Draggable
+  title = options.header.title();
+  TypographyApp = dog.createApp(Typography.toString());
+  return `<Draggable
     handle=".draggable"
     onStop={(e, d) => {
         this.draggableStopCallback &&
@@ -164,12 +164,10 @@ function Panel() {
                     display: display ? 'unset' : 'none',
                 }}
             >
-                {Typography()}
+                {TypographyApp}
             </Layout.Content>
         )}
     </Layout>
-</Draggable>
-`;
-  return dog.createApp(code);
+</Draggable>`;
 }
-ReactDOM.createRoot(dog.container).render(Panel());
+dog.render(dog.createApp(Panel()));

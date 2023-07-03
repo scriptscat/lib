@@ -69,16 +69,26 @@ import {
   Typography,
   Upload,
 } from "@arco-design/web-react";
-import React,{ useState, useRef, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  createElement,
+  CElement,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from "react";
+import { hydrateRoot, createRoot } from "react-dom/client";
 import Draggable from "react-draggable";
-
 
 class DOG_UI {
   shadowroot!: ShadowRoot;
   container!: HTMLDivElement;
   Notification!: typeof Notification;
   Message!: typeof Message;
-  moudles: any;
+  static moudles: any;
 
   constructor() {
     this.#createShadow();
@@ -87,8 +97,25 @@ class DOG_UI {
   }
 
   createApp(code: string) {
-    //@ts-ignore
-    return eval(globalThis.jsxLoader.compiler.compile(code));
+    const app = new Function(
+      //@ts-ignore
+      "return " + globalThis.jsxLoader.compiler.compile(code)
+    )();
+    return typeof app == "function" ? createElement(app) : app;
+  }
+
+  render(
+    app:
+      | string
+      | number
+      | boolean
+      | ReactElement<any, string | JSXElementConstructor<any>>
+      | Iterable<ReactNode>
+      | ReactPortal
+      | null
+      | undefined
+  ) {
+    return createRoot(this.container).render(app);
   }
 
   #createShadow() {
@@ -114,79 +141,80 @@ class DOG_UI {
   }
 
   #assignMoudles() {
-    this.moudles = {
-      useState,
-      useRef,
-      useEffect,
-      Draggable,
-      Affix,
-      Alert,
-      Anchor,
-      AutoComplete,
-      Avatar,
-      BackTop,
-      Badge,
-      Breadcrumb,
-      Button,
-      Calendar,
-      Card,
-      Carousel,
-      Cascader,
-      Checkbox,
-      Collapse,
-      Comment,
-      ConfigProvider,
-      DatePicker,
-      Descriptions,
-      Divider,
-      Drawer,
-      Dropdown,
-      Empty,
-      Form,
-      Grid,
-      Icon,
-      Image,
-      Input,
-      InputNumber,
-      InputTag,
-      Layout,
-      Link,
-      List,
-      Mentions,
-      Menu,
-      Modal,
-      PageHeader,
-      Pagination,
-      Popconfirm,
-      Popover,
-      Portal,
-      Progress,
-      Radio,
-      Rate,
-      ResizeBox,
-      Result,
-      Select,
-      Skeleton,
-      Slider,
-      Space,
-      Spin,
-      Statistic,
-      Steps,
-      Switch,
-      Table,
-      Tabs,
-      Tag,
-      TimePicker,
-      Timeline,
-      Tooltip,
-      Transfer,
-      Tree,
-      TreeSelect,
-      Trigger,
-      Typography,
-      Upload,
-    };
-    Object.assign(this, this.moudles);
+    if (!DOG_UI.moudles) {
+      Object.assign(DOG_UI, {
+        useState,
+        useRef,
+        useEffect,
+        Draggable,
+        Affix,
+        Alert,
+        Anchor,
+        AutoComplete,
+        Avatar,
+        BackTop,
+        Badge,
+        Breadcrumb,
+        Button,
+        Calendar,
+        Card,
+        Carousel,
+        Cascader,
+        Checkbox,
+        Collapse,
+        Comment,
+        ConfigProvider,
+        DatePicker,
+        Descriptions,
+        Divider,
+        Drawer,
+        Dropdown,
+        Empty,
+        Form,
+        Grid,
+        Icon,
+        Image,
+        Input,
+        InputNumber,
+        InputTag,
+        Layout,
+        Link,
+        List,
+        Mentions,
+        Menu,
+        Modal,
+        PageHeader,
+        Pagination,
+        Popconfirm,
+        Popover,
+        Portal,
+        Progress,
+        Radio,
+        Rate,
+        ResizeBox,
+        Result,
+        Select,
+        Skeleton,
+        Slider,
+        Space,
+        Spin,
+        Statistic,
+        Steps,
+        Switch,
+        Table,
+        Tabs,
+        Tag,
+        TimePicker,
+        Timeline,
+        Tooltip,
+        Transfer,
+        Tree,
+        TreeSelect,
+        Trigger,
+        Typography,
+        Upload,
+      });
+    }
   }
 
   #initProxy() {
