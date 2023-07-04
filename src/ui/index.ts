@@ -1,11 +1,11 @@
 import CAT_UI from "./ui";
-import DOG_UI from "./DOG_UI";
+import AST from "./ast";
 import React from "react";
 import ReactDOM from "react-dom";
 //@ts-ignore
 import jsxLoaderFuc from "./lib/jsxLoader";
 
-(<any>window).CAT_UI = Object.assign(DOG_UI, CAT_UI);
+(<any>window).CAT_UI = Object.assign(AST, CAT_UI);
 (<any>window).React = React;
 (<any>window).ReactDOM = ReactDOM;
 jsxLoaderFuc();

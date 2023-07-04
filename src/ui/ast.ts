@@ -83,7 +83,7 @@ import {
 import { hydrateRoot, createRoot } from "react-dom/client";
 import Draggable from "react-draggable";
 
-class DOG_UI {
+class AST {
   shadowroot!: ShadowRoot;
   container!: HTMLDivElement;
   Notification!: typeof Notification;
@@ -241,4 +241,4 @@ class DOG_UI {
   }
 }
 
-export default DOG_UI;
+export default AST;

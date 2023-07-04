@@ -7,7 +7,7 @@ module.exports = merge(baseConfig, {
   entry: {
     "ui": "./src/ui/index.ts",
     "ui.user": "./example/ui.user.js",
-    "DOG_UI.user": "./example/DOG_UI.user.js",
+    "ast.user": "./example/ast.user.js",
   },
   output: {
     path: __dirname + "/../dist/example",
@@ -29,8 +29,8 @@ module.exports = merge(baseConfig, {
       ],
     }),
     new ScriptCatWebpackPlugin({
-      file: "DOG_UI.user.js",
-      name: "脚本狗UI库",
+      file: "ast.user.js",
+      name: "脚本猫UI库（AST）",
       namespace: "https://scriptcat.org/",
       version: "0.1.0",
       description: "基于Arco做的UI库, 用于快速开发脚本的UI界面",
