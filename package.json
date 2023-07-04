@@ -32,7 +32,7 @@
     "jest": "^27.0.4",
     "nock": "^13.2.4",
     "raw-loader": "^4.0.2",
-    "scriptcat-webpack-plugin": "^1.3.0",
+    "scriptcat-webpack-plugin": "^1.3.2",
     "style-loader": "^3.3.3",
     "ts-jest": "^27.0.2",
     "ts-loader": "^9.2.2",
