@@ -1579,6 +1579,8 @@ export default function() {
                             if (node.isClass) {
                               if (node.name.endsWith("$")) {
                                 nodeName = node.name.slice(0, -1);
+                              } else if(node.name.startsWith("React")){
+                                nodeName = node.name
                               } else {
                                 nodeName = "CAT_UI.moudles." + node.name;
                               }
