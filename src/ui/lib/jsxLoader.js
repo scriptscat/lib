@@ -1575,7 +1575,17 @@ export default function() {
                         case astTypes.createElement:
                             // Start of Element
                             // Modified by DreamNya 
-                            var js = createElement + '(' + (node.isClass ? 'CAT_UI.moudles.' + node.name : JSON.stringify(node.name)) + ', ';
+                            let nodeName;
+                            if (node.isClass) {
+                              if (node.name.endsWith("$")) {
+                                nodeName = node.name.slice(0, -1);
+                              } else {
+                                nodeName = "CAT_UI.moudles." + node.name;
+                              }
+                            } else {
+                              nodeName = JSON.stringify(node.name);
+                            }
+                            var js = createElement + "(" + nodeName + ", ";
                             if (node.stackCount > 0) {
                                 if (skipIndent !== true) {
                                     js = '\n' + ' '.repeat(8) + ' '.repeat(node.stackCount * 4) + js;

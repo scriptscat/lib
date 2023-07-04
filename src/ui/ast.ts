@@ -74,17 +74,17 @@ import {
   useRef,
   useEffect,
   createElement,
-  CElement,
   JSXElementConstructor,
   ReactElement,
   ReactNode,
   ReactPortal,
+  FunctionComponent,
 } from "react";
 import { hydrateRoot, createRoot } from "react-dom/client";
 import Draggable from "react-draggable";
 
 class AST {
-  shadowroot!: ShadowRoot;
+  shadowRoot!: ShadowRoot;
   container!: HTMLDivElement;
   Notification!: typeof Notification;
   Message!: typeof Message;
@@ -96,16 +96,22 @@ class AST {
     this.#assignMoudles();
   }
 
-  createApp(code: string, args = {}) {
-    const keys = Object.keys(args).join(",");
+  // 创建App
+  createApp(code: string | FunctionComponent<{}>, argument = {}) {
+    if (typeof code == "function") {
+      return createElement(code);
+    }
+    const keys = Object.keys(argument).join(",");
+    const args = Object.values(argument);
     const app = new Function(
       keys,
       //@ts-ignore
       "return " + globalThis.jsxLoader.compiler.compile(code)
-    )(...Object.values(args));
+    )(...args);
     return typeof app == "function" ? createElement(app) : app;
   }
 
+  // 渲染元素
   render(
     app:
       | string
@@ -120,6 +126,7 @@ class AST {
     return createRoot(this.container).render(app);
   }
 
+  // 初始化后在document.body下创建一个div，挂载shadowRoot，并添加基础样式
   #createShadow() {
     const div = document.createElement("div");
     //div.innerHTML = "<cat-ui-page />";
@@ -133,16 +140,19 @@ class AST {
     css.innerHTML = arcoCss as unknown as string;
     shadow.append(css);
     this.container = container;
-    this.shadowroot = shadow;
+    this.shadowRoot = shadow;
   }
 
+  // 在shadowRoot下动态新增样式，类似GM_addStyle
   addStyle(styleString: string) {
     const css = document.createElement("style");
     css.innerHTML = styleString;
-    this.shadowroot.append(css);
+    this.shadowRoot.append(css);
   }
 
+  // 暴露组件方法
   #assignMoudles() {
+    Object.assign(this, { useState, useRef, useEffect });
     //@ts-ignore
     if (!window.CAT_UI.moudles) {
       //@ts-ignore
@@ -178,7 +188,8 @@ class AST {
           Empty,
           Form,
           Grid,
-          Icon,
+          //@ts-ignore
+          Icon: CAT_UI.Icon,
           Image,
           Input,
           InputNumber,
@@ -224,14 +235,17 @@ class AST {
     }
   }
 
+  // 特殊组件API优化
   #initProxy() {
     const that = this;
+    // 指定Notification组件挂载位置
     this.Notification = new Proxy(Notification, {
       get(...args) {
         Notification.config({ getContainer: () => that.container });
         return Reflect.get(...args);
       },
     });
+    // 指定Message组件挂载位置
     this.Message = new Proxy(Message, {
       get(...args) {
         Message.config({ getContainer: () => that.container });

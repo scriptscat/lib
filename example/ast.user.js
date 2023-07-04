@@ -61,9 +61,7 @@ function Typography() {
   });
 }
 
-options = {
-  min: false,
-  display: true,
+const options = {
   point: { x: (window.screen.width - 500) / 2, y: 20 },
   header: {
     title: () =>
@@ -85,89 +83,83 @@ options = {
 
 // 混搭 模板字符串
 function Panel() {
+  const [min, setMin] = ast.useState(options.min ?? false);
+  const MinIcon = min
+    ? CAT_UI.moudles.Icon.IconPlus
+    : CAT_UI.moudles.Icon.IconMinus;
+  const onMin = (min) => setMin(min);
   // jsx开头要顶格写 否则可能会被库识别错误
   const jsx = `<Draggable
-    handle=".draggable"
-    onStop={(e, d) => {
-        this.draggableStopCallback &&
-            this.draggableStopCallback({
-                x: d.x,
-                y: d.y,
-            });
-    }}
+  handle=".draggable"
+  onStop={(e, d) => {
+      this.draggableStopCallback &&
+          this.draggableStopCallback({
+              x: d.x,
+              y: d.y,
+          });
+  }}
 >
-    <Layout
-        style={{
-            position: 'absolute',
-            border: '1px solid var(--color-border-2)',
-            background: 'var(--color-bg-1)',
-            top: (options?.point?.y ?? 0) + 'px',
-            left: (options?.point?.x ?? 0) + 'px',
-            borderRadius: '6px',
-            zIndex: '1000',
-            overflow: 'hidden',
-        }}
-    >
-        
-        <Layout.Header
-            className="flex"
-            style={{
-                alignItems: 'center',
-                padding: '4px 6px',
-            }}
-        >
-            <div
-                className="draggable flex"
-                style={{
-                    flex: 1,
-                    cursor: 'move',
-                    alignItems: 'center',
-                    userSelect: 'none',
-                    MozUserSelect: '-moz-none',
-                }}
-            >
-                {title}
-            </div>
-            {options.displayButton && !options.min && (
-                <Button
-                    type="text"
-                    className="min-btn"
-                    icon={<DisplayIcon />}
-                    size="small"
-                    onClick={() => {
-                        options.onDisplay && options.onDisplay();
-                    }}
-                />
-            )}
-            {options.minButton && (
-                <Button
-                    type="text"
-                    className="min-btn"
-                    icon={<MinIcon />}
-                    size="small"
-                    onClick={() => {
-                        options.onMin && options.onMin();
-                    }}
-                />
-            )}
-        </Layout.Header>
-        
-        {!options.min && (
-            <Layout.Content
-                style={{
-                    padding: '4px 6px',
-                    display: display ? 'unset' : 'none',
-                }}
-            >
-                {TypographyApp}
-            </Layout.Content>
-        )}
-    </Layout>
-</Draggable>`;
+  <Layout
+      style={{
+          position: 'absolute',
+          border: '1px solid var(--color-border-2)',
+          background: 'var(--color-bg-1)',
+          top: (options?.point?.y ?? 0) + 'px',
+          left: (options?.point?.x ?? 0) + 'px',
+          borderRadius: '6px',
+          zIndex: '1000',
+          overflow: 'hidden',
+      }}
+  >
+      <Layout.Header
+          className="flex"
+          style={{
+              alignItems: 'center',
+              padding: '4px 6px',
+          }}
+      >
+          <div
+              className="draggable flex"
+              style={{
+                  flex: 1,
+                  cursor: 'move',
+                  alignItems: 'center',
+                  userSelect: 'none',
+                  MozUserSelect: '-moz-none',
+              }}
+          >
+              {title}
+          </div>
+          <Button
+              type="text"
+              className="min-btn"
+              {/* JSX元素名以$结尾转义变量，视为使用传入变量，否则均视为CAT_UI组件变量*/}
+              icon={<MinIcon$ />}
+              iconOnly={true}
+              size="small"
+              onClick={() => onMin(!min)}
+          />
+      </Layout.Header>
+      <Layout.Content
+          style={{
+              padding: '4px 6px',
+              display: !min ? 'unset' : 'none',
+          }}
+      >
+          {TypographyApp}
+      </Layout.Content>
+  </Layout>
+</Draggable>;
+`;
   // 传递变量引用
   return ast.createApp(jsx, {
     title: options.header.title(),
     TypographyApp: ast.createApp(Typography.toString()),
+    min,
+    setMin,
+    onMin,
+    MinIcon, // 不需要加$
+    options,
   });
 }
-ast.render(Panel());
+ast.render(ast.createApp(Panel));
