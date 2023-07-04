@@ -8,10 +8,8 @@ import {
 import UIPage, { UIPageOptions } from "./page";
 import { Button, Layout } from "@arco-design/web-react";
 import {
-  IconExpand,
   IconMinus,
   IconPlus,
-  IconShrink,
 } from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
 // @ts-ignore
@@ -25,9 +23,6 @@ import {
 
 export type UIPanelOptions = UIPageOptions & {
   min: boolean;
-  minButton: boolean;
-  displayButton: boolean;
-  display: boolean;
   point?: {
     x: number;
     y: number;
@@ -71,12 +66,12 @@ class UIPanel extends HTMLElement {
     const Render = () => {
       const ref = useRef<HTMLElement>();
       const [min, setMin] = useState(this.options.min ?? false);
-      const [display, setDisplay] = useState(this.options.display ?? true);
       const title =
         typeof this.options.header?.title == "function"
           ? this.options.header?.title()
           : this.options.header?.title;
 
+      this._setMin = setMin;
       return (
         <Draggable
           handle=".draggable"
@@ -106,34 +101,26 @@ class UIPanel extends HTMLElement {
               icon={this.options.header?.icon}
               style={this.options.header?.style}
               min={min}
-              minButton={this.options.minButton}
-              display={display}
-              displayButton={this.options.displayButton}
-              onMin={() => {
-                setMin(!min);
-                if (min && !display) {
-                  setDisplay(true);
+              onMin={(min) => {
+                setMin(min);
+                if (this._onMin) {
+                  this._onMin(min);
                 }
               }}
-              onDisplay={() => setDisplay(!display)}
               panel={ref}
             />
-            {!min && (
-              <Layout.Content
-                style={{
-                  padding: "4px 6px",
-                  display: display ? "unset" : "none",
-                }}
-              >
-                <Child />
-              </Layout.Content>
-            )}
-            {!min && (
-              <UIPanel.DefaultFooter
-                version={this.options.footer?.version}
-                style={{ display: display ? "unset" : "none" }}
-              />
-            )}
+            <Layout.Content
+              style={{
+                padding: "4px 6px",
+                display: min ? "unset" : "none",
+              }}
+            >
+              <Child />
+            </Layout.Content>
+            <UIPanel.DefaultFooter
+              version={this.options.footer?.version}
+              style={{ display: min ? "unset" : "none" }}
+            />
           </Layout>
         </Draggable>
       );
@@ -160,6 +147,18 @@ class UIPanel extends HTMLElement {
 
     UIPage.render(this);
     this.options.onReady && this.options.onReady(this);
+  }
+
+  _setMin?: (min: boolean) => void;
+
+  setMin(min: boolean) {
+    this._setMin?.(min);
+  }
+
+  _onMin?: (min: boolean) => void;
+
+  onMin(onMin: (min: boolean) => void) {
+    this._onMin = onMin;
   }
 
   draggableStopCallback?: (event: { x: number; y: number }) => void;
@@ -196,14 +195,6 @@ class UIPanel extends HTMLElement {
     if (!this.options.footer) {
       this.options.footer = {};
     }
-    if (this.options.minButton == void 0) {
-      this.options.minButton = false;
-      this.options.min = false;
-    }
-    if (this.options.displayButton == void 0) {
-      this.options.displayButton = false;
-      this.options.display = true;
-    }
   }
 
   static DefaultHeader(props: {
@@ -211,15 +202,11 @@ class UIPanel extends HTMLElement {
     icon?: JSX.Element;
     style?: React.CSSProperties;
     min: boolean;
-    minButton: boolean;
-    display: boolean;
-    displayButton: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
-    onMin?: () => void;
-    onDisplay?: () => void;
+    onMin?: (min: boolean) => void;
+    onDisplay?: (display: boolean) => void;
   }) {
     const MinIcon = props.min ? IconPlus : IconMinus;
-    const DisplayIcon = props.display ? IconShrink : IconExpand;
     return (
       <Layout.Header
         className="flex"
@@ -242,30 +229,16 @@ class UIPanel extends HTMLElement {
           {props.icon}
           {props.title}
         </div>
-        {props.displayButton && !props.min && (
-          <Button
-            type="text"
-            className="min-btn"
-            icon={<DisplayIcon />}
-            iconOnly
-            size="small"
-            onClick={() => {
-              props.onDisplay && props.onDisplay();
-            }}
-          />
-        )}
-        {props.minButton && (
-          <Button
-            type="text"
-            className="min-btn"
-            icon={<MinIcon />}
-            iconOnly
-            size="small"
-            onClick={() => {
-              props.onMin && props.onMin();
-            }}
-          />
-        )}
+        <Button
+          type="text"
+          className="min-btn"
+          icon={<MinIcon />}
+          iconOnly
+          size="small"
+          onClick={() => {
+            props.onMin && props.onMin(!props.min);
+          }}
+        />
       </Layout.Header>
     );
   }

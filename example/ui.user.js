@@ -94,7 +94,6 @@ function Typography() {
 }
 
 CAT_UI.createPanel({
-  displayButton:true,
   header: {
     title() {
       // createElement别名
@@ -131,6 +130,10 @@ CAT_UI.createPanel({
   onReady(panel) {
     panel.onDraggableStop((e) => {
       console.log(e);
+    });
+    panel.onMin((min) => {
+      console.log("min", min);
+      panel.setMin(min);
     });
   },
 });
@@ -189,8 +192,6 @@ function initTable() {
   CAT_UI.createPanel({
     // 最小化面板
     min: true,
-    minButton: true,
-    displayButton:true,
     header: {
       title: () => {
         let tittle;

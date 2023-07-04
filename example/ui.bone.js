@@ -4,7 +4,7 @@
 // @version      0.1.0
 // @description  try to take over the world!
 // @author       Bigonion
-// @match       *
+// @match        *
 // ==/UserScript==
 
 (function () {
