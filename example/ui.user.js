@@ -4,7 +4,6 @@
 (window.unsafeWindow || window).ReactDOM = ReactDOM;
 (window.unsafeWindow || window).jsxLoader = jsxLoader;
 
-
 // 综合面板
 const data = { input: "默认值" };
 
@@ -193,6 +192,7 @@ function initTable() {
 
   let useTittle;
   let testData;
+  let init = false;
   CAT_UI.createPanel({
     // 最小化面板
     min: true,
@@ -218,7 +218,7 @@ function initTable() {
     },
     render: () => {
       CAT_UI.useEffect(() => {
-        if (!testData) {
+        if (init && !testData) {
           simXHR().then((data) => {
             testData = data;
             useTittle("数据已更新");
@@ -281,6 +281,12 @@ function initTable() {
         },
       ];
       return CAT_UI.Table({ columns, data: testData, loading: !!!testData });
+    },
+    onReady(panel) {
+      console.log("Table onReady");
+      panel.onMin((min) => {
+        if (!init) init = true;
+      });
     },
   });
 }

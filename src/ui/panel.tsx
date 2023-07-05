@@ -112,14 +112,14 @@ class UIPanel extends HTMLElement {
             <Layout.Content
               style={{
                 padding: "4px 6px",
-                display: min ? "unset" : "none",
+                display: !min ? "unset" : "none",
               }}
             >
               <Child />
             </Layout.Content>
             <UIPanel.DefaultFooter
               version={this.options.footer?.version}
-              style={{ display: min ? "unset" : "none" }}
+              style={{ display: !min ? "unset" : "none" }}
             />
           </Layout>
         </Draggable>
@@ -204,7 +204,6 @@ class UIPanel extends HTMLElement {
     min: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: (min: boolean) => void;
-    onDisplay?: (display: boolean) => void;
   }) {
     const MinIcon = props.min ? IconPlus : IconMinus;
     return (
