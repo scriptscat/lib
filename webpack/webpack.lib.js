@@ -17,7 +17,17 @@ module.exports = {
 			{ test: /\.(ts|tsx)?$/, use: "ts-loader" },
 			{
 				test: /arco\.css$/,
-				use: ["raw-loader"],
+				use: [
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [["cssnano"]],
+              },
+            },
+          },
+        ],
 			}
 		],
 	},
