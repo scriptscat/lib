@@ -12,6 +12,7 @@ module.exports = merge(baseConfig, {
   output: {
     path: __dirname + "/../dist/example",
     filename: "[name].js",
+    clean: true,
   },
   plugins: [
     new ScriptCatWebpackPlugin({
