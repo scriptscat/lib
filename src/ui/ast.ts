@@ -1,3 +1,4 @@
+import { ComponentConfig } from "@arco-design/web-react/es/ConfigProvider/interface";
 import arcoCss from "./arco.css";
 import {
   Affix,
@@ -123,14 +124,24 @@ class AST {
       | null
       | undefined
   ) {
-    return createRoot(this.container).render(app);
+    const componentConfig = {
+      Message: { getContainer: () => this.container },
+      Notification: { getContainer: () => this.container },
+    } as ComponentConfig;
+ConfigProvider.ConfigContext
+    const App = createElement(
+      ConfigProvider,
+      { getPopupContainer: () => this.container, componentConfig },
+      app
+    );
+    return createRoot(this.container).render(App);
   }
 
   // 初始化后在document.body下创建一个div，挂载shadowRoot，并添加基础样式
-  #createShadow() {
+  #createShadow(parentNode = document.body) {
     const div = document.createElement("div");
     //div.innerHTML = "<cat-ui-page />";
-    document.body.append(div);
+    parentNode.append(div);
     const shadow = div.attachShadow({ mode: "open" });
     const container = document.createElement("div");
     container.classList.add("container");
