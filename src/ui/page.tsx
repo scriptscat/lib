@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import React, { ReactElement } from "react";
 // @ts-ignore
 import arcoCss from "./arco.css";
+import { ConfigProvider } from "@arco-design/web-react";
 
 export type UIPageOptions = {
   style?: string;
@@ -57,7 +58,10 @@ class UIPage extends HTMLElement {
 
     ReactDOM.createRoot(container).render(
       <div>
-        <Child />
+        {/*定义全局Popup弹出挂载容器*/}
+        <ConfigProvider getPopupContainer={() => container}>
+          <Child />
+        </ConfigProvider>
       </div>
     );
 

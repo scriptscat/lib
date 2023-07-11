@@ -89,50 +89,12 @@ const CAT_UI: { [key: string]: any } = {
     return <Checkbox {...props}>{text}</Checkbox>;
   },
   Select(options: JSX.Element[], props?: SelectProps) {
-    if (!props) {
-      props = {};
-    }
-    if (!props.triggerProps) {
-      props.triggerProps = {};
-    }
-    if (!props.triggerProps.getPopupContainer) {
-      props.triggerProps.getPopupContainer = (node) => {
-        return node;
-      };
-    }
     return <Select {...props}>{options}</Select>;
   },
   Space(element: JSX.Element[] | JSX.Element, props?: SpaceProps) {
     return <Space {...props}>{element}</Space>;
   },
   Table(props: TableProps) {
-    // 定义筛选框、搜索框默认弹出位置至UIPanel节点下
-    props.columns?.forEach((ColumnProps) => {
-      if (ColumnProps.filterDropdown || ColumnProps.filters) {
-        if (!ColumnProps.filterDropdownProps) {
-          ColumnProps.filterDropdownProps = {};
-        }
-        if (!ColumnProps.filterDropdownProps.triggerProps) {
-          ColumnProps.filterDropdownProps.triggerProps = {};
-        }
-        if (!ColumnProps.filterDropdownProps.triggerProps.getPopupContainer) {
-          ColumnProps.filterDropdownProps.triggerProps.getPopupContainer = (
-            node
-          ) => {
-            return node.getRootNode().lastChild as HTMLElement;
-          };
-        }
-      }
-    });
-    // 定义气泡框默认弹出位置至UIPanel节点下
-    if (props.showSorterTooltip !== false) {
-      if (!(props.showSorterTooltip instanceof Object)) {
-        props.showSorterTooltip = {};
-      }
-      props.showSorterTooltip.getPopupContainer = (node) => {
-        return node.getRootNode().lastChild as HTMLElement;
-      };
-    }
     return <Table {...props} />;
   },
   Message: Message,
