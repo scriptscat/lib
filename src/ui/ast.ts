@@ -82,13 +82,15 @@ import {
 } from "react";
 import { hydrateRoot, createRoot } from "react-dom/client";
 import Draggable from "react-draggable";
+import { messageFuncType } from "@arco-design/web-react/es/Message/useMessage";
+import { notificationFuncType } from "@arco-design/web-react/es/Notification/useNotification";
 
 class AST {
   shadowRoot!: ShadowRoot;
   container!: HTMLDivElement;
-  Notification!: typeof Notification;
-  Message!: typeof Message;
   static moudles: any;
+  Notification!: ProxyHandler<object> | notificationFuncType;
+  Message!: ProxyHandler<object> | messageFuncType;
 
   constructor(parentNode: HTMLElement) {
     this.#createShadow(parentNode);
@@ -204,7 +206,9 @@ class AST {
           List,
           Mentions,
           Menu,
+          Message,
           Modal,
+          Notification,
           PageHeader,
           Pagination,
           Popconfirm,
@@ -242,21 +246,55 @@ class AST {
 
   // 特殊组件API优化
   #initProxy() {
-    const that = this;
-    // 指定Notification组件挂载位置
-    this.Notification = new Proxy(Notification, {
-      get(...args) {
-        Notification.config({ getContainer: () => that.container });
-        return Reflect.get(...args);
-      },
-    });
-    // 指定Message组件挂载位置
-    this.Message = new Proxy(Message, {
-      get(...args) {
-        Message.config({ getContainer: () => that.container });
-        return Reflect.get(...args);
-      },
-    });
+    this.Notification = new Proxy(
+      {},
+      {
+        get: (_, props) => {
+          const [notification, contextHolder] = Notification.useNotification();
+          hydrateRoot(this.container, contextHolder);
+          this.Notification = notification;
+          return new Proxy(
+            {},
+            {
+              apply: (_, ...args) => {
+                // React 18 官方推荐用setTimeout回调 https://github.com/reactwg/react-18/discussions/5#discussioncomment-798304
+                setTimeout(() =>
+                  Reflect.apply(
+                    notification[
+                      props as keyof notificationFuncType
+                    ] as Function,
+                    ...args
+                  )
+                );
+              },
+            }
+          );
+        },
+      }
+    );
+    this.Message = new Proxy(
+      {},
+      {
+        get: (_, props) => {
+          const [message, contextHolder] = Message.useMessage();
+          hydrateRoot(this.container, contextHolder);
+          this.Message = message;
+          return new Proxy(
+            {},
+            {
+              apply: (_, ...args) => {
+                setTimeout(() =>
+                  Reflect.apply(
+                    message[props as keyof messageFuncType] as Function,
+                    ...args
+                  )
+                );
+              },
+            }
+          );
+        },
+      }
+    );
   }
 }
 
