@@ -1,4 +1,3 @@
-import { ComponentConfig } from "@arco-design/web-react/es/ConfigProvider/interface";
 import arcoCss from "./arco.css";
 import {
   Affix,
@@ -91,8 +90,8 @@ class AST {
   Message!: typeof Message;
   static moudles: any;
 
-  constructor() {
-    this.#createShadow();
+  constructor(parentNode: HTMLElement) {
+    this.#createShadow(parentNode);
     this.#initProxy();
     this.#assignMoudles();
   }
@@ -124,14 +123,9 @@ class AST {
       | null
       | undefined
   ) {
-    const componentConfig = {
-      Message: { getContainer: () => this.container },
-      Notification: { getContainer: () => this.container },
-    } as ComponentConfig;
-ConfigProvider.ConfigContext
     const App = createElement(
       ConfigProvider,
-      { getPopupContainer: () => this.container, componentConfig },
+      { getPopupContainer: () => this.container },
       app
     );
     return createRoot(this.container).render(App);
