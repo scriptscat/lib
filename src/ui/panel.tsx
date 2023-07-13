@@ -7,10 +7,7 @@ import {
 } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import { Button, Layout } from "@arco-design/web-react";
-import {
-  IconMinus,
-  IconPlus,
-} from "@arco-design/web-react/icon";
+import { IconMinus, IconPlus } from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
 // @ts-ignore
 import arcoCss from "./arco.css";
@@ -23,6 +20,8 @@ import {
 
 export type UIPanelOptions = UIPageOptions & {
   min: boolean;
+  onMin?: Function;
+  minButton?: boolean;
   point?: {
     x: number;
     y: number;
@@ -70,8 +69,6 @@ class UIPanel extends HTMLElement {
         typeof this.options.header?.title == "function"
           ? this.options.header?.title()
           : this.options.header?.title;
-
-      this._setMin = setMin;
       return (
         <Draggable
           handle=".draggable"
@@ -101,11 +98,10 @@ class UIPanel extends HTMLElement {
               icon={this.options.header?.icon}
               style={this.options.header?.style}
               min={min}
+              minButton={this.options.minButton ?? true}
               onMin={(min) => {
                 setMin(min);
-                if (this._onMin) {
-                  this._onMin(min);
-                }
+                this.options.onMin && this.options.onMin(min);
               }}
               panel={ref}
             />
@@ -149,18 +145,6 @@ class UIPanel extends HTMLElement {
     this.options.onReady && this.options.onReady(this);
   }
 
-  _setMin?: (min: boolean) => void;
-
-  setMin(min: boolean) {
-    this._setMin?.(min);
-  }
-
-  _onMin?: (min: boolean) => void;
-
-  onMin(onMin: (min: boolean) => void) {
-    this._onMin = onMin;
-  }
-
   draggableStopCallback?: (event: { x: number; y: number }) => void;
 
   onDraggableStop(callback: (event: { x: number; y: number }) => void) {
@@ -202,6 +186,7 @@ class UIPanel extends HTMLElement {
     icon?: JSX.Element;
     style?: React.CSSProperties;
     min: boolean;
+    minButton?: boolean;
     panel: MutableRefObject<HTMLElement | undefined>;
     onMin?: (min: boolean) => void;
   }) {
@@ -228,16 +213,18 @@ class UIPanel extends HTMLElement {
           {props.icon}
           {props.title}
         </div>
-        <Button
-          type="text"
-          className="min-btn"
-          icon={<MinIcon />}
-          iconOnly
-          size="small"
-          onClick={() => {
-            props.onMin && props.onMin(!props.min);
-          }}
-        />
+        {props.minButton && (
+          <Button
+            type="text"
+            className="min-btn"
+            icon={<MinIcon />}
+            iconOnly
+            size="small"
+            onClick={() => {
+              props.onMin && props.onMin(!props.min);
+            }}
+          />
+        )}
       </Layout.Header>
     );
   }

@@ -97,6 +97,8 @@ function Typography() {
 }
 
 CAT_UI.createPanel({
+  //minButton控制是否显示最小化按钮，默认为true
+  minButton: false,
   header: {
     title() {
       // createElement别名
@@ -134,15 +136,12 @@ CAT_UI.createPanel({
     panel.onDraggableStop((e) => {
       console.log(e);
     });
-    panel.onMin((min) => {
-      console.log("min", min);
-      panel.setMin(min);
-    });
   },
 });
 
+//由于React 18渲染规则，顶级调用Message、Modal、Notification时需要使用异步方法，非顶级可直接调用
 // Message
-CAT_UI.Message.success("你好，脚本猫");
+setTimeout(() => CAT_UI.Message.success("你好，脚本猫"));
 
 // Table
 function initTable() {
@@ -194,8 +193,12 @@ function initTable() {
   let testData;
   let init = false;
   CAT_UI.createPanel({
-    // 最小化面板
+    // min代表面板初始状态为最小化（仅显示header）
     min: true,
+    onMin: (min) => {
+      console.log('onMin',min)
+      if (!init) init = true;
+    },
     header: {
       title: () => {
         let tittle;
@@ -209,6 +212,7 @@ function initTable() {
       icon: CAT_UI.Icon.ScriptCat({
         style: { width: "24px", marginRight: "10px" },
         draggable: "false",
+        // 这个class控制图标旋转spin
         className: "arco-icon-loading",
       }),
       style: { background: "#e5e5ff" },
@@ -282,12 +286,6 @@ function initTable() {
       ];
       return CAT_UI.Table({ columns, data: testData, loading: !!!testData });
     },
-    onReady(panel) {
-      console.log("Table onReady");
-      panel.onMin((min) => {
-        if (!init) init = true;
-      });
-    },
   });
 }
 
@@ -295,7 +293,6 @@ initTable();
 
 // Typography
 CAT_UI.createPanel({
-  minButton: true,
   // 相当于GM_addStyle
   appendStyle: `section {
     max-width:500px;

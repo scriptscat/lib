@@ -1,5 +1,5 @@
 //函数式方法：CAT_UI.XXX
-//文本式方法：const cat = new CAT_UI(); 下方使用ast便于区分
+//文本式方法：const cat = new CAT_UI(container?); 下方使用ast便于区分
 const ast = new CAT_UI();
 (window.unsafeWindow || window).ast = ast;
 
@@ -84,6 +84,8 @@ const options = {
 // 混搭 模板字符串
 function Panel() {
   const [min, setMin] = ast.useState(options.min ?? false);
+  const [visible, setVisible] = ast.useState(false);
+  const [disabled, setDisabled] = React.useState(true);
   const MinIcon = min
     ? CAT_UI.moudles.Icon.IconPlus
     : CAT_UI.moudles.Icon.IconMinus;
@@ -147,6 +149,37 @@ function Panel() {
           }}
       >
           {TypographyApp}
+          <Button 
+            onClick={() => setVisible(true)} 
+            type='primary'
+            style={{ margin: '0 auto', 'align-items': 'center' }}
+            className='flex'
+          >
+            Open Draggable Modal
+          </Button>
+          <Modal
+            style={{ cursor: 'move', userSelect: 'none' }}
+            title='Modal Title'
+            visible={visible}
+            onOk={() => (ast.Message.success('OK'), setVisible(false))}
+            onCancel={() => (ast.Message.warning('Cancel'), setVisible(false))}
+            autoFocus={false}
+            onMouseOver={() => {
+              disabled && setDisabled(false);
+            }}
+            onMouseOut={() => {
+              !disabled && setDisabled(true);
+            }}
+            {/*这里不能用箭头函数，否则会被识别错误，可能是ast识别库的bug*/}
+            modalRender={(modal) => {return <Draggable disabled={disabled}>{modal}</Draggable>}}
+            {/*这里需要指定挂载容器，不受全局设置影响，可能是arco框架的bug*/}
+            getPopupContainer={() => ast.container}
+          >
+            <p>
+              You can customize modal body text by the current situation. This modal will be closed
+              immediately once you press the OK button.
+            </p>
+          </Modal>
       </Layout.Content>
   </Layout>
 </Draggable>;
@@ -160,6 +193,10 @@ function Panel() {
     onMin,
     MinIcon, // 不需要加$
     options,
+    visible,
+    setVisible,
+    disabled,
+    setDisabled,
   });
 }
 ast.render(ast.createApp(Panel));

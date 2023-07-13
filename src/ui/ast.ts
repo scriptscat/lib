@@ -254,7 +254,7 @@ class AST {
           hydrateRoot(this.container, contextHolder);
           this.Notification = notification;
           return new Proxy(
-            {},
+            ()=>{},
             {
               apply: (_, ...args) => {
                 // React 18 官方推荐用setTimeout回调 https://github.com/reactwg/react-18/discussions/5#discussioncomment-798304
@@ -280,7 +280,7 @@ class AST {
           hydrateRoot(this.container, contextHolder);
           this.Message = message;
           return new Proxy(
-            {},
+            ()=>{},
             {
               apply: (_, ...args) => {
                 setTimeout(() =>
