@@ -58,8 +58,14 @@ class UIPage extends HTMLElement {
 
     ReactDOM.createRoot(container).render(
       <div>
-        {/*定义全局Popup弹出挂载容器 Modal要单独设置 不知是否为框架BUG*/}
-        <ConfigProvider getPopupContainer={() => container } componentConfig={{ Modal: { getPopupContainer: () => container } }}>
+        {/*定义全局Popup弹出挂载容器 Modal、Drawer要单独设置 不知是否为框架BUG*/}
+        <ConfigProvider
+          getPopupContainer={() => container}
+          componentConfig={{
+            Modal: { getPopupContainer: () => container },
+            Drawer: { getPopupContainer: () => container },
+          }}
+        >
           <Child />
         </ConfigProvider>
       </div>
