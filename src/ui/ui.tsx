@@ -18,7 +18,6 @@ import {
 import { InputSearchProps } from "@arco-design/web-react/es/Input";
 import UIPanel, { UIPanelOptions } from "./panel";
 import * as Icon from "@arco-design/web-react/icon";
-import Message from "./component/message";
 // @ts-ignore
 import arcoCss from "./arco.css";
 import { ImgHTMLAttributes } from "react";
@@ -29,11 +28,14 @@ import Typography, {
   TypographyParagraphProps,
 } from "@arco-design/web-react/es/Typography";
 import Router from "./component/route";
+import Popup from "./component/Popup";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
 const planElName = "cat-ui-plan";
 window.customElements.define(planElName, UIPanel);
+const popupElName = "cat-ui-popup";
+customElements.define(popupElName, Popup);
 
 const CAT_UI: { [key: string]: any } = {
   create(options: UIPageOptions) {
@@ -43,6 +45,14 @@ const CAT_UI: { [key: string]: any } = {
     let div = document.createElement("div");
 
     div.innerHTML = "<" + pageElName + " />";
+
+    document.body.append(div);
+    return div;
+  },
+  createPopup() {
+    let div = document.createElement("div");
+
+    div.innerHTML = "<" + popupElName + " />";
 
     document.body.append(div);
     return div;
@@ -97,7 +107,6 @@ const CAT_UI: { [key: string]: any } = {
   Table(props: TableProps) {
     return <Table {...props} />;
   },
-  Message: Message,
 };
 
 // 动态引入所有图标
