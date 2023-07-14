@@ -1,10 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
 import UIPage, { UIPageOptions } from "./page";
 import {
   Button,
   ButtonProps,
   Checkbox,
   CheckboxProps,
+  Divider,
+  DividerProps,
+  Drawer,
+  DrawerProps,
   Input,
   InputProps,
   Select,
@@ -29,6 +33,7 @@ import Typography, {
 } from "@arco-design/web-react/es/Typography";
 import Router from "./component/route";
 import Popup from "./component/Popup";
+import Draggable, { DraggableProps } from "react-draggable";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -84,6 +89,9 @@ const CAT_UI: { [key: string]: any } = {
     return useRef(data);
   },
   Router: Router,
+  Draggable(element: ReactNode, props: DraggableProps) {
+    return <Draggable {...props}>{element}</Draggable>;
+  },
   //图标 动态加载
   Icon: {},
   Typography(text: string, props?: TypographyProps) {
@@ -101,8 +109,14 @@ const CAT_UI: { [key: string]: any } = {
   Select(options: JSX.Element[], props?: SelectProps) {
     return <Select {...props}>{options}</Select>;
   },
-  Space(element: JSX.Element[] | JSX.Element, props?: SpaceProps) {
+  Space(element: ReactNode, props?: SpaceProps) {
     return <Space {...props}>{element}</Space>;
+  },
+  Divider(children?: ReactNode, props?: DividerProps) {
+    return <Divider {...props}>{children}</Divider>;
+  },
+  Drawer(children: ReactNode, props?: DrawerProps) {
+    return <Drawer {...props}>{children}</Drawer>;
   },
   Table(props: TableProps) {
     return <Table {...props} />;

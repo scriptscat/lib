@@ -196,7 +196,7 @@ function initTable() {
     // min代表面板初始状态为最小化（仅显示header）
     min: true,
     onMin: (min) => {
-      console.log('onMin',min)
+      console.log("onMin", min);
       if (!init) init = true;
     },
     header: {
@@ -316,4 +316,78 @@ CAT_UI.createPanel({
     style: { borderBottom: "1px solid var(--color-neutral-3)" },
   },
   render: Typography,
+});
+
+// Drawer / Modal
+function DM() {
+  const [visible, setVisible] = CAT_UI.useState(false);
+  return CAT_UI.Space([
+    CAT_UI.Button("Open Drawer", {
+      type: "primary",
+      onClick: () => setVisible(true),
+    }),
+    CAT_UI.Button("Open Modal", {
+      type: "primary",
+      onClick: () => {
+        const modal = CAT_UI.Modal.info({
+          style: { cursor: "move", userSelect: "none" },
+          title: "Modal Title",
+          content: CAT_UI.createElement(
+            "p",
+            null,
+            "You can customize modal body text by the current situation. This modal will be closed immediately once you press the OK button."
+          ),
+          onOk: () => (CAT_UI.Message.success("OK"), modal.close()),
+          onCancel: () => CAT_UI.Message.warning("Cancel"),
+          autoFocus: false,
+          modalRender: (modal) => CAT_UI.Draggable(modal),
+        });
+      },
+    }),
+    CAT_UI.Drawer(
+      CAT_UI.createElement("div", { style: { textAlign: "left" } }, [
+        "Here is an example text.",
+        CAT_UI.Divider("divider with text"),
+        "text2",
+        CAT_UI.Divider(null, { type: "vertical" }),
+        "text3",
+      ]),
+      {
+        title: "Basic",
+        visible,
+        focusLock: true,
+        autoFocus: true,
+        zIndex: 10000,
+        onOk: () => {
+          setVisible(false);
+        },
+        onCancel: () => {
+          setVisible(false);
+        },
+      }
+    ),
+  ]);
+}
+
+CAT_UI.createPanel({
+  // 强制固定Drawer
+  appendStyle: `.arco-drawer-wrapper {
+    position: fixed !important;
+  }`,
+  header: {
+    title: CAT_UI.Space(
+      [
+        CAT_UI.Icon.ScriptCat({
+          style: { width: "24px", verticalAlign: "middle" },
+          draggable: "false",
+        }),
+        CAT_UI.Text("脚本猫的UI框架Drawer Modal", {
+          style: { fontSize: "16px" },
+        }),
+      ],
+      { style: { marginLeft: "5px" } }
+    ),
+    style: { borderBottom: "1px solid var(--color-neutral-3)" },
+  },
+  render: DM,
 });
