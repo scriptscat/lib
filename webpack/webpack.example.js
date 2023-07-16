@@ -40,7 +40,7 @@ module.exports = merge(baseConfig, {
         match: "https://bbs.tampermonkey.net.cn/",
       },
       requireFile: [
-        //"./dist/example/ui.js"
+        "./dist/example/ui.js"
       ],
     }),
   ],
