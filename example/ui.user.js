@@ -391,3 +391,109 @@ CAT_UI.createPanel({
   },
   render: DM,
 });
+
+CAT_UI.create({
+  appendStyle: `.menu-demo-button {
+    position: fixed;
+    bottom:20px;
+  }
+  
+  .button-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 25px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 14px;
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+  
+  .button-trigger:nth-child(1) {
+    left: 50px;
+    background-color: var(--color-neutral-5);
+  }
+  
+  .button-trigger:nth-child(1).button-trigger-active {
+    background-color: var(--color-neutral-4);
+  }
+  
+  .button-trigger:nth-child(2) {
+    left: 125px;
+    background-color: rgb(var(--arcoblue-6));
+  }
+  
+  .button-trigger:nth-child(2).button-trigger-active {
+    background-color: var(--color-primary-light-4);
+  }`,
+  render: () => {
+    const [popupVisibleOne, setPopupVisibleOne] = CAT_UI.useState(false);
+    const [popupVisibleTwo, setPopupVisibleTwo] = CAT_UI.useState(false);
+
+    const renderMenu = () =>
+      CAT_UI.Menu(
+        [
+          CAT_UI.Menu.Item([CAT_UI.Icon.IconBug(), "Bugs"], { key: "1" }),
+          CAT_UI.Menu.Item([CAT_UI.Icon.IconBulb(), "Ideas"], { key: "2" }),
+        ],
+        {
+          style: { marginBottom: -4 },
+          mode: "popButton",
+          tooltipProps: { position: "left" },
+          hasCollapseButton: true,
+          onClickMenuItem: (keyPath, event) => {
+            console.log(keyPath, event);
+            CAT_UI.Message.info("点击了CAT_UI.Menu.Item，keyPath: " + keyPath);
+          },
+        }
+      );
+
+    const Trigger1 = CAT_UI.Trigger(
+      CAT_UI.createElement(
+        "div",
+        {
+          className: `button-trigger ${
+            popupVisibleOne ? "button-trigger-active" : ""
+          }`,
+        },
+        popupVisibleOne ? CAT_UI.Icon.IconClose() : CAT_UI.Icon.IconMessage()
+      ),
+      {
+        popup: renderMenu,
+        trigger: ["click", "hover"],
+        clickToClose: true,
+        position: "top",
+        onVisibleChange: (v) => setPopupVisibleOne(v),
+      }
+    );
+
+    const Trigger2 = CAT_UI.Trigger(
+      CAT_UI.createElement(
+        "div",
+        {
+          className: `button-trigger ${
+            popupVisibleTwo ? "button-trigger-active" : ""
+          }`,
+        },
+        popupVisibleTwo ? CAT_UI.Icon.IconClose() : CAT_UI.Icon.IconMessage()
+      ),
+      {
+        popup: renderMenu,
+        trigger: ["click", "hover"],
+        clickToClose: true,
+        position: "top",
+        onVisibleChange: (v) => setPopupVisibleTwo(v),
+      }
+    );
+
+    return CAT_UI.createElement(
+      "div",
+      { className: "menu-demo menu-demo-button" },
+      [Trigger1, Trigger2]
+    );
+  },
+});

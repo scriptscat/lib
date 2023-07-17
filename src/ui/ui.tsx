@@ -11,6 +11,11 @@ import {
   DrawerProps,
   Input,
   InputProps,
+  Menu,
+  MenuItemGroupProps,
+  MenuItemProps,
+  MenuProps,
+  MenuSubMenuProps,
   Select,
   SelectOptionProps,
   SelectProps,
@@ -18,6 +23,10 @@ import {
   SpaceProps,
   Table,
   TableProps,
+  Tooltip,
+  TooltipProps,
+  Trigger,
+  TriggerProps,
 } from "@arco-design/web-react";
 import { InputSearchProps } from "@arco-design/web-react/es/Input";
 import UIPanel, { UIPanelOptions } from "./panel";
@@ -118,8 +127,18 @@ const CAT_UI: { [key: string]: any } = {
   Drawer(children: ReactNode, props?: DrawerProps) {
     return <Drawer {...props}>{children}</Drawer>;
   },
+  Menu(children: ReactNode, props?: MenuProps) {
+    return <Menu {...props}>{children}</Menu>;
+  },
   Table(props: TableProps) {
     return <Table {...props} />;
+  },
+  Tooltip(children: ReactNode, props?: TooltipProps) {
+    return <Tooltip {...props}>{children}</Tooltip>;
+  },
+  Trigger(children: ReactNode, props?: TriggerProps) {
+    //@ts-ignore  存在类型错误 可能为React18 & Arco BUG
+    return <Trigger {...props}>{children}</Trigger>;
   },
   React,
 };
@@ -140,6 +159,18 @@ Object.keys(Icon).forEach((icon) => {
     return <Item {...props}></Item>;
   };
 });
+
+CAT_UI.Menu.Item = (children: ReactNode, props: MenuItemProps) => {
+  return <Menu.Item {...props}>{children}</Menu.Item>;
+};
+
+CAT_UI.Menu.ItemGroup = (children: ReactNode, props?: MenuItemGroupProps) => {
+  return <Menu.ItemGroup {...props}>{children}</Menu.ItemGroup>;
+};
+
+CAT_UI.Menu.SubMenu = (children: ReactNode, props: MenuSubMenuProps) => {
+  return <Menu.SubMenu {...props}>{children}</Menu.SubMenu>;
+};
 
 CAT_UI.Typography.Text = (text: string, props: TypographyTextProps) => {
   return <Typography.Text {...props}>{text}</Typography.Text>;
