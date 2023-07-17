@@ -471,7 +471,7 @@ CAT_UI.create({
         {
           style: { marginBottom: -4 },
           mode: "popButton",
-          tooltipProps: { position: "left" },
+          tooltipProps: { position: "left", style: { userSelect: "none" } },
           hasCollapseButton: true,
           onClickMenuItem: (keyPath, event) => {
             console.log(keyPath, event);
@@ -496,6 +496,8 @@ CAT_UI.create({
         clickToClose: true,
         position: "top",
         onVisibleChange: (v) => setPopupVisibleOne(v),
+        style:{userSelect:'none',left:-4},
+        getPopupContainer:(node)=>node,
       }
     );
 
@@ -511,17 +513,24 @@ CAT_UI.create({
       ),
       {
         popup: renderMenu,
-        trigger: ["click", "hover"],
+        trigger: ["click"],
         clickToClose: true,
         position: "top",
         onVisibleChange: (v) => setPopupVisibleTwo(v),
+        style:{userSelect:'none',left:-4},
+        getPopupContainer:(node)=>node,
       }
     );
 
-    return CAT_UI.createElement(
-      "div",
-      { className: "menu-demo menu-demo-button" },
-      [Trigger1, Trigger2]
+    return CAT_UI.Draggable(
+      CAT_UI.createElement(
+        "div",
+        {
+          className: "menu-demo menu-demo-button",
+          style: { userSelect: "none" },
+        },
+        [Trigger1, Trigger2]
+      )
     );
   },
 });
