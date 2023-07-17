@@ -9,13 +9,41 @@ const data = { input: "默认值" };
 
 function Home() {
   const [input, setInput] = CAT_UI.useState(data.input);
+  const [visibleUserConfig, setVisibleUserConfig] = CAT_UI.useState(false);
   return CAT_UI.Space(
     [
       CAT_UI.Text("脚本猫的UI框架: " + input),
-      CAT_UI.Button("我是按钮", {
-        type: "primary",
-        onClick() {
-          CAT_UI.Message.info("我被点击了,你输入了: " + input);
+      CAT_UI.Space(
+        [
+          CAT_UI.Button("我是按钮", {
+            type: "primary",
+            onClick() {
+              CAT_UI.Message.info("我被点击了,你输入了: " + input);
+            },
+          }),
+          CAT_UI.Button("打开用户配置面板", {
+            type: "primary",
+            onClick() {
+              setVisibleUserConfig(true);
+            },
+          }),
+        ],
+        {
+          direction: "horizontal",
+        }
+      ),
+      CAT_UI.UserConfigPanel({
+        title: "脚本用户配置",
+        visible: visibleUserConfig,
+        userConfig: GM_info.userConfig,
+        defaultValues: {},
+        onCancel() {
+          setVisibleUserConfig(false);
+        },
+        onOk(values) {
+          console.log(values);
+          // GM_setValue
+          setVisibleUserConfig(false);
         },
       }),
       CAT_UI.Input({

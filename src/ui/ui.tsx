@@ -43,6 +43,9 @@ import Typography, {
 import Router from "./component/route";
 import Popup from "./component/Popup";
 import Draggable, { DraggableProps } from "react-draggable";
+import UserConfigPanel, {
+  UserConfigPanelProps,
+} from "./component/UserConfigPanel";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -139,6 +142,9 @@ const CAT_UI: { [key: string]: any } = {
   Trigger(children: ReactNode, props?: TriggerProps) {
     //@ts-ignore  存在类型错误 可能为React18 & Arco BUG
     return <Trigger {...props}>{children}</Trigger>;
+  },
+  UserConfigPanel(props: UserConfigPanelProps) {
+    return <UserConfigPanel {...props} />;
   },
   React,
 };
