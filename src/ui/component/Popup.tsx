@@ -2,6 +2,7 @@ import { Message, Modal, Notification } from "@arco-design/web-react";
 import UIPage, { UIPageOptions } from "../page";
 // @ts-ignore
 import arcoCss from "../arco.css";
+import { Fragment } from "react";
 
 class Popup extends HTMLElement {
   options: UIPageOptions;
@@ -22,11 +23,11 @@ class Popup extends HTMLElement {
         Notification: useNotification,
       });
       return (
-        <div>
+        <Fragment>
           {messageContext}
           {notificationContext}
           {modalContext}
-        </div>
+        </Fragment>
       );
     };
     this.options.style = arcoCss as unknown as string;
