@@ -253,22 +253,17 @@ class AST {
           const [notification, contextHolder] = Notification.useNotification();
           hydrateRoot(this.container, contextHolder);
           this.Notification = notification;
-          return new Proxy(
-            ()=>{},
-            {
-              apply: (_, ...args) => {
-                // React 18 官方推荐用setTimeout回调 https://github.com/reactwg/react-18/discussions/5#discussioncomment-798304
-                setTimeout(() =>
-                  Reflect.apply(
-                    notification[
-                      props as keyof notificationFuncType
-                    ] as Function,
-                    ...args
-                  )
-                );
-              },
-            }
-          );
+          return new Proxy(() => {}, {
+            apply: (_, ...args) => {
+              // React 18 官方推荐用setTimeout回调 https://github.com/reactwg/react-18/discussions/5#discussioncomment-798304
+              setTimeout(() =>
+                Reflect.apply(
+                  notification[props as keyof notificationFuncType] as Function,
+                  ...args
+                )
+              );
+            },
+          });
         },
       }
     );
@@ -279,19 +274,16 @@ class AST {
           const [message, contextHolder] = Message.useMessage();
           hydrateRoot(this.container, contextHolder);
           this.Message = message;
-          return new Proxy(
-            ()=>{},
-            {
-              apply: (_, ...args) => {
-                setTimeout(() =>
-                  Reflect.apply(
-                    message[props as keyof messageFuncType] as Function,
-                    ...args
-                  )
-                );
-              },
-            }
-          );
+          return new Proxy(() => {}, {
+            apply: (_, ...args) => {
+              setTimeout(() =>
+                Reflect.apply(
+                  message[props as keyof messageFuncType] as Function,
+                  ...args
+                )
+              );
+            },
+          });
         },
       }
     );

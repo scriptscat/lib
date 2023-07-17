@@ -1,3 +1,6 @@
+// 需要强制将CAT_UI暴露到页面中，待优化
+(window.unsafeWindow || window).CAT_UI = CAT_UI;
+
 //函数式方法：CAT_UI.XXX
 //文本式方法：const cat = new CAT_UI(container?); 下方使用ast便于区分
 const ast = new CAT_UI();

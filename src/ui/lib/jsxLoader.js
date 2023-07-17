@@ -577,8 +577,8 @@ export default function() {
             /**
              * Compiler Options
              */
-            pragma: 'React.createElement',
-            pragmaFrag: 'React.Fragment',
+            pragma: 'CAT_UI.React.createElement',
+            pragmaFrag: 'CAT_UI.React.Fragment',
             maxRecursiveCalls: 1000,
             addUseStrict: true,
 

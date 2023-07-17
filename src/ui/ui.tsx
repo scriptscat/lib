@@ -121,6 +121,7 @@ const CAT_UI: { [key: string]: any } = {
   Table(props: TableProps) {
     return <Table {...props} />;
   },
+  React,
 };
 
 // 动态引入所有图标
