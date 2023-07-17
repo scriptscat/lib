@@ -30,7 +30,7 @@ class UIPage extends HTMLElement {
     if (!this.options.style) {
       this.options.style = arcoCss as unknown as string;
     }
-    if (!this.options.appendStyle) {
+    if (this.options.appendStyle) {
       this.options.style += this.options.appendStyle;
     }
   }
