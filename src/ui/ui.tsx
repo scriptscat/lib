@@ -46,6 +46,7 @@ import Draggable, { DraggableProps } from "react-draggable";
 import UserConfigPanel, {
   UserConfigPanelProps,
 } from "./component/UserConfigPanel";
+import { Resizable, ResizableProps } from "react-resizable";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -104,6 +105,9 @@ const CAT_UI: { [key: string]: any } = {
   Router: Router,
   Draggable(element: ReactNode, props: DraggableProps) {
     return <Draggable {...props}>{element}</Draggable>;
+  },
+  Resizable(element: ReactNode, props: ResizableProps) {
+    return <Resizable {...props}>{element}</Resizable>;
   },
   //图标 动态加载
   Icon: {},
