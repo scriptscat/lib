@@ -71,7 +71,8 @@ const CAT_UI: { [key: string]: any } = {
 
     div.innerHTML = "<" + popupElName + " />";
 
-    document.body.append(div);
+    // @run-at document.start 时 document.body可能未初始化
+    (document.body || document.firstElementChild).append(div);
     return div;
   },
   createPanel(options: UIPanelOptions) {
