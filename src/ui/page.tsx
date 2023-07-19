@@ -40,6 +40,7 @@ class UIPage extends HTMLElement {
     let container = document.createElement("div");
     container.classList.add("container");
     container.classList.add("arco");
+    container.style.cssText = "position: absolute; top: 0px; width: 100%;";
 
     if (_this.options.style) {
       let css = document.createElement("style");
@@ -59,15 +60,10 @@ class UIPage extends HTMLElement {
     ReactDOM.createRoot(container).render(
       <div
         tabIndex={window.CAT_UI.tabIndex++}
-        onFocus={(e) => {
-          if (e.target.style.zIndex != window.CAT_UI.zIndex) {
-            e.target.style.zIndex = "" + ++window.CAT_UI.zIndex;
+        onFocus={() => {
+          if (container.style.zIndex != window.CAT_UI.zIndex) {
+            container.style.zIndex = "" + ++window.CAT_UI.zIndex;
           }
-        }}
-        style={{
-          position: "absolute",
-          top: "0px",
-          width: "100%",
         }}
       >
         {/*定义全局Popup弹出挂载容器 Modal、Drawer要单独设置 不知是否为框架BUG*/}
