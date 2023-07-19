@@ -217,6 +217,39 @@ function initTable() {
     });
   }
 
+  // Resizeable
+  const CustomResizeHandle = CAT_UI.React.forwardRef((props, ref) => {
+    const { handleAxis, ...restProps } = props;
+    return CAT_UI.createElement("span", {
+      ref,
+      className: `react-resizable-handle react-resizable-handle-${handleAxis}`,
+      ...restProps,
+      onClick: (e) => {
+        e.stopPropagation();
+      },
+    });
+  });
+  const ResizableTitle = (props) => {
+    const { onResize, width, children, ...restProps } = props;
+
+    if (!width) {
+      return CAT_UI.createElement("th", { ...restProps }, children);
+    }
+
+    return CAT_UI.Resizable(
+      CAT_UI.createElement("th", { ...restProps }, children),
+      {
+        width,
+        height: 0,
+        handle: CAT_UI.createElement(CustomResizeHandle),
+        onResize,
+        draggableOpts: {
+          enableUserSelectHack: false,
+        },
+      }
+    );
+  };
+
   let useTittle;
   let testData;
   let init = false;
@@ -227,11 +260,25 @@ function initTable() {
       console.log("onMin", min);
       if (!init) init = true;
     },
+    appendStyle: `.table-demo-resizable-column .react-resizable {
+      position: relative;
+      background-clip: padding-box;
+    }
+    
+    .table-demo-resizable-column .react-resizable-handle {
+      position: absolute;
+      width: 10px;
+      height: 100%;
+      bottom: 0;
+      right: -5px;
+      cursor: col-resize;
+      z-index: 1;
+    }`,
     header: {
       title: () => {
         let tittle;
         [tittle, useTittle] = CAT_UI.useState("最大化后1s获取数据");
-        return CAT_UI.Text("脚本猫的UI框架Table " + tittle, {
+        return CAT_UI.Text("脚本猫的UI框架Resizeable Table " + tittle, {
           style: { fontSize: "16px" },
         });
       },
@@ -257,14 +304,12 @@ function initTable() {
           });
         }
       });
-
-      // 下方均为官方示例https://arco.design/react/components/table#自定义筛选菜单
-      // 转译成ui.js封装形式
       const inputRef = CAT_UI.useRef(null);
-      const columns = [
+      const originColumns = [
         {
           title: "Name",
           dataIndex: "name",
+          width: 120,
           filterIcon: CAT_UI.Icon.IconSearch(),
           filterDropdown: ({ filterKeys, setFilterKeys, confirm }) => {
             return CAT_UI.createElement(
@@ -302,17 +347,58 @@ function initTable() {
         {
           title: "Salary",
           dataIndex: "salary",
+          width: 100,
         },
         {
           title: "Address",
           dataIndex: "address",
+          width: 180,
         },
         {
           title: "Email",
           dataIndex: "email",
         },
       ];
-      return CAT_UI.Table({ columns, data: testData, loading: !!!testData });
+
+      const [columns, setColumns] = CAT_UI.useState(
+        originColumns.map((column, index) => {
+          if (column.width) {
+            return {
+              ...column,
+              onHeaderCell: (col) => ({
+                width: col.width,
+                onResize: handleResize(index),
+              }),
+            };
+          }
+
+          return column;
+        })
+      );
+      function handleResize(index) {
+        return (e, { size }) => {
+          setColumns((prevColumns) => {
+            const nextColumns = [...prevColumns];
+            nextColumns[index] = { ...nextColumns[index], width: size.width };
+            return nextColumns;
+          });
+        };
+      }
+      const components = {
+        header: {
+          th: ResizableTitle,
+        },
+      };
+
+      return CAT_UI.Table({
+        className: "table-demo-resizable-column",
+        columns,
+        data: testData,
+        loading: !!!testData,
+        components,
+        border: true,
+        borderCell: true,
+      });
     },
   });
 }
@@ -496,8 +582,8 @@ CAT_UI.create({
         clickToClose: true,
         position: "top",
         onVisibleChange: (v) => setPopupVisibleOne(v),
-        style:{userSelect:'none',left:-4},
-        getPopupContainer:(node)=>node,
+        style: { userSelect: "none", left: -4 },
+        getPopupContainer: (node) => node,
       }
     );
 
@@ -517,8 +603,8 @@ CAT_UI.create({
         clickToClose: true,
         position: "top",
         onVisibleChange: (v) => setPopupVisibleTwo(v),
-        style:{userSelect:'none',left:-4},
-        getPopupContainer:(node)=>node,
+        style: { userSelect: "none", left: -4 },
+        getPopupContainer: (node) => node,
       }
     );
 
