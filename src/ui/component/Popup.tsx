@@ -16,8 +16,7 @@ class Popup extends HTMLElement {
       const [useModal, modalContext] = Modal.useModal();
       const [useNotification, notificationContext] =
         Notification.useNotification();
-      //@ts-ignore
-      Object.assign(globalThis.CAT_UI, {
+      Object.assign(window.CAT_UI, {
         Message: useMessage,
         Modal: useModal,
         Notification: useNotification,
