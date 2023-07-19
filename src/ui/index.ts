@@ -12,8 +12,7 @@ import jsxLoaderFuc from "./lib/jsxLoader";
 
 // 加载AST方法编译库jsxLoader
 jsxLoaderFuc();
-//@ts-ignore
-jsxLoader.compiler.addUseStrict = false;
+window.jsxLoader.compiler.addUseStrict = false;
 
 // 函数式初始化Popup相关组件
 CAT_UI.createPopup()

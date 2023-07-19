@@ -107,8 +107,7 @@ class AST {
     const args = Object.values(argument);
     const app = new Function(
       keys,
-      //@ts-ignore
-      "return " + globalThis.jsxLoader.compiler.compile(code)
+      "return " + window.jsxLoader.compiler.compile(code)
     )(...args);
     return typeof app == "function" ? createElement(app) : app;
   }
@@ -160,9 +159,7 @@ class AST {
   // 暴露组件方法
   #assignMoudles() {
     Object.assign(this, { useState, useRef, useEffect });
-    //@ts-ignore
     if (!window.CAT_UI.moudles) {
-      //@ts-ignore
       window.CAT_UI.moudles = Object.assign(
         {},
         {
@@ -195,8 +192,7 @@ class AST {
           Empty,
           Form,
           Grid,
-          //@ts-ignore
-          Icon: CAT_UI.Icon,
+          Icon: window.CAT_UI.Icon,
           Image,
           Input,
           InputNumber,

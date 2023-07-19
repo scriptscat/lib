@@ -85,3 +85,10 @@ declare namespace CAT_UI {
     function normal(config: MessageProps | string);
   }
 }
+
+export global {
+  interface Window {
+    CAT_UI: any;
+    jsxLoader: any;
+  }
+}
