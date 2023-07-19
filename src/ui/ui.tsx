@@ -56,6 +56,8 @@ const popupElName = "cat-ui-popup";
 customElements.define(popupElName, Popup);
 
 const CAT_UI: { [key: string]: any } = {
+  tabIndex: 1,
+  zIndex: 10000,
   create(options: UIPageOptions) {
     // @ts-ignore
     UIPage.options = options;
