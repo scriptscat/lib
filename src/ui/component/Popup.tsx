@@ -9,9 +9,7 @@ class Popup extends HTMLElement {
 
   constructor() {
     super();
-    // @ts-ignore
-    this.options = {};
-    this.options.render = () => {
+    const render = () => {
       const [useMessage, messageContext] = Message.useMessage();
       const [useModal, modalContext] = Modal.useModal();
       const [useNotification, notificationContext] =
@@ -29,8 +27,15 @@ class Popup extends HTMLElement {
         </Fragment>
       );
     };
-    this.options.style = arcoCss as unknown as string;
-
+    const appendStyle = `.container {
+      z-index: 1000000;
+    }`;
+    const style = arcoCss as unknown as string;
+    this.options = {
+      render,
+      style: style + appendStyle, //待优化？
+      zIndex: false,
+    };
     UIPage.render(this);
   }
 }

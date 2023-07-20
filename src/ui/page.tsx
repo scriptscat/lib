@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom/client";
-import React, { ReactElement } from "react";
 // @ts-ignore
 import arcoCss from "./arco.css";
 import { ConfigProvider } from "@arco-design/web-react";
@@ -7,6 +6,7 @@ import { ConfigProvider } from "@arco-design/web-react";
 export type UIPageOptions = {
   style?: string;
   appendStyle?: string;
+  zIndex?: boolean;
   render: () => JSX.Element[] | JSX.Element;
   onReady?: (panel: UIPage) => void;
 };
@@ -48,24 +48,34 @@ class UIPage extends HTMLElement {
       shadow.append(css);
     }
 
-    const Child = (): ReactElement => {
+    const Child = (): JSX.Element => {
       if (_this.options.render instanceof Array) {
         return (_this.options.render() as JSX.Element[]).map((val) => {
           return val;
-        }) as unknown as ReactElement;
+        }) as unknown as JSX.Element;
       }
-      return _this.options.render() as ReactElement;
+      return _this.options.render() as JSX.Element;
+    };
+
+    const Zindex = (props: { children: JSX.Element }): JSX.Element => {
+      return _this.options.zIndex === false ? (
+        <div>{props.children}</div>
+      ) : (
+        <div
+          tabIndex={window.CAT_UI.tabIndex++}
+          onFocus={() => {
+            if (container.style.zIndex != window.CAT_UI.zIndex) {
+              container.style.zIndex = "" + ++window.CAT_UI.zIndex;
+            }
+          }}
+        >
+          {props.children}
+        </div>
+      );
     };
 
     ReactDOM.createRoot(container).render(
-      <div
-        tabIndex={window.CAT_UI.tabIndex++}
-        onFocus={() => {
-          if (container.style.zIndex != window.CAT_UI.zIndex) {
-            container.style.zIndex = "" + ++window.CAT_UI.zIndex;
-          }
-        }}
-      >
+      <Zindex>
         {/*定义全局Popup弹出挂载容器 Modal、Drawer要单独设置 不知是否为框架BUG*/}
         <ConfigProvider
           getPopupContainer={() => container}
@@ -76,7 +86,7 @@ class UIPage extends HTMLElement {
         >
           <Child />
         </ConfigProvider>
-      </div>
+      </Zindex>
     );
 
     shadow.append(container);
