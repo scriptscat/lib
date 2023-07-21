@@ -11,12 +11,15 @@ class Popup extends HTMLElement {
     super();
     const render = () => {
       const [useMessage, messageContext] = Message.useMessage();
-      const [useModal, modalContext] = Modal.useModal();
       const [useNotification, notificationContext] =
         Notification.useNotification();
+
+      const [useModal, modalContext] = Modal.useModal();
+      const { confirm, info, success, warning, error } = Modal;
+      const rawModal = { raw: { confirm, info, success, warning, error } };
       Object.assign(window.CAT_UI, {
         Message: useMessage,
-        Modal: useModal,
+        Modal: Object.assign(window.CAT_UI.Modal, Modal, useModal, rawModal),
         Notification: useNotification,
       });
       return (

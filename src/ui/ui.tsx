@@ -17,6 +17,8 @@ import {
   MenuItemProps,
   MenuProps,
   MenuSubMenuProps,
+  Modal,
+  ModalProps,
   Result,
   ResultProps,
   Select,
@@ -139,6 +141,9 @@ const CAT_UI: { [key: string]: any } = {
   },
   Drawer(children: ReactNode, props?: DrawerProps) {
     return <Drawer {...props}>{children}</Drawer>;
+  },
+  Modal(children?: ReactNode, props?: ModalProps) {
+    return <Modal {...props}>{children}</Modal>;
   },
   Result(props: ResultProps & { children?: ReactNode }) {
     return <Result {...props} />;
