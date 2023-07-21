@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, ReactNode } from "react";
+import ReactDOM from "react-dom/client";
 import UIPage, { UIPageOptions } from "./page";
 import {
   Button,
@@ -16,6 +17,8 @@ import {
   MenuItemProps,
   MenuProps,
   MenuSubMenuProps,
+  Result,
+  ResultProps,
   Select,
   SelectOptionProps,
   SelectProps,
@@ -137,6 +140,9 @@ const CAT_UI: { [key: string]: any } = {
   Drawer(children: ReactNode, props?: DrawerProps) {
     return <Drawer {...props}>{children}</Drawer>;
   },
+  Result(props: ResultProps & { children?: ReactNode }) {
+    return <Result {...props} />;
+  },
   Menu(children: ReactNode, props?: MenuProps) {
     return <Menu {...props}>{children}</Menu>;
   },
@@ -154,6 +160,7 @@ const CAT_UI: { [key: string]: any } = {
     return <UserConfigPanel {...props} />;
   },
   React,
+  ReactDOM,
 };
 
 // 动态引入所有图标
