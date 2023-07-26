@@ -10,6 +10,8 @@ import {
   DividerProps,
   Drawer,
   DrawerProps,
+  Empty,
+  EmptyProps,
   Input,
   InputProps,
   Menu,
@@ -115,6 +117,9 @@ const CAT_UI: { [key: string]: any } = {
   },
   Resizable(element: ReactNode, props: ResizableProps) {
     return <Resizable {...props}>{element}</Resizable>;
+  },
+  Empty(props?:EmptyProps){
+    return <Empty {...props}/>
   },
   //图标 动态加载
   Icon: {},
