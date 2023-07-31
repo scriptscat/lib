@@ -6,6 +6,8 @@ import {
   ButtonProps,
   Checkbox,
   CheckboxProps,
+  Descriptions,
+  DescriptionsProps,
   Divider,
   DividerProps,
   Drawer,
@@ -140,6 +142,9 @@ const CAT_UI: { [key: string]: any } = {
   },
   Space(element: ReactNode, props?: SpaceProps) {
     return <Space {...props}>{element}</Space>;
+  },
+  Descriptions(props: DescriptionsProps){
+    return <Descriptions {...props} />
   },
   Divider(children?: ReactNode, props?: DividerProps) {
     return <Divider {...props}>{children}</Divider>;
