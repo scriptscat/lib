@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, ReactNode } from "react";
 import ReactDOM from "react-dom/client";
+import { renderToString, renderToStaticMarkup } from "react-dom/server";
 import UIPage, { UIPageOptions } from "./page";
 import {
   Button,
@@ -120,8 +121,8 @@ const CAT_UI: { [key: string]: any } = {
   Resizable(element: ReactNode, props: ResizableProps) {
     return <Resizable {...props}>{element}</Resizable>;
   },
-  Empty(props?:EmptyProps){
-    return <Empty {...props}/>
+  Empty(props?: EmptyProps) {
+    return <Empty {...props} />;
   },
   //图标 动态加载
   Icon: {},
@@ -143,8 +144,8 @@ const CAT_UI: { [key: string]: any } = {
   Space(element: ReactNode, props?: SpaceProps) {
     return <Space {...props}>{element}</Space>;
   },
-  Descriptions(props: DescriptionsProps){
-    return <Descriptions {...props} />
+  Descriptions(props: DescriptionsProps) {
+    return <Descriptions {...props} />;
   },
   Divider(children?: ReactNode, props?: DividerProps) {
     return <Divider {...props}>{children}</Divider>;
@@ -175,7 +176,7 @@ const CAT_UI: { [key: string]: any } = {
     return <UserConfigPanel {...props} />;
   },
   React,
-  ReactDOM,
+  ReactDOM: { ...ReactDOM, renderToString, renderToStaticMarkup },
 };
 
 // 动态引入所有图标
