@@ -58,20 +58,23 @@ class UIPage extends HTMLElement {
     };
 
     const Zindex = (props: { children: JSX.Element }): JSX.Element => {
-      return _this.options.zIndex === false ? (
-        <div>{props.children}</div>
-      ) : (
-        <div
-          tabIndex={window.CAT_UI.tabIndex++}
-          onFocus={() => {
-            if (container.style.zIndex != window.CAT_UI.zIndex) {
-              container.style.zIndex = "" + ++window.CAT_UI.zIndex;
-            }
-          }}
-        >
-          {props.children}
-        </div>
-      );
+      if (_this.options.zIndex === false) {
+        return <div>{props.children}</div>;
+      } else {
+        container.style.zIndex = "" + ++window.CAT_UI.zIndex;
+        return (
+          <div
+            tabIndex={window.CAT_UI.tabIndex++}
+            onFocus={() => {
+              if (container.style.zIndex != window.CAT_UI.zIndex) {
+                container.style.zIndex = "" + ++window.CAT_UI.zIndex;
+              }
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
     };
 
     ReactDOM.createRoot(container).render(
