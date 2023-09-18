@@ -59,7 +59,7 @@ class UIPanel extends HTMLElement {
     // };
 
     let Child: any = () => {
-      return oldRender() as ReactElement;
+      return oldRender?.() as ReactElement;
     };
 
     const Render = () => {

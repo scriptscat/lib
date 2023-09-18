@@ -7,7 +7,7 @@ export type UIPageOptions = {
   style?: string;
   appendStyle?: string;
   zIndex?: boolean;
-  render: () => JSX.Element[] | JSX.Element;
+  render?: () => JSX.Element[] | JSX.Element;
   onReady?: (panel: UIPage) => void;
 };
 
@@ -54,7 +54,7 @@ class UIPage extends HTMLElement {
           return val;
         }) as unknown as JSX.Element;
       }
-      return _this.options.render() as JSX.Element;
+      return _this.options.render?.() as JSX.Element;
     };
 
     const Zindex = (props: { children: JSX.Element }): JSX.Element => {
@@ -76,21 +76,22 @@ class UIPage extends HTMLElement {
         );
       }
     };
-
-    ReactDOM.createRoot(container).render(
-      <Zindex>
-        {/*定义全局Popup弹出挂载容器 Modal、Drawer要单独设置 不知是否为框架BUG*/}
-        <ConfigProvider
-          getPopupContainer={() => container}
-          componentConfig={{
-            Modal: { getPopupContainer: () => container },
-            Drawer: { getPopupContainer: () => container },
-          }}
-        >
-          <Child />
-        </ConfigProvider>
-      </Zindex>
-    );
+    const root = ReactDOM.createRoot(container);
+    _this.options.render &&
+      root.render(
+        <Zindex>
+          {/*定义全局Popup弹出挂载容器 Modal、Drawer要单独设置 不知是否为框架BUG*/}
+          <ConfigProvider
+            getPopupContainer={() => container}
+            componentConfig={{
+              Modal: { getPopupContainer: () => container },
+              Drawer: { getPopupContainer: () => container },
+            }}
+          >
+            <Child />
+          </ConfigProvider>
+        </Zindex>
+      );
 
     shadow.append(container);
   }
