@@ -1,11 +1,9 @@
-import React from "react";
 import {
   Link,
   LinkProps,
   Outlet,
   RouteObject,
   RouterProvider,
-  createHashRouter,
   createMemoryRouter,
 } from "react-router-dom";
 
