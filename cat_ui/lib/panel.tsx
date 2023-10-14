@@ -9,8 +9,7 @@ import UIPage, { UIPageOptions } from "./page";
 import { Button, Layout } from "@arco-design/web-react";
 import { IconMinus, IconPlus } from "@arco-design/web-react/icon";
 import Draggable from "react-draggable";
-// @ts-ignore
-import arcoCss from "./arco.css";
+import arcoCss from "./arco.css?inline";
 import {
   Outlet,
   RouteObject,
@@ -20,7 +19,7 @@ import {
 
 export type UIPanelOptions = UIPageOptions & {
   min: boolean;
-  onMin?: Function;
+  onMin?: (min: boolean) => void;
   minButton?: boolean;
   point?: {
     x: number;
@@ -47,7 +46,7 @@ class UIPanel extends HTMLElement {
     // @ts-ignore
     this.options = UIPanel.options;
     this.defaultOptions();
-    let oldRender = this.options.render;
+    const oldRender = this.options.render;
     // const Child = (): ReactElement => {
     //   const ret = oldRender();
     //   if (ret instanceof Array) {
@@ -72,7 +71,7 @@ class UIPanel extends HTMLElement {
       return (
         <Draggable
           handle=".draggable"
-          onStop={(e, d) => {
+          onStop={(_e, d) => {
             this.draggableStopCallback &&
               this.draggableStopCallback({
                 x: d.x,

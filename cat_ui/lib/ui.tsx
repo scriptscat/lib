@@ -17,7 +17,6 @@ import {
   MenuProps,
   MenuSubMenuProps,
   Select,
-  SelectOptionProps,
   SelectProps,
   Space,
   SpaceProps,
@@ -31,8 +30,7 @@ import {
 import { InputSearchProps } from "@arco-design/web-react/es/Input";
 import UIPanel, { UIPanelOptions } from "./panel";
 import * as Icon from "@arco-design/web-react/icon";
-// @ts-ignore
-import arcoCss from "./arco.css";
+import "./arco.css?inline";
 import { ImgHTMLAttributes } from "react";
 import Typography, {
   TypographyProps,
@@ -46,6 +44,7 @@ import Draggable, { DraggableProps } from "react-draggable";
 import UserConfigPanel, {
   UserConfigPanelProps,
 } from "./component/UserConfigPanel";
+import { OptionProps } from "@arco-design/web-react/es/Select/interface";
 
 const pageElName = "cat-ui-page";
 window.customElements.define(pageElName, UIPage);
@@ -59,7 +58,7 @@ const CAT_UI: { [key: string]: any } = {
     // @ts-ignore
     UIPage.options = options;
 
-    let div = document.createElement("div");
+    const div = document.createElement("div");
 
     div.innerHTML = "<" + pageElName + " />";
 
@@ -67,7 +66,7 @@ const CAT_UI: { [key: string]: any } = {
     return div;
   },
   createPopup() {
-    let div = document.createElement("div");
+    const div = document.createElement("div");
 
     div.innerHTML = "<" + popupElName + " />";
 
@@ -78,7 +77,7 @@ const CAT_UI: { [key: string]: any } = {
     // @ts-ignore
     UIPanel.options = options;
 
-    let div = document.createElement("div");
+    const div = document.createElement("div");
 
     div.innerHTML = "<" + planElName + " />";
 
@@ -92,12 +91,13 @@ const CAT_UI: { [key: string]: any } = {
     return React.createElement(type, props, children);
   },
   useEffect(effect: React.EffectCallback, deps?: React.DependencyList) {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return useEffect(effect, deps);
   },
-  useState(data?: any) {
+  useState<T>(data?: T) {
     return useState(data);
   },
-  useRef(data?: any) {
+  useRef<T>(data?: T) {
     return useRef(data);
   },
   Router: Router,
@@ -140,7 +140,6 @@ const CAT_UI: { [key: string]: any } = {
     return <Tooltip {...props}>{children}</Tooltip>;
   },
   Trigger(children: ReactNode, props?: TriggerProps) {
-    //@ts-ignore  存在类型错误 可能为React18 & Arco BUG
     return <Trigger {...props}>{children}</Trigger>;
   },
   UserConfigPanel(props: UserConfigPanelProps) {
@@ -205,8 +204,7 @@ CAT_UI.Icon.ScriptCat = (props: ImgHTMLAttributes<HTMLImageElement>) => {
   );
 };
 
-CAT_UI.Select.Option = function (text: string, props?: SelectOptionProps) {
-  // @ts-ignore
+CAT_UI.Select.Option = function (text: string, props: OptionProps) {
   return <Select.Option {...props}>{text}</Select.Option>;
 };
 

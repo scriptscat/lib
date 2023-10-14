@@ -1,7 +1,6 @@
+import { ReactElement } from "react";
 import ReactDOM from "react-dom/client";
-import React, { ReactElement } from "react";
-// @ts-ignore
-import arcoCss from "./arco.css";
+import arcoCss from "./arco.css?inline";
 import { ConfigProvider } from "@arco-design/web-react";
 
 export type UIPageOptions = {
@@ -36,13 +35,13 @@ class UIPage extends HTMLElement {
   }
 
   static render(_this: HTMLElement & { options: UIPageOptions }) {
-    let shadow = _this.attachShadow({ mode: "open" });
-    let container = document.createElement("div");
+    const shadow = _this.attachShadow({ mode: "open" });
+    const container = document.createElement("div");
     container.classList.add("container");
     container.classList.add("arco");
 
     if (_this.options.style) {
-      let css = document.createElement("style");
+      const css = document.createElement("style");
       css.innerHTML = _this.options.style;
       shadow.append(css);
     }
