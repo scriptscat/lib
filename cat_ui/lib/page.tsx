@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import arcoCss from "./arco.css?inline";
 import { ConfigProvider } from "@arco-design/web-react";
+import CAT_UI from "./ui";
 
 export type UIPageOptions = {
   style?: string;
@@ -60,13 +61,13 @@ class UIPage extends HTMLElement {
       if (_this.options.zIndex === false) {
         return <div>{props.children}</div>;
       } else {
-        container.style.zIndex = "" + ++window.CAT_UI.zIndex;
+        container.style.zIndex = "" + ++CAT_UI.zIndex;
         return (
           <div
-            tabIndex={window.CAT_UI.tabIndex++}
+            tabIndex={CAT_UI.tabIndex++}
             onFocus={() => {
-              if (container.style.zIndex != window.CAT_UI.zIndex) {
-                container.style.zIndex = "" + ++window.CAT_UI.zIndex;
+              if (container.style.zIndex != CAT_UI.zIndex) {
+                container.style.zIndex = "" + ++CAT_UI.zIndex;
               }
             }}
           >
