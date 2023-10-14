@@ -26,7 +26,6 @@ class UIPage extends HTMLElement {
 
   protected defaultOptions() {
     this.options = Object.assign({}, this.options);
-    console.log(this.options);
     if (!this.options.style) {
       this.options.style = arcoCss as unknown as string;
     }

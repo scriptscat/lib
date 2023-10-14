@@ -104,6 +104,9 @@ const CAT_UI: { [key: string]: any } = {
   el(type: string, props?: any, ...children: React.ReactNode[]) {
     return React.createElement(type, props, children);
   },
+  defineComponent(key: string, name: any) {
+    CAT_UI[key] = name;
+  },
   useEffect(effect: React.EffectCallback, deps?: React.DependencyList) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return useEffect(effect, deps);

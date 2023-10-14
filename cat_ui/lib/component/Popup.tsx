@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Message, Modal, Notification } from "@arco-design/web-react";
 import UIPage, { UIPageOptions } from "../page";
-// @ts-ignore
-import arcoCss from "../arco.css";
+import arcoCss from "../arco.css?inline";
 import { Fragment } from "react";
+import CAT_UI from "../ui";
 
 class Popup extends HTMLElement {
   options: UIPageOptions;
@@ -17,11 +18,14 @@ class Popup extends HTMLElement {
       const [useModal, modalContext] = Modal.useModal();
       const { confirm, info, success, warning, error } = Modal;
       const rawModal = { raw: { confirm, info, success, warning, error } };
-      Object.assign(window.CAT_UI, {
-        Message: useMessage,
-        Modal: Object.assign(window.CAT_UI.Modal, Modal, useModal, rawModal),
-        Notification: useNotification,
-      });
+      CAT_UI.defineComponent("Message", useMessage);
+      CAT_UI.Modal = Object.assign(CAT_UI.Modal, Modal, useModal, rawModal);
+      CAT_UI.Notification = useNotification;
+      // Object.assign(CAT_UI, {
+      //   Message: useMessage,
+      //   Modal: Object.assign(CAT_UI.Modal, Modal, useModal, rawModal),
+      //   Notification: useNotification,
+      // });
       return (
         <Fragment>
           {messageContext}

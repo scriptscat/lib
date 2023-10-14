@@ -180,7 +180,9 @@ CAT_UI.createPanel({
 
 //由于React 18渲染规则，顶级调用Message、Modal、Notification时需要使用异步方法，非顶级可直接调用
 // Message
-setTimeout(() => CAT_UI.Message.success("你好，脚本猫"));
+setTimeout(() => {
+  CAT_UI.Message.success("你好，脚本猫");
+}, 1000);
 
 // Table
 function initTable() {
