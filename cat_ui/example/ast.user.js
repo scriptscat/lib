@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* global CAT_UI, CAT_UI_AST, React, */
+/* eslint-env greasemonkey*/
+
 // 需要强制将CAT_UI暴露到页面中，待优化
-(window.unsafeWindow || window).CAT_UI = CAT_UI;
+(window.unsafeWindow || window).CAT_UI_AST = CAT_UI_AST;
 
 //函数式方法：CAT_UI.XXX
-//文本式方法：const cat = new CAT_UI(container?); 下方使用ast便于区分
-const ast = new CAT_UI();
+//文本式方法：const cat = new CAT_UI_AST(container?); 下方使用ast便于区分
+const ast = new CAT_UI_AST();
 (window.unsafeWindow || window).ast = ast;
 
 ast.addStyle(`

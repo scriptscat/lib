@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* global CAT_UI, React, ReactDOM, jsxLoader */
+/* eslint-env greasemonkey*/
+
 //暴露变量 方便调试
 (window.unsafeWindow || window).CAT_UI = CAT_UI;
 (window.unsafeWindow || window).React = React;
@@ -169,9 +173,7 @@ CAT_UI.createPanel({
 
 //由于React 18渲染规则，顶级调用Message、Modal、Notification时需要使用异步方法，非顶级可直接调用
 // Message
-setTimeout(() => {
-  CAT_UI.Message.success("你好，脚本猫");
-}, 1000);
+setTimeout(() => CAT_UI.Message.success("你好，脚本猫"));
 
 // Table
 function initTable() {
@@ -396,7 +398,7 @@ function initTable() {
         className: "table-demo-resizable-column",
         columns,
         data: testData,
-        loading: !!!testData,
+        loading: !testData,
         components,
         border: true,
         borderCell: true,
@@ -489,6 +491,9 @@ CAT_UI.createPanel({
   // 强制固定Drawer
   appendStyle: `.arco-drawer-wrapper {
     position: fixed !important;
+  }
+  .container {
+    overflow: visible!important;
   }`,
   header: {
     title: CAT_UI.Space(
