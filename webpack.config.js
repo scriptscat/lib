@@ -8,7 +8,6 @@ module.exports = merge(baseConfig, {
     gm: home + "/gm/index.ts",
     scsite: home + "/scsite/index.js",
     utils: home + "/utils/index.ts",
-    ui: home + "/ui/index.ts"
   },
   output: {
     path: __dirname + "/dist",

@@ -2,6 +2,9 @@
 import { ReactNode } from "react";
 import CAT_UI from "../lib/ui";
 
+// 函数式初始化Popup相关组件
+CAT_UI.createPopup();
+
 // 综合面板
 const data = { input: "默认值" };
 
