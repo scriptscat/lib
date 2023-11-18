@@ -36,6 +36,8 @@ import {
   TooltipProps,
   Trigger,
   TriggerProps,
+  Upload,
+  UploadProps,
 } from "@arco-design/web-react";
 import { InputSearchProps } from "@arco-design/web-react/es/Input";
 import UIPanel, { UIPanelOptions } from "./panel";
@@ -173,6 +175,9 @@ const CAT_UI: { [key: string]: any } = {
   },
   Trigger(children: ReactNode, props?: TriggerProps) {
     return <Trigger {...props}>{children}</Trigger>;
+  },
+  Upload(children: ReactNode, props?: UploadProps) {
+    return <Upload {...props}>{children}</Upload>;
   },
   UserConfigPanel(props: UserConfigPanelProps) {
     return <UserConfigPanel {...props} />;
