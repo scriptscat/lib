@@ -5,7 +5,7 @@ const baseConfig = require("./webpack.lib");
 
 module.exports = merge(baseConfig, {
   entry: {
-    ui: "./src/ui/index.ts",
+    ui: "./cat_ui/lib/index.ts",
     "ui.user": "./example/ui.user.js",
     "ast.user": "./example/ast.user.js",
   },
